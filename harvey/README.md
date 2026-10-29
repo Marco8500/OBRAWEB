@@ -11,9 +11,10 @@ Harvey es el agente comercial de OBRAWEB. Cada día laborable por la mañana se 
 **Harvey no envía nada solo.** Tú revisas los borradores y los envías.
 
 ## Tu parte (5 minutos al día)
-- Abre `harvey/borradores/`, revisa los mensajes y envía los que te gusten.
-- Dile a Claude: *"he enviado el de Clínica X"* o *"Clínica X ha respondido que le interesa"*.
-  Así Harvey sabe qué nicho funciona.
+- Abre **Gmail → Borradores** (infoobraweb@gmail.com): Harvey te deja ahí los emails listos. Revisa, retoca y pulsa Enviar.
+  Los que van por llamada, WhatsApp o formulario están en `harvey/borradores/`.
+- Harvey detecta solo en Gmail lo que has enviado y quién te ha respondido. Si contactas por otro canal,
+  díselo a Claude: *"he llamado a Taller X y quiere presupuesto"*.
 
 ## Ver el panel
 ```bash
