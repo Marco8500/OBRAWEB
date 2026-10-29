@@ -1,0 +1,31 @@
+{
+  "empresa": "OBRAWEB",
+  "oferta": {
+    "webs": "Webs rápidas, modernas y adaptadas a móvil, con reservas/citas online y SEO local",
+    "automatizaciones": "Automatizaciones para pymes: recordatorios de citas por WhatsApp/email, respuesta automática a leads, captación de reseñas en Google, CRM sencillo, facturación y tareas repetitivas"
+  },
+  "zona": "Valencia ciudad y área metropolitana (Mislata, Burjassot, Paterna, Torrent, Alboraia, Xirivella...)",
+  "cliente_ideal": "Pyme local de 2 a 50 empleados, con buenas reseñas (negocio sano) pero con web antigua, sin web, sin reservas online o que depende solo de directorios (Fresha, Treatwell, Doctoralia, Google Maps)",
+  "nichos": [
+    { "id": "clinicas-dentales", "nombre": "Clínicas dentales", "activo": true },
+    { "id": "fisioterapia", "nombre": "Fisioterapia y osteopatía", "activo": true },
+    { "id": "estetica", "nombre": "Centros de estética y medicina estética", "activo": true },
+    { "id": "talleres", "nombre": "Talleres mecánicos", "activo": true },
+    { "id": "inmobiliarias", "nombre": "Inmobiliarias de barrio", "activo": true },
+    { "id": "academias", "nombre": "Academias y autoescuelas", "activo": true },
+    { "id": "reformas", "nombre": "Empresas de reformas e instaladores", "activo": true },
+    { "id": "gimnasios", "nombre": "Gimnasios boutique, pilates y yoga", "activo": true },
+    { "id": "gestorias", "nombre": "Gestorías y asesorías", "activo": true },
+    { "id": "restauracion", "nombre": "Restaurantes y cafeterías", "activo": true }
+  ],
+  "ritmo": {
+    "prospectos_nuevos_por_ejecucion": 10,
+    "nota_minima_para_borrador": 7,
+    "dias_hasta_seguimiento": 4,
+    "max_seguimientos": 2
+  },
+  "envio": {
+    "modo": "borrador",
+    "nota": "Harvey NUNCA envía nada solo. Prepara borradores y tú decides si se envían (RGPD/LSSI)."
+  }
+}

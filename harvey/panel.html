@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Harvey · OBRAWEB</title>
+<style>
+  :root { --bg:#0f1115; --card:#171a21; --line:#262b36; --text:#e8eaf0; --muted:#8b93a7; --accent:#f97316; --ok:#22c55e; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:15px/1.45 system-ui, sans-serif; padding:24px 16px; }
+  .wrap { max-width:1200px; margin:0 auto; }
+  h1 { margin:0 0 4px; font-size:22px; } h1 span { color:var(--accent); }
+  .sub { color:var(--muted); margin-bottom:20px; }
+  .kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-bottom:24px; }
+  .kpi, .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px; }
+  .kpi b { display:block; font-size:28px; } .kpi small { color:var(--muted); }
+  h2 { font-size:16px; margin:24px 0 10px; }
+  .board { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; }
+  .col h3 { font-size:13px; text-transform:uppercase; color:var(--muted); margin:0 0 8px; }
+  .p { border:1px solid var(--line); border-radius:8px; padding:8px; margin-bottom:8px; }
+  .p .n { font-weight:600; } .p .m { color:var(--muted); font-size:13px; }
+  .nota { float:right; color:var(--accent); font-weight:700; }
+  table { width:100%; border-collapse:collapse; } th, td { text-align:left; padding:8px; border-bottom:1px solid var(--line); }
+  th { color:var(--muted); font-weight:500; font-size:13px; }
+  .best { color:var(--ok); font-weight:600; }
+  .err { color:#fca5a5; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1><span>Harvey</span> · OBRAWEB</h1>
+  <div class="sub" id="sub">Cargando…</div>
+  <div class="kpis" id="kpis"></div>
+  <h2>Pipeline</h2>
+  <div class="board" id="board"></div>
+  <h2>¿Qué nicho funciona mejor?</h2>
+  <div class="card"><table id="nichos"></table></div>
+</div>
+<script>
+const COLS = [
+  ["nuevo","Nuevos"],["borrador","Borrador listo"],["contactado","Contactado"],
+  ["respondio","Respondió"],["interesado","Interesado"],["reunion","Reunión"],["ganado","Ganado"]
+];
+const CONTACTADOS = ["contactado","respondio","interesado","reunion","ganado","perdido"];
+const RESPUESTAS = ["respondio","interesado","reunion","ganado"];
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+Promise.all([fetch("data/prospectos.json").then(r => r.json()), fetch("config.json").then(r => r.json())])
+.then(([data, cfg]) => {
+  const ps = data.prospectos || [];
+  const count = f => ps.filter(f).length;
+  const contactados = count(p => CONTACTADOS.includes(p.estado));
+  const respuestas = count(p => RESPUESTAS.includes(p.estado));
+  document.getElementById("sub").textContent = `Actualizado: ${data.actualizado} · ${cfg.zona}`;
+  document.getElementById("kpis").innerHTML = [
+    [ps.length, "Prospectos"],
+    [count(p => p.estado === "borrador"), "Borradores por revisar"],
+    [contactados, "Contactados"],
+    [contactados ? (100 * respuestas / contactados).toFixed(1) + " %" : "—", "Tasa de respuesta"],
+    [count(p => ["respondio","interesado","reunion"].includes(p.estado)), "Conversaciones activas"],
+    [count(p => p.estado === "ganado"), "Clientes ganados"]
+  ].map(([v, l]) => `<div class="kpi"><b>${v}</b><small>${l}</small></div>`).join("");
+
+  document.getElementById("board").innerHTML = COLS.map(([id, t]) => {
+    const items = ps.filter(p => p.estado === id).sort((a, b) => b.nota - a.nota);
+    return `<div class="card col"><h3>${t} (${items.length})</h3>` + items.map(p =>
+      `<div class="p"><span class="nota">${p.nota}/10</span><div class="n">${esc(p.nombre)}</div>
+       <div class="m">${esc(p.zona)} · ${esc(p.oportunidad)}</div></div>`).join("") + "</div>";
+  }).join("");
+
+  const filas = cfg.nichos.map(n => {
+    const deN = ps.filter(p => p.nicho === n.id);
+    const c = deN.filter(p => CONTACTADOS.includes(p.estado)).length;
+    const r = deN.filter(p => RESPUESTAS.includes(p.estado)).length;
+    return { n, total: deN.length, c, r, g: deN.filter(p => p.estado === "ganado").length, tasa: c ? r / c : -1 };
+  }).sort((a, b) => b.tasa - a.tasa || b.total - a.total);
+  const mejor = filas.find(f => f.c >= 5);
+  document.getElementById("nichos").innerHTML =
+    "<tr><th>Nicho</th><th>Prospectos</th><th>Contactados</th><th>Respuestas</th><th>Tasa</th><th>Ganados</th></tr>" +
+    filas.map(f => `<tr class="${f === mejor ? "best" : ""}"><td>${esc(f.n.nombre)}</td><td>${f.total}</td><td>${f.c}</td>
+      <td>${f.r}</td><td>${f.tasa < 0 ? "—" : (100 * f.tasa).toFixed(0) + " %"}</td><td>${f.g}</td></tr>`).join("");
+})
+.catch(() => {
+  document.getElementById("sub").innerHTML =
+    '<span class="err">No se pudieron cargar los datos. Abre el panel con un servidor: <code>python3 -m http.server</code> dentro de <code>harvey/</code>.</span>';
+});
+</script>
+</body>
+</html>
