@@ -11,6 +11,7 @@ origen: varias sesiones
 - [ ] Logo: generar la versión plana con naranja y la versión solo "OW" para el perfil.
 - [ ] Tarjeta de visita: decidir nombre y cargo.
 - [ ] Activar la sección Opiniones cuando haya reseñas reales.
-- [ ] Comprobar que la sesión "Instagram OBRAWEB" ha subido `instagram/` (normas, guiones, scripts) y enlazar sus normas desde [[linea-editorial-instagram]].
+- [x] Subir `instagram/` (normas, guiones, scripts) al repo (29/10, desde el zip).
+- [ ] Unificar el naranja: `#FF7A1A` en Instagram y `#F97316` en la web.
 
 Relacionado: [[web-obraweb]], [[paleta-de-marca]], [[material-instagram]], [[tarjeta-de-visita]]

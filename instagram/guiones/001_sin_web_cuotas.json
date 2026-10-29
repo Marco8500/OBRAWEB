@@ -1,0 +1,33 @@
+[
+ {
+  "kind": "hook",
+  "text": "¿Tu negocio todavía no tiene página web?",
+  "cover": [
+   "¿TU NEGOCIO",
+   "SIN WEB?",
+   "*135€",
+   "2 cuotas · 270 € total"
+  ]
+ },
+ {
+  "kind": "search",
+  "text": "Hoy tus clientes te buscan en Google. Y si no te encuentran, se van con la competencia."
+ },
+ {
+  "kind": "build",
+  "text": "En ObraWeb diseñamos tu web a medida: moderna, rápida y perfecta en el móvil."
+ },
+ {
+  "kind": "checks",
+  "text": "Tú te centras en tu negocio. Nosotros nos encargamos de todo."
+ },
+ {
+  "kind": "price",
+  "text": "Y lo mejor: tu web profesional en solo dos cuotas de ciento treinta y cinco euros.",
+  "sub": "Y lo mejor: tu web profesional en solo 2 cuotas de 135€"
+ },
+ {
+  "kind": "cta",
+  "text": "Escríbenos hoy y empieza a conseguir clientes. ObraWeb."
+ }
+]

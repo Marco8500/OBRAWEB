@@ -1,0 +1,13 @@
+[
+ {"kind": "boom", "obj": "closed", "h": ["SON LAS 23:00", "Y TE BUSCAN"],
+  "text": "Son las once de la noche y un cliente te está buscando.", "sub": "Son las 23:00 y un cliente te está buscando.",
+  "cover": ["SON LAS", "*23:00", "Y UN CLIENTE", "TE ESTÁ BUSCANDO"]},
+ {"kind": "clock", "text": "Pero tu local está cerrado."},
+ {"kind": "nightsearch", "text": "Y lo que pase ahora decide si te compra."},
+ {"kind": "other", "text": "Si no tienes web, se va con otro.", "cut": true},
+ {"kind": "secret", "h": ["PERO SI", "LA TIENES…"], "text": "Pero si la tienes, pasa algo mejor."},
+ {"kind": "nightweb", "text": "Ve tus servicios, tus fotos, y te escribe al momento.", "cut": true},
+ {"kind": "morning", "text": "Y tú te levantas con un cliente nuevo."},
+ {"kind": "logo", "tag": "TRABAJA MIENTRAS DUERMES", "text": "En ObraWeb te creamos la web que trabaja mientras duermes.", "cut": true},
+ {"kind": "dm", "text": "Escríbenos web por mensaje.", "sub": "Escríbenos «WEB» por mensaje."}
+]

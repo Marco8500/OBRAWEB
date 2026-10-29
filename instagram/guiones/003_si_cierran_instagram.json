@@ -1,0 +1,44 @@
+[
+ {
+  "kind": "boom",
+  "obj": "insta",
+  "h": [
+   "¿Y SI MAÑANA",
+   "TE LO CIERRAN?"
+  ],
+  "text": "Si mañana te cierran el Instagram, pierdes a tus clientes.",
+  "cover": [
+   "¿Y SI MAÑANA",
+   "TE CIERRAN",
+   "*INSTAGRAM?",
+   "tu negocio desaparece"
+  ]
+ },
+ {
+  "kind": "suspended",
+  "text": "Y pasa más de lo que crees."
+ },
+ {
+  "kind": "secret",
+  "text": "Pero hay algo que nadie te puede quitar."
+ },
+ {
+  "kind": "ownweb",
+  "text": "Tu propia web.",
+  "cut": true
+ },
+ {
+  "kind": "yours",
+  "text": "Tu web, tus clientes, tus reglas."
+ },
+ {
+  "kind": "logo",
+  "text": "En ObraWeb te la creamos de principio a fin.",
+  "cut": true
+ },
+ {
+  "kind": "dm",
+  "text": "Escríbenos web por mensaje.",
+  "sub": "Escríbenos «WEB» por mensaje."
+ }
+]

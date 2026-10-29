@@ -1,0 +1,66 @@
+[
+ {
+  "kind": "boom",
+  "text": "Tu web está espantando a tus clientes.",
+  "cover": [
+   "TU WEB",
+   "ESPANTA A TUS",
+   "*CLIENTES",
+   "3 errores que lo causan"
+  ]
+ },
+ {
+  "kind": "three",
+  "text": "Tres errores. Y el tercero te va a sorprender.",
+  "sub": "3 errores. Y el tercero te va a sorprender."
+ },
+ {
+  "kind": "slow",
+  "text": "Error uno: tu web tarda en cargar.",
+  "sub": "Error 1: tu web tarda en cargar.",
+  "cut": true
+ },
+ {
+  "kind": "leave",
+  "text": "Y el cliente se va antes de verla."
+ },
+ {
+  "kind": "loop2",
+  "text": "Pero el segundo es todavía peor."
+ },
+ {
+  "kind": "mobile",
+  "text": "Error dos: en el móvil se ve fatal.",
+  "sub": "Error 2: en el móvil se ve fatal.",
+  "cut": true
+ },
+ {
+  "kind": "loop3",
+  "text": "Y el tercero es el que más dinero te cuesta."
+ },
+ {
+  "kind": "nobutton",
+  "text": "Error tres: no hay un botón claro para escribirte.",
+  "sub": "Error 3: no hay un botón claro para escribirte.",
+  "cut": true
+ },
+ {
+  "kind": "competitor",
+  "text": "Si no te escriben en un clic, escriben a tu competencia."
+ },
+ {
+  "kind": "fix",
+  "text": "En ObraWeb arreglamos los tres.",
+  "cut": true
+ },
+ {
+  "kind": "price",
+  "text": "Tu web en dos cuotas de ciento treinta y cinco euros.",
+  "sub": "Tu web en 2 cuotas de 135€"
+ },
+ {
+  "kind": "dm",
+  "text": "Escríbenos web por mensaje.",
+  "sub": "Escríbenos «WEB» por mensaje."
+ }
+]

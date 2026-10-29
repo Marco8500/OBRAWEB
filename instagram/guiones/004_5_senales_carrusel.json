@@ -1,0 +1,78 @@
+[
+ {
+  "type": "cover",
+  "title": "¿Tu web te hace perder clientes?",
+  "hl": [
+   "perder",
+   "clientes"
+  ],
+  "big": "5 SEÑALES",
+  "sub": "La 5ª es la que más dinero te cuesta"
+ },
+ {
+  "type": "sign",
+  "num": 1,
+  "ill": "shame",
+  "title": "Te da vergüenza pasar el enlace",
+  "hl": [
+   "vergüenza"
+  ],
+  "body": "Si dudas antes de enseñarla, tus clientes también dudan de ti.",
+  "next": "La 2ª es aún más común"
+ },
+ {
+  "type": "sign",
+  "num": 2,
+  "ill": "old",
+  "title": "No recuerdas cuándo la actualizaste",
+  "hl": [
+   "actualizaste"
+  ],
+  "body": "Horarios viejos, servicios que ya no haces… y el cliente se va con la duda.",
+  "next": "La 3ª pasa en cada móvil"
+ },
+ {
+  "type": "sign",
+  "num": 3,
+  "ill": "zoom",
+  "title": "En el móvil hay que hacer zoom",
+  "hl": [
+   "móvil",
+   "zoom"
+  ],
+  "body": "Si hay que pellizcar la pantalla para leer, el cliente no lo hace: se va.",
+  "next": "La 4ª se nota en tu bandeja"
+ },
+ {
+  "type": "sign",
+  "num": 4,
+  "ill": "silence",
+  "title": "Nadie te escribe desde ella",
+  "hl": [
+   "nadie"
+  ],
+  "body": "Una web sin un botón claro de contacto es un escaparate con la puerta cerrada.",
+  "next": "Y la 5ª es la peor"
+ },
+ {
+  "type": "sign",
+  "num": 5,
+  "ill": "google",
+  "title": "No apareces cuando te buscan",
+  "hl": [
+   "no",
+   "apareces"
+  ],
+  "body": "Tu cliente busca lo que vendes… y encuentra a tu competencia.",
+  "next": ""
+ },
+ {
+  "type": "cta",
+  "title": "¿Cuántas señales tiene tu web?",
+  "hl": [
+   "cuántas"
+  ],
+  "body": "Si son 2 o más, es momento de cambiarla. En ObraWeb te la creamos de principio a fin.",
+  "save": "Guárdalo y mándaselo a quien lo necesite"
+ }
+]
