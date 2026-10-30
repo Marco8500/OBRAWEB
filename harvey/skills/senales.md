@@ -8,6 +8,7 @@ El primer email debe mencionar **una** de estas señales: es el motivo por el qu
 
 | Código | Qué significa | Cómo comprobarlo | Puntos |
 |---|---|---|---|
+| `WEB_CAIDA` | Su web está suspendida, caducada, da error o lleva en "mantenimiento" indefinido: pagaron por una web y la han perdido | Abrir la web: "Account Suspended", dominio a la venta, página de mantenimiento | +5 |
 | `SIN_WEB` | Tiene ficha (Google, directorio) y teléfono, pero no web propia | Buscar nombre + ciudad; solo salen directorios/redes | +3 |
 | `SIN_RESERVA_ONLINE` | No se puede pedir cita/reserva/presupuesto online; fuera de horario se pierden clientes | Revisar web y ficha: solo teléfono | +2 |
 | `DEPENDE_DE_DIRECTORIO` | Las citas van por Fresha/Treatwell/Doctoralia/TheFork (pagan comisión o cuota) | Enlaces de reserva a terceros | +1 |

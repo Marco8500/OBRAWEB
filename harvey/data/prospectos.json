@@ -129,6 +129,461 @@
           "evento": "Encontrado por Scout (TrustLocal, 8,7 sobre 77 reseñas)"
         }
       ]
+    },
+    {
+      "web": "https://monicaalcazar.com",
+      "telefono": "963 891 501",
+      "email_publico": null,
+      "email_estado": "desconocido",
+      "agencia_actual": null,
+      "intencion": null,
+      "fecha_alta": "2026-10-30",
+      "fecha_contacto": null,
+      "seguimientos_hechos": 0,
+      "proxima_fecha": null,
+      "gmail_draft_id": null,
+      "gmail_thread_id": null,
+      "pendiente_verificar": [
+        "Dirección y barrio (un buscador lo sitúa en Benimaclet)",
+        "Si ya tienen a alguien haciendo la web nueva"
+      ],
+      "id": "monica-alcazar-peluqueros",
+      "nombre": "Mónica Alcázar Peluqueros",
+      "nicho": "peluquerias",
+      "zona": "Valencia (Benimaclet, sin confirmar)",
+      "direccion": null,
+      "fuentes": [
+        "https://monicaalcazar.com/"
+      ],
+      "senales": [
+        "WEB_CAIDA",
+        "SIN_RESERVA_ONLINE"
+      ],
+      "nota": 7,
+      "oportunidad": "Web nueva con cita online (su web lleva en mantenimiento: 'Muy pronto nuestra nueva imagen')",
+      "canal_recomendado": "llamada",
+      "estado": "borrador",
+      "proximo_paso": "Llamar con el guion de harvey/borradores/monica-alcazar-peluqueros.md",
+      "historial": [
+        {
+          "fecha": "2026-10-30",
+          "evento": "Scout: web en modo mantenimiento ('Muy pronto nuestra nueva imagen... Si quieres reservar una cita, llámanos: 96 389 15 01')"
+        },
+        {
+          "fecha": "2026-10-30",
+          "evento": "Guion de llamada preparado"
+        }
+      ]
+    },
+    {
+      "web": "https://clinicadefisioterapiavalencia.com",
+      "telefono": "+34 960 71 02 40",
+      "email_publico": "info@clinicadefisioterapiavalencia.com",
+      "email_estado": "probable",
+      "agencia_actual": null,
+      "intencion": null,
+      "fecha_alta": "2026-10-30",
+      "fecha_contacto": null,
+      "seguimientos_hechos": 0,
+      "proxima_fecha": null,
+      "gmail_draft_id": null,
+      "gmail_thread_id": null,
+      "pendiente_verificar": [
+        "Nombre comercial: una ficha da 'Quintana Fisioterapia' en esa dirección y ese teléfono",
+        "El email está en el dominio suspendido: puede rebotar, por eso llamada"
+      ],
+      "id": "clinica-fisioterapia-valencia-patraix",
+      "nombre": "Clínica de Fisioterapia Valencia (posible Quintana Fisioterapia)",
+      "nicho": "fisioterapia",
+      "zona": "Patraix, Valencia",
+      "direccion": "C/ Baró de Patraix, 6, Local 1, València",
+      "fuentes": [
+        "https://clinicadefisioterapiavalencia.com/ (redirige a 'Account Suspended')",
+        "Resultados de búsqueda: info@clinicadefisioterapiavalencia.com, +34 960710240, L-V 8-20 y S 9:30-17:30"
+      ],
+      "senales": [
+        "WEB_CAIDA"
+      ],
+      "nota": 5,
+      "oportunidad": "Recuperar su web (está suspendida) con cita online",
+      "canal_recomendado": "llamada",
+      "estado": "borrador",
+      "proximo_paso": "Llamar con el guion de harvey/borradores/clinica-fisioterapia-valencia-patraix.md",
+      "historial": [
+        {
+          "fecha": "2026-10-30",
+          "evento": "Scout: su web muestra 'Account Suspended' (hosting suspendido)"
+        },
+        {
+          "fecha": "2026-10-30",
+          "evento": "Guion de llamada preparado"
+        }
+      ]
+    },
+    {
+      "web": "https://www.fisiopatraix.com",
+      "telefono": "+34 636 435 301",
+      "email_publico": "info@fisiopatraix.com",
+      "email_estado": "verificado",
+      "agencia_actual": null,
+      "intencion": null,
+      "fecha_alta": "2026-10-30",
+      "fecha_contacto": null,
+      "seguimientos_hechos": 0,
+      "proxima_fecha": null,
+      "gmail_draft_id": null,
+      "gmail_thread_id": null,
+      "pendiente_verificar": [
+        "Reseñas en Google (Doctoralia muestra 8 opiniones)"
+      ],
+      "id": "fisiopatraix",
+      "nombre": "Clínica FisioPatraix",
+      "nicho": "fisioterapia",
+      "zona": "Patraix, Valencia",
+      "direccion": "C/ Calvo Acacio, 9, bajo, 46017 València",
+      "fuentes": [
+        "https://www.fisiopatraix.com/",
+        "https://www.doctoralia.es/clinicas/clinica-de-fisioterapia-patraix"
+      ],
+      "senales": [
+        "SIN_RESERVA_ONLINE",
+        "WEB_ANTIGUA"
+      ],
+      "nota": 4,
+      "oportunidad": "Web más completa con cita online y recordatorios (ahora: web de 3 secciones hecha con el editor de One.com; cita solo por WhatsApp/email)",
+      "canal_recomendado": "email",
+      "estado": "nuevo",
+      "proximo_paso": "Si sus reseñas en Google son buenas (≥4,3 y ≥30), sube a 5 y prepara email",
+      "historial": [
+        {
+          "fecha": "2026-10-30",
+          "evento": "Scout: web básica (One.com Web Editor), 'Copyright ©' sin año, errata 'Escrímenos' en portada, cita solo por WhatsApp/email"
+        }
+      ]
+    },
+    {
+      "web": "https://pablopeluquero.com",
+      "telefono": null,
+      "email_publico": null,
+      "email_estado": "desconocido",
+      "agencia_actual": null,
+      "intencion": null,
+      "fecha_alta": "2026-10-30",
+      "fecha_contacto": null,
+      "seguimientos_hechos": 0,
+      "proxima_fecha": null,
+      "gmail_draft_id": null,
+      "gmail_thread_id": null,
+      "pendiente_verificar": [],
+      "id": "pablo-peluqueros-campanar",
+      "nombre": "Pablo Peluqueros",
+      "nicho": "peluquerias",
+      "zona": "Valencia",
+      "fuentes": [
+        "https://pablopeluquero.com"
+      ],
+      "senales": [
+        "WEB_MUY_BUENA"
+      ],
+      "nota": 1,
+      "oportunidad": null,
+      "canal_recomendado": null,
+      "estado": "descartado",
+      "proximo_paso": null,
+      "historial": [
+        {
+          "fecha": "2026-10-30",
+          "evento": "Descartado: Web buena y completa (desde 1973, blog, certificado Q). Solo falta reserva online: candidato a automatizaciones más adelante."
+        }
+      ]
+    },
+    {
+      "web": "https://www.joseramonpeluqueriabarberia.com",
+      "telefono": null,
+      "email_publico": null,
+      "email_estado": "desconocido",
+      "agencia_actual": null,
+      "intencion": null,
+      "fecha_alta": "2026-10-30",
+      "fecha_contacto": null,
+      "seguimientos_hechos": 0,
+      "proxima_fecha": null,
+      "gmail_draft_id": null,
+      "gmail_thread_id": null,
+      "pendiente_verificar": [],
+      "id": "jose-ramon-peluqueria-patraix",
+      "nombre": "José Ramón Peluquería Barbería",
+      "nicho": "peluquerias",
+      "zona": "Valencia",
+      "fuentes": [
+        "https://www.joseramonpeluqueriabarberia.com"
+      ],
+      "senales": [
+        "WEB_MUY_BUENA"
+      ],
+      "nota": 1,
+      "oportunidad": null,
+      "canal_recomendado": null,
+      "estado": "descartado",
+      "proximo_paso": null,
+      "historial": [
+        {
+          "fecha": "2026-10-30",
+          "evento": "Descartado: Web propia con cita online (Booksy)."
+        }
+      ]
+    },
+    {
+      "web": "https://albertyfranknuevocentro.com",
+      "telefono": null,
+      "email_publico": null,
+      "email_estado": "desconocido",
+      "agencia_actual": null,
+      "intencion": null,
+      "fecha_alta": "2026-10-30",
+      "fecha_contacto": null,
+      "seguimientos_hechos": 0,
+      "proxima_fecha": null,
+      "gmail_draft_id": null,
+      "gmail_thread_id": null,
+      "pendiente_verificar": [],
+      "id": "albert-frank-campanar",
+      "nombre": "Peluquería Albert & Frank Nuevo Centro",
+      "nicho": "peluquerias",
+      "zona": "Valencia",
+      "fuentes": [
+        "https://albertyfranknuevocentro.com"
+      ],
+      "senales": [
+        "WEB_MUY_BUENA"
+      ],
+      "nota": 1,
+      "oportunidad": null,
+      "canal_recomendado": null,
+      "estado": "descartado",
+      "proximo_paso": null,
+      "historial": [
+        {
+          "fecha": "2026-10-30",
+          "evento": "Descartado: Web propia con cita online."
+        }
+      ]
+    },
+    {
+      "web": "https://valminfisioterapia.com",
+      "telefono": null,
+      "email_publico": null,
+      "email_estado": "desconocido",
+      "agencia_actual": null,
+      "intencion": null,
+      "fecha_alta": "2026-10-30",
+      "fecha_contacto": null,
+      "seguimientos_hechos": 0,
+      "proxima_fecha": null,
+      "gmail_draft_id": null,
+      "gmail_thread_id": null,
+      "pendiente_verificar": [],
+      "id": "valmin-fisioterapia",
+      "nombre": "Valmin Fisioterapia",
+      "nicho": "fisioterapia",
+      "zona": "Valencia",
+      "fuentes": [
+        "https://valminfisioterapia.com"
+      ],
+      "senales": [
+        "WEB_MUY_BUENA"
+      ],
+      "nota": 1,
+      "oportunidad": null,
+      "canal_recomendado": null,
+      "estado": "descartado",
+      "proximo_paso": null,
+      "historial": [
+        {
+          "fecha": "2026-10-30",
+          "evento": "Descartado: Web WordPress actual con cita online y WhatsApp."
+        }
+      ]
+    },
+    {
+      "web": "https://clinicabaro.com",
+      "telefono": null,
+      "email_publico": null,
+      "email_estado": "desconocido",
+      "agencia_actual": null,
+      "intencion": null,
+      "fecha_alta": "2026-10-30",
+      "fecha_contacto": null,
+      "seguimientos_hechos": 0,
+      "proxima_fecha": null,
+      "gmail_draft_id": null,
+      "gmail_thread_id": null,
+      "pendiente_verificar": [],
+      "id": "clinica-baro-benimaclet",
+      "nombre": "Clínica Baró",
+      "nicho": "fisioterapia",
+      "zona": "Valencia",
+      "fuentes": [
+        "https://clinicabaro.com"
+      ],
+      "senales": [
+        "WEB_MUY_BUENA"
+      ],
+      "nota": 1,
+      "oportunidad": null,
+      "canal_recomendado": null,
+      "estado": "descartado",
+      "proximo_paso": null,
+      "historial": [
+        {
+          "fecha": "2026-10-30",
+          "evento": "Descartado: Web actual hecha por agencia (jordirv.com), WhatsApp y pedir cita."
+        }
+      ]
+    },
+    {
+      "web": "https://aidanovareformas.com",
+      "telefono": null,
+      "email_publico": null,
+      "email_estado": "desconocido",
+      "agencia_actual": null,
+      "intencion": null,
+      "fecha_alta": "2026-10-30",
+      "fecha_contacto": null,
+      "seguimientos_hechos": 0,
+      "proxima_fecha": null,
+      "gmail_draft_id": null,
+      "gmail_thread_id": null,
+      "pendiente_verificar": [],
+      "id": "aida-nova-reformas",
+      "nombre": "Aida Nova Reformas",
+      "nicho": "reformas",
+      "zona": "Valencia",
+      "fuentes": [
+        "https://aidanovareformas.com"
+      ],
+      "senales": [
+        "WEB_MUY_BUENA"
+      ],
+      "nota": 1,
+      "oportunidad": null,
+      "canal_recomendado": null,
+      "estado": "descartado",
+      "proximo_paso": null,
+      "historial": [
+        {
+          "fecha": "2026-10-30",
+          "evento": "Descartado: Web actual orientada a SEO y presupuesto."
+        }
+      ]
+    },
+    {
+      "web": "https://www.batecs.es",
+      "telefono": null,
+      "email_publico": null,
+      "email_estado": "desconocido",
+      "agencia_actual": null,
+      "intencion": null,
+      "fecha_alta": "2026-10-30",
+      "fecha_contacto": null,
+      "seguimientos_hechos": 0,
+      "proxima_fecha": null,
+      "gmail_draft_id": null,
+      "gmail_thread_id": null,
+      "pendiente_verificar": [],
+      "id": "batecs-reformas",
+      "nombre": "Batecs",
+      "nicho": "reformas",
+      "zona": "Valencia",
+      "fuentes": [
+        "https://www.batecs.es"
+      ],
+      "senales": [
+        "WEB_MUY_BUENA"
+      ],
+      "nota": 1,
+      "oportunidad": null,
+      "canal_recomendado": null,
+      "estado": "descartado",
+      "proximo_paso": null,
+      "historial": [
+        {
+          "fecha": "2026-10-30",
+          "evento": "Descartado: Web actual (Elementor) con WhatsApp y presupuesto."
+        }
+      ]
+    },
+    {
+      "web": "https://renoveplac.com",
+      "telefono": null,
+      "email_publico": null,
+      "email_estado": "desconocido",
+      "agencia_actual": null,
+      "intencion": null,
+      "fecha_alta": "2026-10-30",
+      "fecha_contacto": null,
+      "seguimientos_hechos": 0,
+      "proxima_fecha": null,
+      "gmail_draft_id": null,
+      "gmail_thread_id": null,
+      "pendiente_verificar": [],
+      "id": "renoveplac",
+      "nombre": "Renoveplac",
+      "nicho": "reformas",
+      "zona": "Valencia",
+      "fuentes": [
+        "https://renoveplac.com"
+      ],
+      "senales": [
+        "WEB_MUY_BUENA"
+      ],
+      "nota": 1,
+      "oportunidad": null,
+      "canal_recomendado": null,
+      "estado": "descartado",
+      "proximo_paso": null,
+      "historial": [
+        {
+          "fecha": "2026-10-30",
+          "evento": "Descartado: Web actual con WhatsApp y presupuesto."
+        }
+      ]
+    },
+    {
+      "web": "https://www.geteco.es",
+      "telefono": null,
+      "email_publico": null,
+      "email_estado": "desconocido",
+      "agencia_actual": null,
+      "intencion": null,
+      "fecha_alta": "2026-10-30",
+      "fecha_contacto": null,
+      "seguimientos_hechos": 0,
+      "proxima_fecha": null,
+      "gmail_draft_id": null,
+      "gmail_thread_id": null,
+      "pendiente_verificar": [],
+      "id": "geteco-reformas",
+      "nombre": "GETECO",
+      "nicho": "reformas",
+      "zona": "Valencia",
+      "fuentes": [
+        "https://www.geteco.es"
+      ],
+      "senales": [
+        "WEB_MUY_BUENA"
+      ],
+      "nota": 1,
+      "oportunidad": null,
+      "canal_recomendado": null,
+      "estado": "descartado",
+      "proximo_paso": null,
+      "historial": [
+        {
+          "fecha": "2026-10-30",
+          "evento": "Descartado: Web actual orientada a SEO."
+        }
+      ]
     }
   ]
 }
