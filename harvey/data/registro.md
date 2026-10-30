@@ -1,5 +1,9 @@
 # Registro de Harvey
 
+## 2026-10-30 10:13 — Revisión rápida
+- Marco envió los emails a FisioPatraix y Clínica de Fisioterapia Valencia (9:21) → contactados, seguimiento el 3/11.
+- Sin respuestas ni rebotes.
+
 ## 2026-10-30 — Primera ejecución (manual)
 
 Primero se hizo solo con el buscador porque la red bloqueaba las webs. Después Marco abrió el acceso a la red y se
