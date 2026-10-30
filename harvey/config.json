@@ -1,8 +1,9 @@
 {
   "empresa": "OBRAWEB",
   "oferta": {
-    "webs": "Webs rápidas, modernas y adaptadas a móvil, con reservas/citas online y SEO local",
-    "automatizaciones": "Automatizaciones para pymes: recordatorios de citas por WhatsApp/email, respuesta automática a leads, captación de reseñas en Google, CRM sencillo, facturación y tareas repetitivas"
+    "webs": "Páginas web rápidas y adaptadas al móvil, pensadas para que te llamen, escriban o pidan cita, y para salir en Google",
+    "chatbots": "Chatbot para la web que atiende 24/7 y asistente de captación de clientes",
+    "automatizaciones": "Respuestas automáticas en WhatsApp/Instagram, recordatorios de citas, contactos a Google Sheets/CRM, petición de reseñas, seguimiento de presupuestos, confirmaciones de reserva"
   },
   "zona": "Valencia ciudad y área metropolitana (Mislata, Burjassot, Paterna, Torrent, Alboraia, Xirivella...)",
   "cliente_ideal": "Pyme local de 2 a 50 empleados, con buenas reseñas (negocio sano) pero con web antigua, sin web, sin reservas online o que depende solo de directorios (Fresha, Treatwell, Doctoralia, Google Maps)",
@@ -20,6 +21,11 @@
     {
       "id": "estetica",
       "nombre": "Centros de estética y medicina estética",
+      "activo": true
+    },
+    {
+      "id": "peluquerias",
+      "nombre": "Peluquerías, barberías y centros de uñas",
       "activo": true
     },
     {

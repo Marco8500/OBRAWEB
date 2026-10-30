@@ -6,17 +6,18 @@
 - **Mensaje 2** (≤ 75 palabras, a los 4 días): un ángulo distinto (otra señal o un mini-ejemplo de resultado).
 - **Mensaje 3** (≤ 40 palabras): cierre amable, deja la puerta abierta.
 - **Asunto**: 2–5 palabras, en minúscula, concreto. Ej.: `citas fuera de horario`, `vuestra ficha de google`.
-- Tutea si el negocio tutea en su web/redes; si no, usa usted.
+- Tutea (como la web de OBRAWEB) y escribe en **primera persona del singular**: "te preparo", "monto", no "montamos".
+  Usa usted solo si el negocio es muy formal (despachos, clínicas médicas que tratan de usted en su web).
 - Firma: la de Gmail (`includeSignature: true`). No escribas firma en el cuerpo.
 - Pie obligatorio en el mensaje 1: `Si no te interesa, dímelo y no vuelvo a escribirte.`
 
 ## Ejemplo (fisioterapia, señal SIN_RESERVA_ONLINE)
 > Asunto: citas fuera de horario
 >
-> Hola, he visto que en Fisio Benimaclet las citas solo se piden por teléfono. Todo el que busca fisio
+> Hola, he visto que en Fisio Ejemplo las citas solo se piden por teléfono. Todo el que busca fisio
 > a las 22:00 acaba reservando en otro sitio.
-> En OBRAWEB montamos webs con cita online y recordatorio automático por WhatsApp para clínicas de Valencia.
-> ¿Te enseño en 10 minutos cómo quedaría la vuestra?
+> Soy Marco, de OBRAWEB: monto webs con cita online y recordatorio automático por WhatsApp para negocios de Valencia.
+> ¿Te interesa que te cuente cómo quedaría en la vuestra?
 >
 > Si no te interesa, dímelo y no vuelvo a escribirte.
 
