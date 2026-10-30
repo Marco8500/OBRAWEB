@@ -91,7 +91,7 @@ Para los `nuevo` con nota ≥ `ritmo.nota_minima_para_borrador`, de mayor a meno
   **"Prioridad: X interesados con respuesta preparada. Y borradores nuevos en Gmail para revisar.
   Z seguimientos preparados. Mejor nicho: … Alertas: …"**
 
-## Revisión rápida (cada 2 horas, sin buscar prospectos nuevos)
+## Revisión rápida (13:13 y 19:13, sin buscar prospectos nuevos)
 
 Entre ciclos completos, Harvey hace una revisión corta para que el panel refleje los cambios en el momento:
 1. Lee el panel (paso 0) y copia a `prospectos.json` lo que Marco haya cambiado.
