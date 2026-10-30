@@ -1,1 +1,134 @@
-{ "actualizado": "2026-10-29", "prospectos": [] }
+{
+  "actualizado": "2026-10-30",
+  "prospectos": [
+    {
+      "web": null,
+      "telefono": "963 778 581",
+      "email_publico": null,
+      "email_estado": "desconocido",
+      "agencia_actual": null,
+      "intencion": null,
+      "fecha_alta": "2026-10-30",
+      "fecha_contacto": null,
+      "seguimientos_hechos": 0,
+      "proxima_fecha": null,
+      "gmail_draft_id": null,
+      "gmail_thread_id": null,
+      "id": "peluqueria-mar-patraix",
+      "nombre": "MAR Peluquería",
+      "nicho": "peluquerias",
+      "zona": "Favara (Patraix), Valencia",
+      "direccion": "C/ Dr. Marañón, 1, bajo, 46017 València",
+      "fuentes": [
+        "https://www.paginasamarillas.es/f/valencia/mar-peluqueria_198855728_000000001.html?gm=consultar"
+      ],
+      "senales": [
+        "SIN_WEB",
+        "SIN_RESERVA_ONLINE"
+      ],
+      "nota": 5,
+      "oportunidad": "Web sencilla con cita online + recordatorios por WhatsApp",
+      "canal_recomendado": "llamada",
+      "estado": "borrador",
+      "pendiente_verificar": [
+        "Confirmar en Google Maps que no tiene web ni reserva online (solo visto en Páginas Amarillas)",
+        "Si tiene WhatsApp de empresa"
+      ],
+      "proximo_paso": "Llamar con el guion de harvey/borradores/peluqueria-mar-patraix.md",
+      "historial": [
+        {
+          "fecha": "2026-10-30",
+          "evento": "Encontrado por Scout (Páginas Amarillas). Sin web oficial en resultados de búsqueda."
+        },
+        {
+          "fecha": "2026-10-30",
+          "evento": "Guion de llamada preparado"
+        }
+      ]
+    },
+    {
+      "web": null,
+      "telefono": "+34 613 11 34 58",
+      "email_publico": null,
+      "email_estado": "desconocido",
+      "agencia_actual": null,
+      "intencion": null,
+      "fecha_alta": "2026-10-30",
+      "fecha_contacto": null,
+      "seguimientos_hechos": 0,
+      "proxima_fecha": null,
+      "gmail_draft_id": null,
+      "gmail_thread_id": null,
+      "id": "clinica-revida-patraix",
+      "nombre": "Clínica REvida",
+      "nicho": "fisioterapia",
+      "zona": "Patraix, Valencia",
+      "direccion": "C/ de Xiva, 42, 46018 València",
+      "fuentes": [
+        "https://www.fresha.com/lp/sv/bt/terapicenter/es-valencia/patraix"
+      ],
+      "senales": [
+        "SIN_WEB",
+        "DEPENDE_DE_DIRECTORIO"
+      ],
+      "nota": 4,
+      "oportunidad": "Web propia con cita online para dejar de depender de Fresha",
+      "canal_recomendado": "llamada",
+      "estado": "nuevo",
+      "pendiente_verificar": [
+        "Otra ficha da C/ Brasil, 20 (L'Olivereta) y tel. +34 722 26 80 13: ¿segunda sede o dato viejo?",
+        "Si tiene web propia",
+        "Reseñas en Google"
+      ],
+      "proximo_paso": "Verificar datos en Google Maps antes de contactar",
+      "historial": [
+        {
+          "fecha": "2026-10-30",
+          "evento": "Encontrado por Scout (Fresha). Datos de dirección contradictorios."
+        }
+      ]
+    },
+    {
+      "web": null,
+      "telefono": null,
+      "email_publico": null,
+      "email_estado": "desconocido",
+      "agencia_actual": null,
+      "intencion": null,
+      "fecha_alta": "2026-10-30",
+      "fecha_contacto": null,
+      "seguimientos_hechos": 0,
+      "proxima_fecha": null,
+      "gmail_draft_id": null,
+      "gmail_thread_id": null,
+      "id": "reformas-claiz-burjassot",
+      "nombre": "Reformas Claiz",
+      "nicho": "reformas",
+      "zona": "Burjassot",
+      "direccion": "Av. Mare de Déu de la Cabeça, 16, Burjassot",
+      "fuentes": [
+        "https://trustlocal.es/valencia/burjassot/reformas/reformas-claiz/"
+      ],
+      "senales": [
+        "SIN_WEB",
+        "BUENAS_RESENAS"
+      ],
+      "nota": 4,
+      "oportunidad": "Web con proyectos y petición de presupuesto (como la de reformas del portfolio)",
+      "canal_recomendado": "visita",
+      "estado": "nuevo",
+      "pendiente_verificar": [
+        "Teléfono y email (no aparecen en los resultados)",
+        "Si tiene web propia",
+        "Las 77 reseñas (8,7) son de TrustLocal, confirmar en Google"
+      ],
+      "proximo_paso": "Buscar teléfono en Google Maps",
+      "historial": [
+        {
+          "fecha": "2026-10-30",
+          "evento": "Encontrado por Scout (TrustLocal, 8,7 sobre 77 reseñas)"
+        }
+      ]
+    }
+  ]
+}
