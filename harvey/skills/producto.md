@@ -1,25 +1,32 @@
 # Qué vende OBRAWEB
 
-> Rellena o corrige lo que está entre [corchetes]. Harvey usa este archivo para escribir y responder.
+Harvey usa este archivo para escribir y responder. Si algo cambia, edítalo aquí.
 
 ## Servicios
 1. **Web profesional para pyme**: rápida, adaptada a móvil, SEO local, formulario/cita online, enlace a WhatsApp.
-   Plazo: [2–3 semanas]. Precio orientativo: [desde X €].
 2. **Cita/reserva online + recordatorios automáticos** (WhatsApp/email): menos ausencias, reservas 24 h.
-   Precio orientativo: [X €/mes o X € de alta].
 3. **Automatizaciones**: respuesta automática a nuevos contactos, pedir reseñas en Google tras cada servicio,
-   CRM sencillo, avisos internos, facturas y tareas repetitivas. Precio: [según proyecto, desde X €].
+   CRM sencillo, avisos internos, facturas y tareas repetitivas.
 
-## Oferta de entrada (para el primer contacto)
-[Ej.: "Te preparo gratis una maqueta de cómo quedaría tu web" o "Auditoría gratuita de 15 min de tu ficha de Google y web".]
+## Precio
+**Depende del caso.** No des cifras ni rangos por escrito. Si preguntan precio, responde que depende de lo que
+necesiten y propón una llamada corta para verlo y darles un presupuesto cerrado.
+Ej.: "Depende de lo que necesitéis: no es lo mismo una web sencilla que una con citas y recordatorios.
+En una llamada de 10 minutos lo vemos y te paso presupuesto cerrado, sin compromiso."
+
+## Demo gratis (solo con interés real)
+- **No ofrezcas la demo en el primer email.** El primer email solo busca una respuesta.
+- Cuando alguien muestre **interés real** (pregunta por precio o plazos, pide que le llamemos, cuenta qué
+  necesita), ofrécele una **demo gratis** de cómo quedaría su web o su automatización.
+- No la ofrezcas a quien solo responde por educación o dice "ahora no".
 
 ## Por qué nosotros
-- Estamos en Valencia: reunión en persona si hace falta.
-- [Casos/clientes que se puedan mencionar, con permiso.]
-- [Garantía o diferencia frente a agencias grandes.]
+- Estamos en Valencia: si hace falta, nos vemos en persona.
+- Trato directo con quien hace el trabajo, sin intermediarios de agencia grande.
+- Ves una demo de lo tuyo antes de decidir.
 
 ## Datos de contacto
-- Web: [https://...]
+- Web: https://obratuweb.netlify.app
 - Email: infoobraweb@gmail.com
-- Teléfono/WhatsApp: [...]
-- Firma: [Nombre, cargo]
+- Teléfono / WhatsApp: 641 409 181
+- Firma: la configurada en Gmail (`includeSignature: true`). Si un mensaje necesita firma en el texto: "Marco — OBRAWEB".
