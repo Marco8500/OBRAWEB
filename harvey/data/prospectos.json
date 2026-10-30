@@ -186,7 +186,7 @@
       "fecha_contacto": null,
       "seguimientos_hechos": 0,
       "proxima_fecha": null,
-      "gmail_draft_id": null,
+      "gmail_draft_id": "r-6312543796794182245",
       "gmail_thread_id": null,
       "pendiente_verificar": [
         "Nombre comercial: una ficha da 'Quintana Fisioterapia' en esa dirección y ese teléfono",
@@ -217,8 +217,14 @@
         {
           "fecha": "2026-10-30",
           "evento": "Guion de llamada preparado"
+        },
+        {
+          "fecha": "2026-10-30",
+          "evento": "Email creado en Gmail → Borradores"
         }
-      ]
+      ],
+      "email_asunto": "vuestra web está caída",
+      "email_cuerpo": "Hola, he entrado en clinicadefisioterapiavalencia.com y ahora mismo sale una página de \"Account Suspended\". Quien os busca en Google puede pensar que habéis cerrado.\n\nSoy Marco, de OBRAWEB, aquí en Valencia: hago webs para clínicas con cita online y recordatorios automáticos, y puedo ayudaros a recuperarla o a hacer una nueva.\n\n¿Os interesa que lo hablemos?\n\nSi no os interesa, decídmelo y no vuelvo a escribiros."
     },
     {
       "web": "https://www.fisiopatraix.com",
@@ -231,7 +237,7 @@
       "fecha_contacto": null,
       "seguimientos_hechos": 0,
       "proxima_fecha": null,
-      "gmail_draft_id": null,
+      "gmail_draft_id": "r-6832400490032697855",
       "gmail_thread_id": null,
       "pendiente_verificar": [
         "Reseñas en Google (Doctoralia muestra 8 opiniones)"
@@ -252,14 +258,20 @@
       "nota": 4,
       "oportunidad": "Web más completa con cita online y recordatorios (ahora: web de 3 secciones hecha con el editor de One.com; cita solo por WhatsApp/email)",
       "canal_recomendado": "email",
-      "estado": "nuevo",
-      "proximo_paso": "Si sus reseñas en Google son buenas (≥4,3 y ≥30), sube a 5 y prepara email",
+      "estado": "borrador",
+      "proximo_paso": "Revisar y enviar el email de Gmail",
       "historial": [
         {
           "fecha": "2026-10-30",
           "evento": "Scout: web básica (One.com Web Editor), 'Copyright ©' sin año, errata 'Escrímenos' en portada, cita solo por WhatsApp/email"
+        },
+        {
+          "fecha": "2026-10-30",
+          "evento": "Email creado en Gmail → Borradores"
         }
-      ]
+      ],
+      "email_asunto": "cita por whatsapp",
+      "email_cuerpo": "Hola, he visto en su web que en FisioPatraix la cita se pide por WhatsApp o por email. Quien busca fisio a última hora y no recibe respuesta suele acabar reservando en otro sitio.\n\nSoy Marco, de OBRAWEB: hago webs para clínicas de Valencia con cita online y recordatorio automático por WhatsApp.\n\n¿Le interesa que le cuente cómo quedaría en la suya?\n\nSi no le interesa, dígamelo y no vuelvo a escribirle."
     },
     {
       "web": "https://pablopeluquero.com",
