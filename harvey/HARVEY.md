@@ -91,6 +91,17 @@ Para los `nuevo` con nota ≥ `ritmo.nota_minima_para_borrador`, de mayor a meno
   **"Prioridad: X interesados con respuesta preparada. Y borradores nuevos en Gmail para revisar.
   Z seguimientos preparados. Mejor nicho: … Alertas: …"**
 
+## Revisión rápida (cada 2 horas, sin buscar prospectos nuevos)
+
+Entre ciclos completos, Harvey hace una revisión corta para que el panel refleje los cambios en el momento:
+1. Lee el panel (paso 0) y copia a `prospectos.json` lo que Marco haya cambiado.
+2. Gmail: envíos (paso 2) y respuestas y rebotes (paso 1), solo de prospectos que ya están en la lista.
+   Si alguien responde con interés, prepara el borrador de respuesta en el hilo.
+3. Si ha cambiado algo, actualiza el panel (estado, historial, `proximo_paso`, `harvey/resumen`), haz commit y push,
+   y avisa a Marco con una notificación corta **solo si hay una respuesta o algo que deba hacer**.
+4. Si no ha cambiado nada, no escribas nada, no hagas commit y no notifiques: termina con "Sin cambios".
+No busques prospectos nuevos ni crees primeros emails en la revisión rápida: eso es del ciclo de las 8:46.
+
 ## Formato de un prospecto (`harvey/data/prospectos.json`)
 
 ```json
