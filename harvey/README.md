@@ -23,4 +23,9 @@ cd harvey && python3 -m http.server 5555
 Y abre http://localhost:5555/panel.html
 
 ## Cambiar cosas
-Todo está en `harvey/config.json`: nichos, zona, cuántos prospectos por día, nota mínima...
+- `harvey/config.json`: nichos, zona, cuántos prospectos y borradores por día, nota mínima.
+- `harvey/skills/producto.md`: **rellena tus precios y tu oferta de entrada** (Harvey los usa para escribir y responder).
+- `harvey/skills/emails.md`: tono, longitud y frases prohibidas. Si los emails te parecen agresivos, edítalo aquí.
+- `harvey/skills/senales.md`: qué hace bueno a un prospecto y cuántos puntos vale cada cosa.
+- `harvey/skills/respuestas.md`: cómo contesta a interesados, bajas y rebotes.
+- `harvey/data/bajas.json`: quien pide no recibir más emails. Harvey no vuelve a escribirles nunca.

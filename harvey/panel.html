@@ -39,10 +39,13 @@
 <script>
 const COLS = [
   ["nuevo","Nuevos"],["borrador","Borrador listo"],["contactado","Contactado"],
-  ["respondio","Respondió"],["interesado","Interesado"],["reunion","Reunión"],["ganado","Ganado"]
+  ["interesado","Interesado"],["cualificando","Cualificando"],["presentando","Presentando"],
+  ["negociando","Negociando"],["ganado","Ganado"]
 ];
-const CONTACTADOS = ["contactado","respondio","interesado","reunion","ganado","perdido"];
-const RESPUESTAS = ["respondio","interesado","reunion","ganado"];
+const POSTERIORES = ["interesado","cualificando","presentando","negociando","ganado"];
+const CONTACTADOS = ["contactado","mas_adelante","perdido","email_invalido", ...POSTERIORES];
+const respondio = p => ["mas_adelante", ...POSTERIORES].includes(p.estado) ||
+  ["pregunta","ya_tiene","no_interesa","baja"].includes(p.intencion);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
 Promise.all([fetch("data/prospectos.json").then(r => r.json()), fetch("config.json").then(r => r.json())])
@@ -50,14 +53,14 @@ Promise.all([fetch("data/prospectos.json").then(r => r.json()), fetch("config.js
   const ps = data.prospectos || [];
   const count = f => ps.filter(f).length;
   const contactados = count(p => CONTACTADOS.includes(p.estado));
-  const respuestas = count(p => RESPUESTAS.includes(p.estado));
+  const respuestas = count(respondio);
   document.getElementById("sub").textContent = `Actualizado: ${data.actualizado} · ${cfg.zona}`;
   document.getElementById("kpis").innerHTML = [
     [ps.length, "Prospectos"],
     [count(p => p.estado === "borrador"), "Borradores por revisar"],
     [contactados, "Contactados"],
     [contactados ? (100 * respuestas / contactados).toFixed(1) + " %" : "—", "Tasa de respuesta"],
-    [count(p => ["respondio","interesado","reunion"].includes(p.estado)), "Conversaciones activas"],
+    [count(p => ["interesado","cualificando","presentando","negociando"].includes(p.estado)), "Conversaciones activas"],
     [count(p => p.estado === "ganado"), "Clientes ganados"]
   ].map(([v, l]) => `<div class="kpi"><b>${v}</b><small>${l}</small></div>`).join("");
 
@@ -71,7 +74,7 @@ Promise.all([fetch("data/prospectos.json").then(r => r.json()), fetch("config.js
   const filas = cfg.nichos.map(n => {
     const deN = ps.filter(p => p.nicho === n.id);
     const c = deN.filter(p => CONTACTADOS.includes(p.estado)).length;
-    const r = deN.filter(p => RESPUESTAS.includes(p.estado)).length;
+    const r = deN.filter(respondio).length;
     return { n, total: deN.length, c, r, g: deN.filter(p => p.estado === "ganado").length, tasa: c ? r / c : -1 };
   }).sort((a, b) => b.tasa - a.tasa || b.total - a.total);
   const mejor = filas.find(f => f.c >= 5);
