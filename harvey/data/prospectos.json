@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-10-30",
+  "actualizado": "2026-11-02",
   "prospectos": [
     {
       "web": null,
@@ -602,6 +602,584 @@
         {
           "fecha": "2026-10-30",
           "evento": "Descartado: Web actual orientada a SEO."
+        }
+      ]
+    },
+    {
+      "web": "https://centrodeesteticamislata.com.es",
+      "telefono": "615 147 186",
+      "email_publico": "pestaneamislata@gmail.com",
+      "email_estado": "probable",
+      "agencia_actual": null,
+      "intencion": null,
+      "fecha_alta": "2026-11-02",
+      "fecha_contacto": null,
+      "seguimientos_hechos": 0,
+      "proxima_fecha": null,
+      "gmail_draft_id": "r-6239647260051559140",
+      "gmail_thread_id": null,
+      "pendiente_verificar": [
+        "Abre centrodeesteticamislata.com.es en tu móvil antes de enviar: si carga, borra el email",
+        "El email sale del directorio de comercios de Mislata, no de su web"
+      ],
+      "direccion": "C/ San Carlos, 9, Mislata",
+      "id": "pestanea-mislata",
+      "nombre": "Pestañea Mislata",
+      "nicho": "estetica",
+      "zona": "Mislata",
+      "fuentes": [
+        "https://mislatacem.com/negocios/pestanea-mislata/",
+        "https://centrodeesteticamislata.com.es/ (no responde, error 502, comprobado 3 veces el 2/11)"
+      ],
+      "senales": [
+        "WEB_CAIDA"
+      ],
+      "nota": 5,
+      "oportunidad": "Volver a tener web, con cita online y recordatorios por WhatsApp",
+      "canal_recomendado": "email",
+      "estado": "borrador",
+      "email_asunto": "vuestra web no carga",
+      "email_cuerpo": "Hola, he intentado entrar en centrodeesteticamislata.com.es y ahora mismo la web no carga. Quien os busca en el móvil para pedir cita se encuentra un error y acaba reservando en otro centro.\n\nSoy Marco, de OBRAWEB, aquí en Valencia: hago webs para centros de estética con cita online y recordatorio por WhatsApp, y puedo ayudaros a tenerla funcionando otra vez.\n\n¿Te interesa que lo hablemos?\n\nSi no te interesa, dímelo y no vuelvo a escribirte.",
+      "proximo_paso": "Revisar y enviar el email de Gmail (o escribir por WhatsApp al 615 147 186)",
+      "historial": [
+        {
+          "fecha": "2026-11-02",
+          "evento": "Scout: su web no responde (error 502) y su ficha en el directorio de Mislata da email y móvil"
+        },
+        {
+          "fecha": "2026-11-02",
+          "evento": "Email creado en Gmail → Borradores"
+        }
+      ]
+    },
+    {
+      "web": "https://autoescuelabenicalap.com",
+      "telefono": "963 40 98 62",
+      "email_publico": null,
+      "email_estado": "desconocido",
+      "agencia_actual": null,
+      "intencion": null,
+      "fecha_alta": "2026-11-02",
+      "fecha_contacto": null,
+      "seguimientos_hechos": 0,
+      "proxima_fecha": null,
+      "gmail_draft_id": null,
+      "gmail_thread_id": null,
+      "pendiente_verificar": [
+        "Reseñas en Google",
+        "Si atienden por WhatsApp aunque no esté en la web"
+      ],
+      "direccion": "C/ Poeta Serrano Clavero, 19, 46025 València",
+      "id": "autoescuela-benicalap",
+      "nombre": "Autoescuela Benicalap",
+      "nicho": "academias",
+      "zona": "Benicalap, Valencia",
+      "fuentes": [
+        "https://autoescuelabenicalap.com/",
+        "https://trustlocal.es/valencia/valencia/autoescuela/autoescuela-benicalap/"
+      ],
+      "senales": [
+        "WEB_ANTIGUA",
+        "SIN_RESERVA_ONLINE",
+        "SIN_WHATSAPP_NEGOCIO"
+      ],
+      "nota": 5,
+      "oportunidad": "Web nueva con matrícula/reserva online, WhatsApp y respuesta automática a quien pide información",
+      "canal_recomendado": "llamada",
+      "estado": "borrador",
+      "proximo_paso": "Llamar con el guion",
+      "historial": [
+        {
+          "fecha": "2026-11-02",
+          "evento": "Scout: web con © 2015, sin email, sin WhatsApp ni matrícula online. Abiertos desde 1984 según TrustLocal."
+        },
+        {
+          "fecha": "2026-11-02",
+          "evento": "Guion de llamada preparado"
+        }
+      ]
+    },
+    {
+      "web": "https://www.flordelotoestetica.es",
+      "telefono": null,
+      "email_publico": null,
+      "email_estado": "desconocido",
+      "agencia_actual": null,
+      "intencion": null,
+      "fecha_alta": "2026-11-02",
+      "fecha_contacto": null,
+      "seguimientos_hechos": 0,
+      "proxima_fecha": null,
+      "gmail_draft_id": null,
+      "gmail_thread_id": null,
+      "pendiente_verificar": [
+        "No he encontrado teléfono ni email: búscalo en Google Maps o pásate por el local",
+        "Confirmar la dirección"
+      ],
+      "direccion": "C/ San Antonio, 77, Mislata (según buscador)",
+      "id": "flor-de-loto-mislata",
+      "nombre": "Flor de Loto Estética",
+      "nicho": "estetica",
+      "zona": "Mislata",
+      "fuentes": [
+        "https://www.flordelotoestetica.es/ (no responde, error 502, comprobado 3 veces el 2/11)"
+      ],
+      "senales": [
+        "WEB_CAIDA"
+      ],
+      "nota": 5,
+      "oportunidad": "Volver a tener web con cita online",
+      "canal_recomendado": "visita",
+      "estado": "nuevo",
+      "proximo_paso": "Encontrar teléfono en Google Maps",
+      "historial": [
+        {
+          "fecha": "2026-11-02",
+          "evento": "Scout: su web no responde (error 502). Sin contacto localizado."
+        }
+      ]
+    },
+    {
+      "web": "https://artdenta.es",
+      "telefono": null,
+      "email_publico": null,
+      "email_estado": "desconocido",
+      "agencia_actual": null,
+      "intencion": null,
+      "fecha_alta": "2026-11-02",
+      "fecha_contacto": null,
+      "seguimientos_hechos": 0,
+      "proxima_fecha": null,
+      "gmail_draft_id": null,
+      "gmail_thread_id": null,
+      "pendiente_verificar": [],
+      "direccion": null,
+      "id": "artdenta-benimaclet",
+      "nombre": "Clínica Dental Artdenta",
+      "nicho": "clinicas-dentales",
+      "zona": "Valencia",
+      "fuentes": [
+        "https://artdenta.es"
+      ],
+      "senales": [
+        "WEB_MUY_BUENA"
+      ],
+      "nota": 1,
+      "oportunidad": null,
+      "canal_recomendado": null,
+      "estado": "descartado",
+      "proximo_paso": null,
+      "historial": [
+        {
+          "fecha": "2026-11-02",
+          "evento": "Descartado: Web actual con WhatsApp; 4 dentistas."
+        }
+      ]
+    },
+    {
+      "web": "https://www.clinicadentalybdent.com",
+      "telefono": null,
+      "email_publico": null,
+      "email_estado": "desconocido",
+      "agencia_actual": null,
+      "intencion": null,
+      "fecha_alta": "2026-11-02",
+      "fecha_contacto": null,
+      "seguimientos_hechos": 0,
+      "proxima_fecha": null,
+      "gmail_draft_id": null,
+      "gmail_thread_id": null,
+      "pendiente_verificar": [],
+      "direccion": null,
+      "id": "ybdent-benimaclet",
+      "nombre": "YBdent Clínica Dental",
+      "nicho": "clinicas-dentales",
+      "zona": "Valencia",
+      "fuentes": [
+        "https://www.clinicadentalybdent.com"
+      ],
+      "senales": [
+        "WEB_MUY_BUENA"
+      ],
+      "nota": 1,
+      "oportunidad": null,
+      "canal_recomendado": null,
+      "estado": "descartado",
+      "proximo_paso": null,
+      "historial": [
+        {
+          "fecha": "2026-11-02",
+          "evento": "Descartado: Web actual (© 2025) con WhatsApp."
+        }
+      ]
+    },
+    {
+      "web": "https://espaidentalvalencia.com",
+      "telefono": null,
+      "email_publico": null,
+      "email_estado": "desconocido",
+      "agencia_actual": null,
+      "intencion": null,
+      "fecha_alta": "2026-11-02",
+      "fecha_contacto": null,
+      "seguimientos_hechos": 0,
+      "proxima_fecha": null,
+      "gmail_draft_id": null,
+      "gmail_thread_id": null,
+      "pendiente_verificar": [],
+      "direccion": null,
+      "id": "espai-dental-valencia",
+      "nombre": "Espai Dental Valencia",
+      "nicho": "clinicas-dentales",
+      "zona": "Valencia",
+      "fuentes": [
+        "https://espaidentalvalencia.com"
+      ],
+      "senales": [
+        "WEB_MUY_BUENA"
+      ],
+      "nota": 1,
+      "oportunidad": null,
+      "canal_recomendado": null,
+      "estado": "descartado",
+      "proximo_paso": null,
+      "historial": [
+        {
+          "fecha": "2026-11-02",
+          "evento": "Descartado: Varias clínicas, web actual con cita online."
+        }
+      ]
+    },
+    {
+      "web": "https://mavifa.es",
+      "telefono": null,
+      "email_publico": null,
+      "email_estado": "desconocido",
+      "agencia_actual": null,
+      "intencion": null,
+      "fecha_alta": "2026-11-02",
+      "fecha_contacto": null,
+      "seguimientos_hechos": 0,
+      "proxima_fecha": null,
+      "gmail_draft_id": null,
+      "gmail_thread_id": null,
+      "pendiente_verificar": [],
+      "direccion": null,
+      "id": "mavifa-paterna",
+      "nombre": "Talleres Mavifa",
+      "nicho": "talleres",
+      "zona": "Valencia",
+      "fuentes": [
+        "https://mavifa.es"
+      ],
+      "senales": [
+        "WEB_MUY_BUENA"
+      ],
+      "nota": 3,
+      "oportunidad": null,
+      "canal_recomendado": null,
+      "estado": "descartado",
+      "proximo_paso": null,
+      "historial": [
+        {
+          "fecha": "2026-11-02",
+          "evento": "Descartado: Nota 3: web con © 2019 pero completa; sin WhatsApp. Posible cliente de automatizaciones más adelante."
+        }
+      ]
+    },
+    {
+      "web": "https://ferriemocion.com",
+      "telefono": null,
+      "email_publico": null,
+      "email_estado": "desconocido",
+      "agencia_actual": null,
+      "intencion": null,
+      "fecha_alta": "2026-11-02",
+      "fecha_contacto": null,
+      "seguimientos_hechos": 0,
+      "proxima_fecha": null,
+      "gmail_draft_id": null,
+      "gmail_thread_id": null,
+      "pendiente_verificar": [],
+      "direccion": null,
+      "id": "ferriemocion-benimaclet",
+      "nombre": "Talleres Ferriemoción",
+      "nicho": "talleres",
+      "zona": "Valencia",
+      "fuentes": [
+        "https://ferriemocion.com"
+      ],
+      "senales": [
+        "CADENA_O_FRANQUICIA"
+      ],
+      "nota": 1,
+      "oportunidad": null,
+      "canal_recomendado": null,
+      "estado": "descartado",
+      "proximo_paso": null,
+      "historial": [
+        {
+          "fecha": "2026-11-02",
+          "evento": "Descartado: Red Eurotaller (franquicia)."
+        }
+      ]
+    },
+    {
+      "web": "https://tallermecanicopascualglover.com",
+      "telefono": null,
+      "email_publico": null,
+      "email_estado": "desconocido",
+      "agencia_actual": null,
+      "intencion": null,
+      "fecha_alta": "2026-11-02",
+      "fecha_contacto": null,
+      "seguimientos_hechos": 0,
+      "proxima_fecha": null,
+      "gmail_draft_id": null,
+      "gmail_thread_id": null,
+      "pendiente_verificar": [],
+      "direccion": null,
+      "id": "pascual-glover-taller",
+      "nombre": "Taller Pascual Glover",
+      "nicho": "talleres",
+      "zona": "Valencia",
+      "fuentes": [
+        "https://tallermecanicopascualglover.com"
+      ],
+      "senales": [
+        "WEB_MUY_BUENA"
+      ],
+      "nota": 1,
+      "oportunidad": null,
+      "canal_recomendado": null,
+      "estado": "descartado",
+      "proximo_paso": null,
+      "historial": [
+        {
+          "fecha": "2026-11-02",
+          "evento": "Descartado: Web actual con cita y WhatsApp."
+        }
+      ]
+    },
+    {
+      "web": "https://www.taller-valencia.com",
+      "telefono": null,
+      "email_publico": null,
+      "email_estado": "desconocido",
+      "agencia_actual": null,
+      "intencion": null,
+      "fecha_alta": "2026-11-02",
+      "fecha_contacto": null,
+      "seguimientos_hechos": 0,
+      "proxima_fecha": null,
+      "gmail_draft_id": null,
+      "gmail_thread_id": null,
+      "pendiente_verificar": [],
+      "direccion": null,
+      "id": "taller-valencia-mislata",
+      "nombre": "Taller Mecánico Valencia",
+      "nicho": "talleres",
+      "zona": "Valencia",
+      "fuentes": [
+        "https://www.taller-valencia.com"
+      ],
+      "senales": [
+        "WEB_MUY_BUENA"
+      ],
+      "nota": 1,
+      "oportunidad": null,
+      "canal_recomendado": null,
+      "estado": "descartado",
+      "proximo_paso": null,
+      "historial": [
+        {
+          "fecha": "2026-11-02",
+          "evento": "Descartado: Web moderna (Astro) con WhatsApp."
+        }
+      ]
+    },
+    {
+      "web": "https://centromiwa.com",
+      "telefono": null,
+      "email_publico": null,
+      "email_estado": "desconocido",
+      "agencia_actual": null,
+      "intencion": null,
+      "fecha_alta": "2026-11-02",
+      "fecha_contacto": null,
+      "seguimientos_hechos": 0,
+      "proxima_fecha": null,
+      "gmail_draft_id": null,
+      "gmail_thread_id": null,
+      "pendiente_verificar": [],
+      "direccion": null,
+      "id": "centro-miwa-mislata",
+      "nombre": "Centro Miwa",
+      "nicho": "estetica",
+      "zona": "Valencia",
+      "fuentes": [
+        "https://centromiwa.com"
+      ],
+      "senales": [
+        "WEB_MUY_BUENA"
+      ],
+      "nota": 1,
+      "oportunidad": null,
+      "canal_recomendado": null,
+      "estado": "descartado",
+      "proximo_paso": null,
+      "historial": [
+        {
+          "fecha": "2026-11-02",
+          "evento": "Descartado: Web actual con WhatsApp."
+        }
+      ]
+    },
+    {
+      "web": "https://www.centroesteticamayva.com",
+      "telefono": null,
+      "email_publico": null,
+      "email_estado": "desconocido",
+      "agencia_actual": null,
+      "intencion": null,
+      "fecha_alta": "2026-11-02",
+      "fecha_contacto": null,
+      "seguimientos_hechos": 0,
+      "proxima_fecha": null,
+      "gmail_draft_id": null,
+      "gmail_thread_id": null,
+      "pendiente_verificar": [],
+      "direccion": null,
+      "id": "mayva-mislata",
+      "nombre": "Centro de Estética Mayva",
+      "nicho": "estetica",
+      "zona": "Valencia",
+      "fuentes": [
+        "https://www.centroesteticamayva.com"
+      ],
+      "senales": [
+        "WEB_MUY_BUENA"
+      ],
+      "nota": 1,
+      "oportunidad": null,
+      "canal_recomendado": null,
+      "estado": "descartado",
+      "proximo_paso": null,
+      "historial": [
+        {
+          "fecha": "2026-11-02",
+          "evento": "Descartado: Web Wix con reserva por Fresha."
+        }
+      ]
+    },
+    {
+      "web": "https://autoescuelas-jorda.com",
+      "telefono": null,
+      "email_publico": null,
+      "email_estado": "desconocido",
+      "agencia_actual": null,
+      "intencion": null,
+      "fecha_alta": "2026-11-02",
+      "fecha_contacto": null,
+      "seguimientos_hechos": 0,
+      "proxima_fecha": null,
+      "gmail_draft_id": null,
+      "gmail_thread_id": null,
+      "pendiente_verificar": [],
+      "direccion": null,
+      "id": "autoescuelas-jorda",
+      "nombre": "Autoescuelas Jordá",
+      "nicho": "academias",
+      "zona": "Valencia",
+      "fuentes": [
+        "https://autoescuelas-jorda.com"
+      ],
+      "senales": [
+        "WEB_MUY_BUENA"
+      ],
+      "nota": 1,
+      "oportunidad": null,
+      "canal_recomendado": null,
+      "estado": "descartado",
+      "proximo_paso": null,
+      "historial": [
+        {
+          "fecha": "2026-11-02",
+          "evento": "Descartado: Varias sedes, web actual con WhatsApp."
+        }
+      ]
+    },
+    {
+      "web": "https://www.autoescuelavalencia.es",
+      "telefono": null,
+      "email_publico": null,
+      "email_estado": "desconocido",
+      "agencia_actual": null,
+      "intencion": null,
+      "fecha_alta": "2026-11-02",
+      "fecha_contacto": null,
+      "seguimientos_hechos": 0,
+      "proxima_fecha": null,
+      "gmail_draft_id": null,
+      "gmail_thread_id": null,
+      "pendiente_verificar": [],
+      "direccion": null,
+      "id": "autoescuela-clase",
+      "nombre": "Autoescuela Clase",
+      "nicho": "academias",
+      "zona": "Valencia",
+      "fuentes": [
+        "https://www.autoescuelavalencia.es"
+      ],
+      "senales": [
+        "WEB_MUY_BUENA"
+      ],
+      "nota": 1,
+      "oportunidad": null,
+      "canal_recomendado": null,
+      "estado": "descartado",
+      "proximo_paso": null,
+      "historial": [
+        {
+          "fecha": "2026-11-02",
+          "evento": "Descartado: Varias sedes, web actual."
+        }
+      ]
+    },
+    {
+      "web": "https://autoescuelasierra.es",
+      "telefono": null,
+      "email_publico": null,
+      "email_estado": "desconocido",
+      "agencia_actual": null,
+      "intencion": null,
+      "fecha_alta": "2026-11-02",
+      "fecha_contacto": null,
+      "seguimientos_hechos": 0,
+      "proxima_fecha": null,
+      "gmail_draft_id": null,
+      "gmail_thread_id": null,
+      "pendiente_verificar": [],
+      "direccion": null,
+      "id": "autoescuela-sierra",
+      "nombre": "AutoEscuelas Sierra",
+      "nicho": "academias",
+      "zona": "Valencia",
+      "fuentes": [
+        "https://autoescuelasierra.es"
+      ],
+      "senales": [
+        "CADENA_O_FRANQUICIA"
+      ],
+      "nota": 1,
+      "oportunidad": null,
+      "canal_recomendado": null,
+      "estado": "descartado",
+      "proximo_paso": null,
+      "historial": [
+        {
+          "fecha": "2026-11-02",
+          "evento": "Descartado: Cadena con varias sedes."
         }
       ]
     }

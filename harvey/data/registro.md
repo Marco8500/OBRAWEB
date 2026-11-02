@@ -1,5 +1,30 @@
 # Registro de Harvey
 
+## 2026-11-02 — Ciclo diario
+
+- **Panel**: Marco no ha marcado cambios.
+- **Gmail**: FisioPatraix y Clínica de Fisioterapia Valencia no han respondido ni rebotado. Seguimiento previsto el 3/11.
+- **Nichos** (exploración, los que no se habían probado): clínicas dentales, estética, talleres y academias.
+- **Nuevos para contactar**:
+  - Pestañea Mislata: 5/10, web caída. Email en Gmail → Borradores; móvil 615 147 186.
+  - Autoescuela Benicalap: 5/10, web de 2015 sin WhatsApp ni matrícula online. Guion de llamada.
+- **Por localizar**: Flor de Loto Estética (web caída, sin teléfono ni email).
+- **Descartados (12)**: los 3 dentistas, 4 talleres (uno es franquicia Eurotaller), 2 centros de estética y 3 autoescuelas,
+  todos con web actual.
+- **Aprendizaje**: dentistas y talleres de Valencia suelen tener ya webs buenas (WordPress actualizado, WhatsApp y cita).
+  En estética de barrio y en negocios veteranos (autoescuelas) aparecen webs caídas o anticuadas.
+  Siguiente exploración: inmobiliarias, gestorías, gimnasios y restauración.
+
+| Nicho | Útiles | Contactados | Respuestas | Tasa |
+|---|---|---|---|---|
+| fisioterapia | 3 | 2 | 0 | 0 % |
+| peluquerias | 2 | 0 | 0 | — |
+| estetica | 2 | 0 | 0 | — |
+| academias | 1 | 0 | 0 | — |
+| reformas | 1 | 0 | 0 | — |
+| clinicas-dentales | 0 | 0 | 0 | — |
+| talleres | 0 | 0 | 0 | — |
+
 ## 2026-10-30 10:13 — Revisión rápida
 - Marco envió los emails a FisioPatraix y Clínica de Fisioterapia Valencia (9:21) → contactados, seguimiento el 3/11.
 - Sin respuestas ni rebotes.
