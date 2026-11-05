@@ -29,7 +29,6 @@ FFMPEG = imageio_ffmpeg.get_ffmpeg_exe()
 # Modelo: Wan 2.2 TI2V-5B (abierto, Apache 2.0). Cabe en una GPU T4 gratuita.
 # ---------------------------------------------------------------------
 MODEL_ID = "Wan-AI/Wan2.2-TI2V-5B-Diffusers"
-W, H = 704, 1280          # vertical 9:16 (resolución nativa del modelo)
 FPS = 24
 
 print("2/3 Descargando la IA Wan 2.2 (la primera vez tarda 5-10 minutos)...")
@@ -63,45 +62,84 @@ NEGATIVE = ("deformed watch, warped dial, changing text, extra hands, melting, d
 
 # Los prompts son fijos: se "traducen" UNA vez con el codificador de texto (muy grande)
 # y después se saca de la GPU para dejar toda la memoria a la parte que crea el video.
+MAIN = torch.device("cuda:0")
+# Con "GPU T4 x2" hay dos tarjetas: la 1ª para la IA principal y la 2ª para el resto.
+AUX = torch.device("cuda:1") if torch.cuda.device_count() > 1 else torch.device("cpu")
+print(f"   Tarjetas de video detectadas: {torch.cuda.device_count()}")
+
 print("   Preparando las tomas (1-2 minutos)...")
-pipe.text_encoder.to("cuda")
+pipe.text_encoder.to(AUX if AUX.type == "cuda" else MAIN)
+enc_dev = pipe.text_encoder.device
 EMB = {}
 with torch.no_grad():
     for name, prompt in SHOTS.items():
         pe, ne = pipe.encode_prompt(prompt=prompt, negative_prompt=NEGATIVE, do_classifier_free_guidance=True,
-                                    max_sequence_length=512, device=torch.device("cuda"))
-        EMB[name] = (pe.to(torch.float16), ne.to(torch.float16))
+                                    max_sequence_length=512, device=enc_dev)
+        EMB[name] = (pe.to(MAIN, torch.float16), ne.to(MAIN, torch.float16))
 pipe.text_encoder.to("cpu")
 pipe.text_encoder = None
 gc.collect(); torch.cuda.empty_cache()
-pipe.to("cuda")
+
+# IA principal (transformer) sola en la 1ª tarjeta; la VAE (codifica/revela el video) en la 2ª.
+pipe.transformer.to(MAIN)
+pipe.vae.to(AUX)
 try:
     pipe.vae.enable_tiling()
 except Exception:
     pass
-print(f"   Memoria de video en uso: {torch.cuda.memory_allocated() / 1e9:.1f} GB de "
-      f"{torch.cuda.get_device_properties(0).total_memory / 1e9:.1f} GB")
 
-def prepare_image(path):
+class _Latents:  # resultado de codificar, ya en la tarjeta principal
+    def __init__(self, t):
+        self.latents = t
+
+_vae_encode, _vae_decode = pipe.vae.encode, pipe.vae.decode
+def _encode_on_aux(x, *args, **kwargs):
+    out = _vae_encode(x.to(AUX, torch.float32), return_dict=True)
+    return _Latents(out.latent_dist.mode().to(MAIN))
+def _decode_on_aux(z, *args, **kwargs):
+    video = _vae_decode(z.to(AUX, torch.float32), return_dict=False)[0]
+    return (video.float().cpu(),)
+pipe.vae.encode, pipe.vae.decode = _encode_on_aux, _decode_on_aux
+# El pipeline debe trabajar siempre en la 1ª tarjeta.
+pipe.__class__ = type("ObraPipe", (pipe.__class__,), {"_execution_device": property(lambda self: MAIN)})
+
+gb = lambda d: torch.cuda.memory_allocated(d) / 1e9
+print(f"   Memoria de video en uso: {gb(0):.1f} GB de {torch.cuda.get_device_properties(0).total_memory / 1e9:.1f} GB"
+      + (f"  (2ª tarjeta: {gb(1):.1f} GB)" if AUX.type == "cuda" else ""))
+
+# Resoluciones (vertical 9:16). Si falta memoria, se reintenta sola con la siguiente.
+SIZES = [(704, 1280), (544, 960), (480, 832)]
+
+def prepare_image(path, w, h):
     """Ajusta la foto a 9:16 sin recortar el reloj: fondo desenfocado de la misma foto."""
     img = ImageOps.exif_transpose(Image.open(path)).convert("RGB")
-    bg = ImageOps.fit(img, (W, H)).filter(ImageFilter.GaussianBlur(40))
-    bg = Image.blend(bg, Image.new("RGB", (W, H), (8, 8, 10)), 0.45)
+    bg = ImageOps.fit(img, (w, h)).filter(ImageFilter.GaussianBlur(40))
+    bg = Image.blend(bg, Image.new("RGB", (w, h), (8, 8, 10)), 0.45)
     fg = img.copy()
-    fg.thumbnail((W, H), Image.LANCZOS)
-    bg.paste(fg, ((W - fg.width) // 2, (H - fg.height) // 2))
+    fg.thumbnail((w, h), Image.LANCZOS)
+    bg.paste(fg, ((w - fg.width) // 2, (h - fg.height) // 2))
     return bg
 
-def generate_clip(path, shot, frames, steps, seed, out_path):
-    image = prepare_image(path)
-    gen = torch.Generator(device="cpu").manual_seed(int(seed))
+def generate_clip(path, shot, frames, steps, seed, out_path, start_size=0):
     pe, ne = EMB[shot]
-    result = pipe(image=image, prompt_embeds=pe, negative_prompt_embeds=ne, height=H, width=W,
-                  num_frames=int(frames), num_inference_steps=int(steps), guidance_scale=5.0, generator=gen)
-    export_to_video(result.frames[0], out_path, fps=FPS)
-    del result
-    gc.collect(); torch.cuda.empty_cache()
-    return out_path
+    for level in range(start_size, len(SIZES)):
+        w, h = SIZES[level]
+        try:
+            gen = torch.Generator(device="cpu").manual_seed(int(seed))
+            result = pipe(image=prepare_image(path, w, h), prompt_embeds=pe, negative_prompt_embeds=ne,
+                          height=h, width=w, num_frames=int(frames), num_inference_steps=int(steps),
+                          guidance_scale=5.0, generator=gen)
+            export_to_video(result.frames[0], out_path, fps=FPS)
+            del result
+            gc.collect(); torch.cuda.empty_cache()
+            print(f"     (resolución usada: {w}x{h})")
+            return out_path, level
+        except torch.OutOfMemoryError:
+            result = None
+            gc.collect(); torch.cuda.empty_cache()
+            if level == len(SIZES) - 1:
+                raise gr.Error("No hay memoria suficiente ni con la resolución más baja. Prueba con 'Corto (2 s)'.")
+            print(f"     Falta memoria a {w}x{h}; reintentando con {SIZES[level + 1][0]}x{SIZES[level + 1][1]}...")
 
 # ---------------------------------------------------------------------
 # Montaje final: transiciones, pantalla con la marca y música
@@ -185,12 +223,14 @@ def crear_anuncio(fotos, tomas_txt, marca, frase, cta, musica, duracion, calidad
     steps = {"Rápida": 20, "Buena": 30, "Máxima": 40}[calidad]
     work = tempfile.mkdtemp(prefix="obraweb_")
     clips = []
+    level = 0  # si una toma necesitó menos resolución, las siguientes empiezan ahí (ahorra tiempo)
     t0 = time.time()
     for i, f in enumerate(fotos):
         shot = elegidas[i] if i < len(elegidas) and elegidas[i] in SHOTS else AUTO_ORDER[i % len(AUTO_ORDER)]
         progress(i / (len(fotos) + 1), desc=f"IA animando foto {i + 1} de {len(fotos)}: {shot}...")
-        clips.append(generate_clip(f, shot, frames, steps, random.randint(0, 2**31 - 1),
-                                   os.path.join(work, f"clip{i}.mp4")))
+        clip, level = generate_clip(f, shot, frames, steps, random.randint(0, 2**31 - 1),
+                                    os.path.join(work, f"clip{i}.mp4"), level)
+        clips.append(clip)
         print(f"  ✅ Clip {i + 1} listo en {time.time() - t0:.0f} s")
     progress(len(fotos) / (len(fotos) + 1), desc="Montando el anuncio final...")
     card = None
