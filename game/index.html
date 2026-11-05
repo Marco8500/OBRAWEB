@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Apex GP – Formula Racing</title>
+<meta name="description" content="Fast top-down formula racing. Beat 5 rivals, unlock circuits and upgrade your car.">
+<script src="https://sdk.crazygames.com/crazygames-sdk-v3.js"></script>
+<style>
+  :root { --accent:#ff2d2d; --accent2:#ffd400; --panel:rgba(14,16,24,.92); --text:#fff; }
+  * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; user-select:none; -webkit-user-select:none; }
+  html, body { margin:0; height:100%; overflow:hidden; background:#101218; color:var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; touch-action:none; overscroll-behavior:none; }
+  canvas#game { position:fixed; inset:0; width:100%; height:100%; display:block; }
+  .hidden { display:none !important; }
+  .screen { position:fixed; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:14px; padding:16px; background:radial-gradient(ellipse at center, rgba(10,12,20,.55), rgba(10,12,20,.9)); z-index:10; text-align:center; }
+  .title { font-size:clamp(44px, 10vw, 96px); font-weight:900; font-style:italic; letter-spacing:-2px; line-height:.9; margin:0;
+    text-shadow:0 6px 0 rgba(0,0,0,.35); }
+  .title span { color:var(--accent); }
+  .subtitle { font-size:clamp(13px,2.4vw,18px); letter-spacing:6px; text-transform:uppercase; opacity:.8; margin:0 0 6px; }
+  h2 { margin:0 0 4px; font-size:clamp(26px,5vw,40px); font-style:italic; font-weight:900; }
+  .btn { font:inherit; font-weight:800; font-style:italic; font-size:clamp(18px,3.4vw,24px); color:#fff; background:var(--accent);
+    border:0; border-radius:12px; padding:14px 34px; min-width:220px; cursor:pointer; box-shadow:0 5px 0 #a50f0f; text-transform:uppercase; transition:transform .06s; }
+  .btn:active { transform:translateY(3px); box-shadow:0 2px 0 #a50f0f; }
+  .btn.big { font-size:clamp(24px,5vw,34px); padding:18px 54px; }
+  .btn.sec { background:#2b3142; box-shadow:0 5px 0 #161a24; }
+  .btn.sec:active { box-shadow:0 2px 0 #161a24; }
+  .btn.gold { background:#e0a800; box-shadow:0 5px 0 #8a6700; color:#1a1400; }
+  .btn.gold:active { box-shadow:0 2px 0 #8a6700; }
+  .btn:disabled { opacity:.45; cursor:default; }
+  .row { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; }
+  .coins { font-weight:800; font-size:20px; color:var(--accent2); }
+  .coins::before { content:"●"; margin-right:6px; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); gap:12px; width:min(820px, 100%); }
+  .card { background:var(--panel); border:2px solid #2b3142; border-radius:14px; padding:10px; cursor:pointer; position:relative; }
+  .card:hover { border-color:var(--accent); }
+  .card.locked { cursor:default; opacity:.55; }
+  .card.locked:hover { border-color:#2b3142; }
+  .card canvas { width:100%; height:auto; aspect-ratio:3/2; display:block; border-radius:8px; }
+  .card .name { font-weight:800; font-style:italic; margin-top:6px; }
+  .card .meta { font-size:13px; opacity:.75; }
+  .panel { background:var(--panel); border-radius:16px; padding:16px; width:min(560px, 100%); }
+  .upg { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 4px; border-bottom:1px solid #2b3142; text-align:left; }
+  .upg:last-child { border-bottom:0; }
+  .upg .lbl { font-weight:800; }
+  .upg .desc { font-size:12px; opacity:.7; }
+  .pips { display:flex; gap:4px; margin-top:4px; }
+  .pip { width:18px; height:8px; border-radius:3px; background:#2b3142; }
+  .pip.on { background:var(--accent); }
+  .upg .btn { min-width:0; padding:8px 14px; font-size:15px; }
+  .swatches { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; padding-top:8px; }
+  .sw { width:40px; height:40px; border-radius:50%; border:3px solid transparent; cursor:pointer; }
+  .sw.on { border-color:#fff; }
+  table.res { border-collapse:collapse; width:100%; font-size:15px; }
+  table.res td { padding:5px 8px; text-align:left; }
+  table.res tr.me { background:rgba(255,45,45,.25); font-weight:800; }
+  table.res td:last-child { text-align:right; font-variant-numeric:tabular-nums; }
+  .bigpos { font-size:clamp(46px,10vw,80px); font-weight:900; font-style:italic; line-height:1; }
+  .hint { font-size:13px; opacity:.7; max-width:520px; }
+  #topBtns { position:fixed; top:10px; right:10px; display:flex; gap:8px; z-index:20; }
+  .ibtn { width:46px; height:46px; border-radius:12px; border:0; background:rgba(14,16,24,.7); color:#fff; font-size:22px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; }
+  #touch { position:fixed; inset:auto 0 0 0; height:0; z-index:15; }
+  .tbtn { position:fixed; bottom:max(18px, env(safe-area-inset-bottom)); width:clamp(78px, 13vw, 110px); height:clamp(78px, 13vw, 110px); border-radius:50%;
+    background:rgba(255,255,255,.16); border:3px solid rgba(255,255,255,.4); color:#fff; font-size:34px; font-weight:900;
+    display:flex; align-items:center; justify-content:center; touch-action:none; }
+  .tbtn.on { background:rgba(255,255,255,.38); }
+  #tLeft { left:18px; }
+  #tRight { left:calc(36px + clamp(78px, 13vw, 110px)); }
+  #tBrake { right:18px; font-size:17px; background:rgba(255,45,45,.3); border-color:rgba(255,90,90,.6); }
+  #tBrake.on { background:rgba(255,45,45,.6); }
+  .screen { overflow-y:auto; justify-content:safe center; }
+  @media (max-height:520px) {
+    .screen { gap:8px; padding:10px; }
+    .title { font-size:clamp(36px, 9vh, 64px); }
+    .subtitle { margin:0; font-size:12px; }
+    .btn { padding:9px 24px; font-size:17px; min-width:170px; }
+    .btn.big { padding:12px 40px; font-size:24px; }
+    .bigpos { font-size:44px; }
+    h2 { font-size:24px; }
+    .cards { grid-template-columns:repeat(4, 1fr); gap:8px; }
+    .card { padding:6px; } .card .meta { font-size:11px; }
+    table.res { font-size:13px; } table.res td { padding:2px 6px; }
+    .panel { padding:10px; }
+  }
+  #toast { position:fixed; left:50%; top:20%; transform:translateX(-50%); z-index:30; font-weight:900; font-style:italic; font-size:22px;
+    background:rgba(0,0,0,.6); padding:8px 18px; border-radius:10px; pointer-events:none; }
+</style>
+</head>
+<body>
+<canvas id="game"></canvas>
+
+<div id="topBtns" class="hidden">
+  <button class="ibtn" id="btnMute" aria-label="Mute">🔊</button>
+  <button class="ibtn" id="btnPause" aria-label="Pause">❚❚</button>
+</div>
+
+<div id="touch" class="hidden">
+  <div class="tbtn" id="tLeft">◀</div>
+  <div class="tbtn" id="tRight">▶</div>
+  <div class="tbtn" id="tBrake">BRAKE</div>
+</div>
+
+<div id="menu" class="screen hidden">
+  <p class="subtitle">Formula Racing</p>
+  <h1 class="title">APEX<span>GP</span></h1>
+  <div class="coins" id="menuCoins">0</div>
+  <button class="btn big" id="btnPlay">Play</button>
+  <div class="row">
+    <button class="btn sec" id="btnTracks">Circuits</button>
+    <button class="btn sec" id="btnGarage">Garage</button>
+  </div>
+  <p class="hint" id="menuHint"></p>
+</div>
+
+<div id="tracks" class="screen hidden">
+  <h2>Choose Circuit</h2>
+  <div class="cards" id="trackCards"></div>
+  <p class="hint">Finish in the top 3 to unlock the next circuit.</p>
+  <button class="btn sec" data-back>Back</button>
+</div>
+
+<div id="garage" class="screen hidden">
+  <h2>Garage</h2>
+  <div class="coins" id="garageCoins">0</div>
+  <div class="panel" id="upgrades"></div>
+  <div class="panel">
+    <div style="font-weight:800">Livery</div>
+    <div class="swatches" id="swatches"></div>
+  </div>
+  <button class="btn sec" data-back>Back</button>
+</div>
+
+<div id="pause" class="screen hidden">
+  <h2>Paused</h2>
+  <button class="btn big" id="btnResume">Resume</button>
+  <div class="row">
+    <button class="btn sec" id="btnRestart">Restart</button>
+    <button class="btn sec" id="btnQuit">Menu</button>
+  </div>
+</div>
+
+<div id="results" class="screen hidden">
+  <div class="bigpos" id="resPos">1st</div>
+  <div id="resMsg" style="font-weight:800"></div>
+  <div class="panel"><table class="res" id="resTable"></table></div>
+  <div class="coins" id="resCoins">+0</div>
+  <button class="btn gold" id="btnDouble">▶ Watch ad: 2× coins</button>
+  <div class="row">
+    <button class="btn" id="btnNext">Next</button>
+    <button class="btn sec" id="btnRetry">Retry</button>
+    <button class="btn sec" id="btnMenu">Menu</button>
+  </div>
+</div>
+
+<div id="toast" class="hidden"></div>
+
+<script src="game.js"></script>
+</body>
+</html>
