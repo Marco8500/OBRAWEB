@@ -46,9 +46,26 @@ const jobs = new Map();
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/videos', express.static(JOBS_DIR, { index: false }));
 
+// Contraseña opcional (APP_PASSWORD) para que solo tú puedas usar la app si está en internet.
+function checkPassword(req, res, next) {
+  const expected = process.env.APP_PASSWORD;
+  if (!expected) return next();
+  const given = Buffer.from(String(req.get('x-clave') || ''));
+  const want = Buffer.from(expected);
+  if (given.length === want.length && crypto.timingSafeEqual(given, want)) return next();
+  res.status(401).json({ error: 'Contraseña incorrecta.' });
+}
+
 app.get('/api/config', (req, res) => {
-  res.json({ ia: ai.enabled(), estilos: Object.keys(video.STYLES) });
+  res.json({ ia: ai.enabled(), clave: Boolean(process.env.APP_PASSWORD), estilos: Object.keys(video.STYLES) });
 });
+
+app.post('/api/login', express.json(), (req, res, next) => {
+  req.headers['x-clave'] = (req.body && req.body.clave) || '';
+  checkPassword(req, res, () => res.json({ ok: true }));
+});
+
+app.use('/api/videos', checkPassword);
 
 app.post('/api/videos', upload.fields([{ name: 'fotos', maxCount: 10 }, { name: 'musica', maxCount: 1 }]), (req, res) => {
   const fotos = (req.files && req.files.fotos) || [];
@@ -129,6 +146,18 @@ async function build(job, o) {
     segundos: Math.round(seconds),
   });
 }
+
+// Borra los videos de más de 6 horas para no llenar el disco.
+setInterval(() => {
+  const limit = Date.now() - 6 * 60 * 60 * 1000;
+  for (const id of fs.readdirSync(JOBS_DIR)) {
+    const dir = path.join(JOBS_DIR, id);
+    if (fs.statSync(dir).mtimeMs < limit) {
+      fs.rmSync(dir, { recursive: true, force: true });
+      jobs.delete(id);
+    }
+  }
+}, 30 * 60 * 1000).unref();
 
 app.listen(PORT, () => {
   console.log(`\n  ✅ OBRAWEB funcionando. Abre en tu navegador:  http://localhost:${PORT}\n`);

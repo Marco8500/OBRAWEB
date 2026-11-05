@@ -4,6 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>OBRAWEB · Videos de relojes</title>
+<meta name="theme-color" content="#0d0d0f">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" type="image/svg+xml" href="/icons/icon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="OBRAWEB">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <style>
   :root {
     --bg: #0d0d0f; --panel: #16161a; --line: #2a2a31; --text: #f2efe9; --muted: #9a968e;
@@ -12,9 +21,12 @@
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
   main { max-width: 760px; margin: 0 auto; padding: 32px 16px 64px; }
+  header { display: flex; gap: 14px; align-items: center; margin-bottom: 28px; }
+  header img { width: 56px; height: 56px; border-radius: 14px; flex: none; }
   header h1 { font-weight: 300; letter-spacing: .18em; text-transform: uppercase; margin: 0; font-size: 28px; }
   header h1 b { color: var(--gold); font-weight: 500; }
-  header p { color: var(--muted); margin: 6px 0 28px; }
+  header p { color: var(--muted); margin: 4px 0 0; font-size: 15px; }
+  #login input { margin-bottom: 12px; }
   section { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 20px; margin-bottom: 16px; }
   h2 { font-size: 15px; font-weight: 600; margin: 0 0 4px; }
   h2 span { color: var(--gold); margin-right: 8px; }
@@ -53,11 +65,24 @@
 <body>
 <main>
   <header>
-    <h1>OBRA<b>WEB</b></h1>
-    <p>Sube fotos de tus relojes y recibe un video profesional listo para Instagram, TikTok y Reels.</p>
+    <img src="/icons/icon-192.png" alt="">
+    <div>
+      <h1>OBRA<b>WEB</b></h1>
+      <p>Sube fotos de tus relojes y recibe un video profesional listo para Instagram, TikTok y Reels.</p>
+    </div>
   </header>
 
-  <form id="form">
+  <form id="login" class="hidden">
+    <section>
+      <h2>🔒 Entrar</h2>
+      <p class="hint">Escribe tu contraseña. Solo se pide una vez en este dispositivo.</p>
+      <input type="password" id="clave" autocomplete="current-password" placeholder="Contraseña">
+      <button class="go" type="submit">Entrar</button>
+      <p class="error" id="loginError"></p>
+    </section>
+  </form>
+
+  <form id="form" class="hidden">
     <section>
       <h2><span>1</span>Fotos del reloj</h2>
       <p class="hint">De 1 a 10 fotos. Consejo: usa fotos nítidas, con buena luz y desde distintos ángulos (frente, lado, detalle, en la muñeca).</p>
@@ -115,12 +140,41 @@
   const $ = (id) => document.getElementById(id);
   const drop = $('drop'), input = $('fileInput'), thumbs = $('thumbs');
 
-  fetch('/api/config').then((r) => r.json()).then((c) => {
+  const store = {
+    get: (k) => { try { return localStorage.getItem(k) || ''; } catch { return ''; } },
+    set: (k, v) => { try { localStorage.setItem(k, v); } catch {} },
+  };
+  let clave = store.get('obraweb-clave');
+  const authHeaders = () => ({ 'x-clave': clave });
+
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(() => {});
+
+  fetch('/api/config').then((r) => r.json()).then(async (c) => {
     if (!c.ia) {
       $('modoIA').disabled = true;
       $('iaHint').textContent = 'Requiere conectar una clave de Replicate (ver instrucciones).';
     }
+    if (c.clave && !(await login(clave))) $('login').classList.remove('hidden');
+    else $('form').classList.remove('hidden');
   });
+
+  async function login(value) {
+    if (!value) return false;
+    const r = await fetch('/api/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ clave: value }) });
+    return r.ok;
+  }
+  $('login').onsubmit = async (ev) => {
+    ev.preventDefault();
+    const value = $('clave').value;
+    if (await login(value)) {
+      clave = value;
+      store.set('obraweb-clave', value);
+      $('login').classList.add('hidden');
+      $('form').classList.remove('hidden');
+    } else {
+      $('loginError').textContent = 'Contraseña incorrecta. Inténtalo de nuevo.';
+    }
+  };
 
   drop.onclick = () => input.click();
   input.onchange = () => { addFiles(input.files); input.value = ''; };
@@ -170,7 +224,7 @@
     $('status').scrollIntoView({ behavior: 'smooth' });
 
     try {
-      const res = await fetch('/api/videos', { method: 'POST', body: fd });
+      const res = await fetch('/api/videos', { method: 'POST', body: fd, headers: authHeaders() });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
       poll(data.id);
@@ -179,7 +233,7 @@
 
   async function poll(id) {
     try {
-      const job = await (await fetch('/api/videos/' + id)).json();
+      const job = await (await fetch('/api/videos/' + id, { headers: authHeaders() })).json();
       $('barFill').style.width = Math.max(2, job.progreso || 0) + '%';
       $('statusMsg').textContent = job.mensaje;
       $('warnings').innerHTML = (job.avisos || []).map((a) => `<li>${a.replace(/</g, '&lt;')}</li>`).join('');

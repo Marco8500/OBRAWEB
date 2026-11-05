@@ -1,3 +1,14 @@
+---
+title: OBRAWEB
+emoji: ⌚
+colorFrom: yellow
+colorTo: gray
+sdk: docker
+app_port: 7860
+pinned: false
+short_description: Videos profesionales de relojes a partir de fotos
+---
+
 # OBRAWEB · Videos profesionales de relojes con IA
 
 Subes fotos de un reloj y la app te devuelve un **video vertical (9:16) listo para Instagram, TikTok y Reels**, con movimientos de cámara, transiciones elegantes, música y una pantalla final con tu marca.
@@ -33,6 +44,28 @@ La primera vez tarda un poco porque instala lo necesario. Luego se abre el naveg
 3. Elige el estilo: **Lujo**, **Minimal** o **Deportivo**.
 4. Opcional: agrega una música MP3.
 5. Presiona **Crear mi video** y descárgalo.
+
+---
+
+## Usarla en el móvil con Hugging Face Spaces (gratis)
+
+1. Crea una cuenta en **https://huggingface.co/join**.
+2. Entra en **https://huggingface.co/new-space**:
+   - **Space name:** `obraweb`
+   - **SDK:** elige **Docker** → **Blank**
+   - **Hardware:** *CPU basic · Free*
+   - Visibilidad: **Public** (la app queda protegida con tu contraseña)
+   - Presiona **Create Space**.
+3. Entra en **Settings → Variables and secrets → New secret**:
+   - Nombre `APP_PASSWORD`, valor: la contraseña que quieras.
+   - (Opcional, para la IA) Nombre `REPLICATE_API_TOKEN`, valor: tu clave de Replicate.
+4. Ve a la pestaña **Files → Add file → Upload files**, arrastra **todos los archivos y carpetas** de este proyecto y presiona **Commit**.
+5. Espera unos minutos a que diga **Running**. Tu app queda en: `https://TU-USUARIO-obraweb.hf.space`
+
+### Poner el icono en el móvil
+Abre ese enlace en el móvil:
+- **Android (Chrome):** menú **⋮** → **Añadir a pantalla de inicio** / **Instalar app**.
+- **iPhone (Safari):** botón **Compartir** → **Añadir a pantalla de inicio**.
 
 ---
 
