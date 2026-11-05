@@ -13,6 +13,7 @@ _pip("diffusers>=0.35.1", "transformers>=4.49", "accelerate", "ftfy", "sentencep
      "gradio>=4.44", "imageio", "imageio-ffmpeg")
 
 import os, gc, random, tempfile, shutil, time
+os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
 import numpy as np
 import torch
 import gradio as gr
@@ -34,11 +35,6 @@ FPS = 24
 print("2/3 Descargando la IA Wan 2.2 (la primera vez tarda 5-10 minutos)...")
 vae = AutoencoderKLWan.from_pretrained(MODEL_ID, subfolder="vae", torch_dtype=torch.float32)
 pipe = WanImageToVideoPipeline.from_pretrained(MODEL_ID, vae=vae, torch_dtype=torch.float16)
-pipe.enable_model_cpu_offload()  # mueve partes a la GPU solo cuando hacen falta (ahorra memoria)
-try:
-    pipe.vae.enable_tiling()
-except Exception:
-    pass
 
 # ---------------------------------------------------------------------
 # Tomas de anuncio de relojes (prompts profesionales)
@@ -65,6 +61,27 @@ AUTO_ORDER = ["Primer plano (cámara acercándose)", "Giro alrededor del reloj",
 NEGATIVE = ("deformed watch, warped dial, changing text, extra hands, melting, distorted logo, blurry, low quality, "
             "jittery, flicker, watermark, text overlay, cartoon")
 
+# Los prompts son fijos: se "traducen" UNA vez con el codificador de texto (muy grande)
+# y después se saca de la GPU para dejar toda la memoria a la parte que crea el video.
+print("   Preparando las tomas (1-2 minutos)...")
+pipe.text_encoder.to("cuda")
+EMB = {}
+with torch.no_grad():
+    for name, prompt in SHOTS.items():
+        pe, ne = pipe.encode_prompt(prompt=prompt, negative_prompt=NEGATIVE, do_classifier_free_guidance=True,
+                                    max_sequence_length=512, device=torch.device("cuda"))
+        EMB[name] = (pe.to(torch.float16), ne.to(torch.float16))
+pipe.text_encoder.to("cpu")
+pipe.text_encoder = None
+gc.collect(); torch.cuda.empty_cache()
+pipe.to("cuda")
+try:
+    pipe.vae.enable_tiling()
+except Exception:
+    pass
+print(f"   Memoria de video en uso: {torch.cuda.memory_allocated() / 1e9:.1f} GB de "
+      f"{torch.cuda.get_device_properties(0).total_memory / 1e9:.1f} GB")
+
 def prepare_image(path):
     """Ajusta la foto a 9:16 sin recortar el reloj: fondo desenfocado de la misma foto."""
     img = ImageOps.exif_transpose(Image.open(path)).convert("RGB")
@@ -78,7 +95,8 @@ def prepare_image(path):
 def generate_clip(path, shot, frames, steps, seed, out_path):
     image = prepare_image(path)
     gen = torch.Generator(device="cpu").manual_seed(int(seed))
-    result = pipe(image=image, prompt=SHOTS[shot], negative_prompt=NEGATIVE, height=H, width=W,
+    pe, ne = EMB[shot]
+    result = pipe(image=image, prompt_embeds=pe, negative_prompt_embeds=ne, height=H, width=W,
                   num_frames=int(frames), num_inference_steps=int(steps), guidance_scale=5.0, generator=gen)
     export_to_video(result.frames[0], out_path, fps=FPS)
     del result
