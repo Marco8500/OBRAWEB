@@ -8,6 +8,7 @@ const params = new URLSearchParams(location.search);
 const AUTOPILOT = params.has('autopilot');
 const TIME_SCALE = Math.min(20, Math.max(1, +params.get('timescale') || 1));
 const COVER = params.get('cover');
+const CAPTURE = params.has('capture');   // debug: fixed-step frames for recording trailers
 
 const LAPS = 5;
 const SP = 8;               // centre-line sample spacing (world units; ~9 units = 1 m)
@@ -320,7 +321,7 @@ function distToTrack(t, x, y) {
 // ================================================================ renderer & scene
 const canvas = $('game');
 const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0 && matchMedia('(pointer: coarse)').matches);
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: !isTouchDevice, powerPreference: 'high-performance', preserveDrawingBuffer: !!COVER });
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: !isTouchDevice, powerPreference: 'high-performance', preserveDrawingBuffer: !!COVER || CAPTURE });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isTouchDevice ? 1.3 : 1.75));
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -1661,7 +1662,7 @@ function drawHUD() {
   const ctx = hud.ctx, W = hud.W, H = hud.H;
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.clearRect(0, 0, hud.cv.width, hud.cv.height);
-  if (!race || COVER) return;
+  if (!race || COVER || CAPTURE) return;
   ctx.setTransform(hud.dpr, 0, 0, hud.dpr, 0, 0);
   const r = race, t = r.track, p = r.player;
   const small = W < 700 || H < 500;
@@ -1881,7 +1882,7 @@ click('btnDouble', async () => {
 // ================================================================ main loop
 let last = performance.now(), acc = 0;
 function frame(now) {
-  const dt = Math.min(0.1, (now - last) / 1000);
+  const dt = CAPTURE ? 1 / 30 : Math.min(0.1, (now - last) / 1000);
   last = now;
   if (race && state !== 'paused' && state !== 'cover' && state !== 'pitmenu') {
     acc += dt * TIME_SCALE;
@@ -1896,7 +1897,7 @@ function frame(now) {
   if (state !== 'cover') { syncCars(); updateCamera(dt); }
   renderer.render(scene, camera);
   drawHUD();
-  requestAnimationFrame(frame);
+  if (!CAPTURE) requestAnimationFrame(frame);
 }
 
 // ================================================================ boot
@@ -1921,7 +1922,10 @@ async function boot() {
   $('loading').classList.add('hidden');
   CG.loadingStop();
   window.__game = { get race() { return race; }, get state() { return state; } };
-  requestAnimationFrame(frame);
+  if (CAPTURE) {
+    document.body.classList.add('capture');
+    window.__advance = (n = 1) => { for (let i = 0; i < n; i++) frame(performance.now()); };
+  } else requestAnimationFrame(frame);
 }
 
 function setupCover() {

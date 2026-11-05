@@ -99,6 +99,7 @@
   #tRight { left:calc(36px + clamp(78px, 13vw, 110px)); }
   #tBrake { right:18px; font-size:17px; background:rgba(255,45,45,.3); border-color:rgba(255,90,90,.6); }
   #tBrake.on { background:rgba(255,45,45,.6); }
+  body.capture #topBtns, body.capture #touch, body.capture #toast { display:none !important; }
   #toast { position:fixed; left:50%; top:22%; transform:translateX(-50%); z-index:30; font-weight:900; font-style:italic; font-size:22px;
     background:rgba(0,0,0,.6); padding:8px 18px; border-radius:10px; pointer-events:none; }
   #loading { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:50; background:#101218;
