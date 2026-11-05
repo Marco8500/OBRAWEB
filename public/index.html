@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OBRAWEB · Videos de relojes</title>
+<style>
+  :root {
+    --bg: #0d0d0f; --panel: #16161a; --line: #2a2a31; --text: #f2efe9; --muted: #9a968e;
+    --gold: #c9a45c; --gold-2: #e3c88f; --danger: #e5675c;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 32px 16px 64px; }
+  header h1 { font-weight: 300; letter-spacing: .18em; text-transform: uppercase; margin: 0; font-size: 28px; }
+  header h1 b { color: var(--gold); font-weight: 500; }
+  header p { color: var(--muted); margin: 6px 0 28px; }
+  section { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 20px; margin-bottom: 16px; }
+  h2 { font-size: 15px; font-weight: 600; margin: 0 0 4px; }
+  h2 span { color: var(--gold); margin-right: 8px; }
+  .hint { color: var(--muted); font-size: 14px; margin: 0 0 14px; }
+  .drop { border: 1.5px dashed var(--line); border-radius: 12px; padding: 28px 16px; text-align: center; cursor: pointer; transition: .2s; }
+  .drop:hover, .drop.over { border-color: var(--gold); background: #1c1a16; }
+  .drop strong { color: var(--gold-2); }
+  .thumbs { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 10px; margin-top: 14px; }
+  .thumb { position: relative; aspect-ratio: 1; border-radius: 10px; overflow: hidden; background: #000; }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .thumb button { position: absolute; top: 4px; right: 4px; width: 26px; height: 26px; border-radius: 50%; border: 0; background: rgba(0,0,0,.7); color: #fff; cursor: pointer; }
+  .thumb i { position: absolute; left: 6px; bottom: 4px; font-style: normal; font-size: 12px; background: rgba(0,0,0,.6); padding: 0 6px; border-radius: 6px; }
+  label { display: block; font-size: 14px; color: var(--muted); margin: 12px 0 6px; }
+  input[type=text] { width: 100%; padding: 12px 14px; background: #0f0f12; border: 1px solid var(--line); border-radius: 10px; color: var(--text); font-size: 16px; }
+  input[type=text]:focus { outline: none; border-color: var(--gold); }
+  .options { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+  .opt { position: relative; }
+  .opt input { position: absolute; opacity: 0; }
+  .opt div { border: 1px solid var(--line); border-radius: 10px; padding: 12px; cursor: pointer; height: 100%; }
+  .opt div b { display: block; }
+  .opt div small { color: var(--muted); }
+  .opt input:checked + div { border-color: var(--gold); background: #1c1a16; }
+  .opt input:disabled + div { opacity: .45; cursor: not-allowed; }
+  .go { width: 100%; padding: 16px; border: 0; border-radius: 12px; font-size: 17px; font-weight: 600; cursor: pointer;
+        background: linear-gradient(135deg, var(--gold), var(--gold-2)); color: #1a1408; }
+  .go:disabled { opacity: .5; cursor: wait; }
+  .bar { height: 8px; background: #0f0f12; border-radius: 99px; overflow: hidden; margin: 12px 0 8px; }
+  .bar div { height: 100%; width: 0; background: var(--gold); transition: width .4s; }
+  .error { color: var(--danger); }
+  video { width: 100%; max-width: 360px; display: block; margin: 12px auto; border-radius: 12px; background: #000; }
+  .download { display: block; text-align: center; padding: 14px; border-radius: 12px; border: 1px solid var(--gold); color: var(--gold-2); text-decoration: none; font-weight: 600; }
+  .hidden { display: none; }
+  ul.warn { color: var(--gold-2); font-size: 14px; padding-left: 18px; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>OBRA<b>WEB</b></h1>
+    <p>Sube fotos de tus relojes y recibe un video profesional listo para Instagram, TikTok y Reels.</p>
+  </header>
+
+  <form id="form">
+    <section>
+      <h2><span>1</span>Fotos del reloj</h2>
+      <p class="hint">De 1 a 10 fotos. Consejo: usa fotos nítidas, con buena luz y desde distintos ángulos (frente, lado, detalle, en la muñeca).</p>
+      <div class="drop" id="drop"><strong>Toca aquí</strong> o arrastra tus fotos</div>
+      <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" multiple hidden>
+      <div class="thumbs" id="thumbs"></div>
+    </section>
+
+    <section>
+      <h2><span>2</span>Textos del final <small style="color:var(--muted);font-weight:400">(opcional)</small></h2>
+      <label for="marca">Marca o nombre del reloj</label>
+      <input type="text" id="marca" name="marca" maxlength="40" placeholder="Ej: Aurora Chrono">
+      <label for="frase">Frase</label>
+      <input type="text" id="frase" name="frase" maxlength="60" placeholder="Ej: El tiempo, a tu manera">
+      <label for="cta">Llamada a la acción</label>
+      <input type="text" id="cta" name="cta" maxlength="50" placeholder="Ej: Pídelo por mensaje directo">
+    </section>
+
+    <section>
+      <h2><span>3</span>Estilo</h2>
+      <div class="options">
+        <label class="opt"><input type="radio" name="estilo" value="lujo" checked><div><b>Lujo</b><small>Fondo oscuro y detalles dorados</small></div></label>
+        <label class="opt"><input type="radio" name="estilo" value="minimal"><div><b>Minimal</b><small>Claro, limpio y elegante</small></div></label>
+        <label class="opt"><input type="radio" name="estilo" value="deportivo"><div><b>Deportivo</b><small>Contraste alto, con energía</small></div></label>
+      </div>
+    </section>
+
+    <section>
+      <h2><span>4</span>Calidad</h2>
+      <div class="options">
+        <label class="opt"><input type="radio" name="modo" value="rapido" checked><div><b>⚡ Rápido · Gratis</b><small>Movimiento de cámara sobre tus fotos. Listo en segundos.</small></div></label>
+        <label class="opt"><input type="radio" name="modo" value="ia" id="modoIA"><div><b>🤖 IA cinematográfica</b><small id="iaHint">La IA anima cada foto con luces y giros reales. Tarda unos minutos.</small></div></label>
+      </div>
+      <label for="musica">Música (opcional, MP3)</label>
+      <input type="file" id="musica" accept="audio/*">
+    </section>
+
+    <button class="go" id="go" type="submit">Crear mi video</button>
+  </form>
+
+  <section id="status" class="hidden" style="margin-top:16px">
+    <h2 id="statusTitle">Creando tu video…</h2>
+    <div class="bar"><div id="barFill"></div></div>
+    <p class="hint" id="statusMsg"></p>
+    <ul class="warn" id="warnings"></ul>
+    <div id="result" class="hidden">
+      <video id="player" controls playsinline loop></video>
+      <a class="download" id="download" download>⬇ Descargar video</a>
+    </div>
+  </section>
+</main>
+
+<script>
+  const files = [];
+  const $ = (id) => document.getElementById(id);
+  const drop = $('drop'), input = $('fileInput'), thumbs = $('thumbs');
+
+  fetch('/api/config').then((r) => r.json()).then((c) => {
+    if (!c.ia) {
+      $('modoIA').disabled = true;
+      $('iaHint').textContent = 'Requiere conectar una clave de Replicate (ver instrucciones).';
+    }
+  });
+
+  drop.onclick = () => input.click();
+  input.onchange = () => { addFiles(input.files); input.value = ''; };
+  ['dragenter', 'dragover'].forEach((e) => drop.addEventListener(e, (ev) => { ev.preventDefault(); drop.classList.add('over'); }));
+  ['dragleave', 'drop'].forEach((e) => drop.addEventListener(e, (ev) => { ev.preventDefault(); drop.classList.remove('over'); }));
+  drop.addEventListener('drop', (ev) => addFiles(ev.dataTransfer.files));
+
+  function addFiles(list) {
+    for (const f of list) {
+      if (!f.type.startsWith('image/')) continue;
+      if (files.length >= 10) { alert('Máximo 10 fotos.'); break; }
+      files.push(f);
+    }
+    render();
+  }
+  function render() {
+    thumbs.innerHTML = '';
+    files.forEach((f, i) => {
+      const d = document.createElement('div');
+      d.className = 'thumb';
+      d.innerHTML = `<img alt=""><i>${i + 1}</i><button type="button" title="Quitar">✕</button>`;
+      d.querySelector('img').src = URL.createObjectURL(f);
+      d.querySelector('button').onclick = () => { files.splice(i, 1); render(); };
+      thumbs.appendChild(d);
+    });
+  }
+
+  $('form').onsubmit = async (ev) => {
+    ev.preventDefault();
+    if (!files.length) return alert('Primero sube al menos una foto del reloj.');
+    const fd = new FormData();
+    // Los textos van primero para que el servidor los lea antes que los archivos.
+    ['marca', 'frase', 'cta'].forEach((k) => fd.append(k, $(k).value));
+    fd.append('estilo', document.querySelector('[name=estilo]:checked').value);
+    fd.append('modo', document.querySelector('[name=modo]:checked').value);
+    files.forEach((f) => fd.append('fotos', f));
+    if ($('musica').files[0]) fd.append('musica', $('musica').files[0]);
+
+    $('go').disabled = true;
+    $('status').classList.remove('hidden');
+    $('result').classList.add('hidden');
+    $('statusTitle').textContent = 'Creando tu video…';
+    $('statusMsg').className = 'hint';
+    $('statusMsg').textContent = 'Subiendo fotos…';
+    $('warnings').innerHTML = '';
+    $('barFill').style.width = '2%';
+    $('status').scrollIntoView({ behavior: 'smooth' });
+
+    try {
+      const res = await fetch('/api/videos', { method: 'POST', body: fd });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      poll(data.id);
+    } catch (err) { fail(err.message); }
+  };
+
+  async function poll(id) {
+    try {
+      const job = await (await fetch('/api/videos/' + id)).json();
+      $('barFill').style.width = Math.max(2, job.progreso || 0) + '%';
+      $('statusMsg').textContent = job.mensaje;
+      $('warnings').innerHTML = (job.avisos || []).map((a) => `<li>${a.replace(/</g, '&lt;')}</li>`).join('');
+      if (job.estado === 'listo') {
+        $('statusTitle').textContent = `¡Listo! Video de ${job.segundos} segundos`;
+        $('player').src = job.url;
+        $('download').href = job.url;
+        $('result').classList.remove('hidden');
+        $('go').disabled = false;
+      } else if (job.estado === 'error') {
+        fail(job.mensaje);
+      } else {
+        setTimeout(() => poll(id), 1500);
+      }
+    } catch (err) { fail('Se perdió la conexión con el servidor. ¿Sigue abierta la ventana negra?'); }
+  }
+
+  function fail(msg) {
+    $('statusTitle').textContent = 'Algo salió mal';
+    $('statusMsg').className = 'error';
+    $('statusMsg').textContent = msg;
+    $('go').disabled = false;
+  }
+</script>
+</body>
+</html>
