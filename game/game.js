@@ -866,7 +866,7 @@ const particles = (() => {
   const geo = new THREE.BufferGeometry();
   geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
   geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
-  const mat = new THREE.PointsMaterial({ size: 26, vertexColors: true, transparent: true, opacity: 0.55, depthWrite: false, sizeAttenuation: true });
+  const mat = new THREE.PointsMaterial({ size: 7, vertexColors: true, transparent: true, opacity: 0.4, depthWrite: false, sizeAttenuation: true });
   const pts = new THREE.Points(geo, mat);
   pts.frustumCulled = false;
   let n = 0;
