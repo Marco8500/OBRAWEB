@@ -4,24 +4,25 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Apex GP – Formula Racing</title>
-<meta name="description" content="Fast top-down formula racing. Beat 5 rivals, unlock circuits and upgrade your car.">
+<meta name="description" content="3D formula racing on world-famous style circuits. Read the weather, pick your tyres and beat 5 rivals.">
 <script src="https://sdk.crazygames.com/crazygames-sdk-v3.js"></script>
 <style>
-  :root { --accent:#ff2d2d; --accent2:#ffd400; --panel:rgba(14,16,24,.92); --text:#fff; }
+  :root { --accent:#ff2d2d; --accent2:#ffd400; --panel:rgba(14,16,24,.9); --text:#fff; }
   * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; user-select:none; -webkit-user-select:none; }
   html, body { margin:0; height:100%; overflow:hidden; background:#101218; color:var(--text);
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; touch-action:none; overscroll-behavior:none; }
-  canvas#game { position:fixed; inset:0; width:100%; height:100%; display:block; }
+  canvas#game, canvas#hud { position:fixed; inset:0; width:100%; height:100%; display:block; }
+  canvas#hud { pointer-events:none; z-index:2; }
   .hidden { display:none !important; }
-  .screen { position:fixed; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
-    gap:14px; padding:16px; background:radial-gradient(ellipse at center, rgba(10,12,20,.55), rgba(10,12,20,.9)); z-index:10; text-align:center; }
+  .screen { position:fixed; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:safe center;
+    gap:14px; padding:16px; background:linear-gradient(180deg, rgba(8,10,16,.35), rgba(8,10,16,.85)); z-index:10; text-align:center; overflow-y:auto; }
   .title { font-size:clamp(44px, 10vw, 96px); font-weight:900; font-style:italic; letter-spacing:-2px; line-height:.9; margin:0;
     text-shadow:0 6px 0 rgba(0,0,0,.35); }
   .title span { color:var(--accent); }
-  .subtitle { font-size:clamp(13px,2.4vw,18px); letter-spacing:6px; text-transform:uppercase; opacity:.8; margin:0 0 6px; }
+  .subtitle { font-size:clamp(13px,2.4vw,18px); letter-spacing:6px; text-transform:uppercase; opacity:.85; margin:0 0 6px; }
   h2 { margin:0 0 4px; font-size:clamp(26px,5vw,40px); font-style:italic; font-weight:900; }
   .btn { font:inherit; font-weight:800; font-style:italic; font-size:clamp(18px,3.4vw,24px); color:#fff; background:var(--accent);
-    border:0; border-radius:12px; padding:14px 34px; min-width:220px; cursor:pointer; box-shadow:0 5px 0 #a50f0f; text-transform:uppercase; transition:transform .06s; }
+    border:0; border-radius:12px; padding:14px 34px; min-width:200px; cursor:pointer; box-shadow:0 5px 0 #a50f0f; text-transform:uppercase; transition:transform .06s; }
   .btn:active { transform:translateY(3px); box-shadow:0 2px 0 #a50f0f; }
   .btn.big { font-size:clamp(24px,5vw,34px); padding:18px 54px; }
   .btn.sec { background:#2b3142; box-shadow:0 5px 0 #161a24; }
@@ -32,14 +33,14 @@
   .row { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; }
   .coins { font-weight:800; font-size:20px; color:var(--accent2); }
   .coins::before { content:"●"; margin-right:6px; }
-  .cards { display:grid; grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); gap:12px; width:min(820px, 100%); }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:12px; width:min(900px, 100%); }
   .card { background:var(--panel); border:2px solid #2b3142; border-radius:14px; padding:10px; cursor:pointer; position:relative; }
   .card:hover { border-color:var(--accent); }
   .card.locked { cursor:default; opacity:.55; }
   .card.locked:hover { border-color:#2b3142; }
   .card canvas { width:100%; height:auto; aspect-ratio:3/2; display:block; border-radius:8px; }
   .card .name { font-weight:800; font-style:italic; margin-top:6px; }
-  .card .meta { font-size:13px; opacity:.75; }
+  .card .meta { font-size:12px; opacity:.75; }
   .panel { background:var(--panel); border-radius:16px; padding:16px; width:min(560px, 100%); }
   .upg { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 4px; border-bottom:1px solid #2b3142; text-align:left; }
   .upg:last-child { border-bottom:0; }
@@ -57,9 +58,37 @@
   table.res tr.me { background:rgba(255,45,45,.25); font-weight:800; }
   table.res td:last-child { text-align:right; font-variant-numeric:tabular-nums; }
   .bigpos { font-size:clamp(46px,10vw,80px); font-weight:900; font-style:italic; line-height:1; }
-  .hint { font-size:13px; opacity:.7; max-width:520px; }
+  .hint { font-size:13px; opacity:.75; max-width:560px; }
+  /* briefing */
+  .brief { display:grid; grid-template-columns:1fr 1fr; gap:14px; width:min(900px,100%); text-align:left; }
+  .brief .panel { width:auto; }
+  .tname { font-size:26px; font-weight:900; font-style:italic; }
+  .tcountry { font-size:13px; opacity:.7; letter-spacing:2px; text-transform:uppercase; }
+  #bMap { width:100%; height:auto; aspect-ratio:3/2; margin-top:8px; border-radius:10px; background:rgba(255,255,255,.04); }
+  .wx { display:flex; gap:14px; align-items:center; margin-top:10px; padding:10px; border-radius:12px; background:rgba(255,255,255,.06); }
+  .wxicon { font-size:44px; line-height:1; }
+  .wxname { font-weight:900; font-size:20px; }
+  .wxmeta { font-size:13px; opacity:.8; line-height:1.5; }
+  .lbl2 { font-weight:900; font-style:italic; font-size:18px; margin-bottom:8px; }
+  .tyres { display:flex; gap:8px; flex-wrap:wrap; }
+  .tyre { width:62px; height:62px; border-radius:50%; background:#111; border:7px solid; display:flex; align-items:center; justify-content:center;
+    font-weight:900; font-size:22px; cursor:pointer; position:relative; box-shadow:0 0 0 3px transparent; }
+  .tyre.on { box-shadow:0 0 0 3px #fff; }
+  .tyre .rec { position:absolute; top:-9px; right:-12px; background:#2db34a; color:#fff; font-size:9px; padding:2px 5px; border-radius:6px; letter-spacing:.5px; }
+  .tinfo { margin-top:12px; font-size:14px; }
+  .bar { height:8px; border-radius:4px; background:#2b3142; overflow:hidden; margin:3px 0 8px; }
+  .bar > div { height:100%; background:var(--accent2); }
+  .warn { color:#ffb020; font-weight:700; font-size:13px; margin-top:6px; }
+  .pitrow { display:flex; align-items:center; gap:10px; padding:10px 4px; border-bottom:1px solid #2b3142; cursor:pointer; }
+  .pitrow input { width:22px; height:22px; accent-color:#ff2d2d; }
+  .plbl { font-weight:800; flex:1; }
+  .pdmg { font-size:13px; font-weight:700; }
+  .psec { font-size:13px; opacity:.7; margin-left:6px; }
+  .pitstat { font-size:13px; opacity:.8; margin-bottom:4px; }
+  .pittotal { margin-top:10px; font-size:16px; }
+  .tyre.keep { font-size:13px; }
   #topBtns { position:fixed; top:10px; right:10px; display:flex; gap:8px; z-index:20; }
-  .ibtn { width:46px; height:46px; border-radius:12px; border:0; background:rgba(14,16,24,.7); color:#fff; font-size:22px; cursor:pointer;
+  .ibtn { width:46px; height:46px; border-radius:12px; border:0; background:rgba(14,16,24,.7); color:#fff; font-size:20px; cursor:pointer;
     display:flex; align-items:center; justify-content:center; }
   #touch { position:fixed; inset:auto 0 0 0; height:0; z-index:15; }
   .tbtn { position:fixed; bottom:max(18px, env(safe-area-inset-bottom)); width:clamp(78px, 13vw, 110px); height:clamp(78px, 13vw, 110px); border-radius:50%;
@@ -70,28 +99,39 @@
   #tRight { left:calc(36px + clamp(78px, 13vw, 110px)); }
   #tBrake { right:18px; font-size:17px; background:rgba(255,45,45,.3); border-color:rgba(255,90,90,.6); }
   #tBrake.on { background:rgba(255,45,45,.6); }
-  .screen { overflow-y:auto; justify-content:safe center; }
+  #toast { position:fixed; left:50%; top:22%; transform:translateX(-50%); z-index:30; font-weight:900; font-style:italic; font-size:22px;
+    background:rgba(0,0,0,.6); padding:8px 18px; border-radius:10px; pointer-events:none; }
+  #loading { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:50; background:#101218;
+    font-weight:900; font-style:italic; font-size:28px; }
+  @media (max-width:700px) { .brief { grid-template-columns:1fr; } }
   @media (max-height:520px) {
     .screen { gap:8px; padding:10px; }
     .title { font-size:clamp(36px, 9vh, 64px); }
     .subtitle { margin:0; font-size:12px; }
-    .btn { padding:9px 24px; font-size:17px; min-width:170px; }
+    .btn { padding:9px 24px; font-size:17px; min-width:150px; }
     .btn.big { padding:12px 40px; font-size:24px; }
     .bigpos { font-size:44px; }
     h2 { font-size:24px; }
-    .cards { grid-template-columns:repeat(4, 1fr); gap:8px; }
+    .cards { grid-template-columns:repeat(3, 1fr); gap:8px; }
     .card { padding:6px; } .card .meta { font-size:11px; }
     table.res { font-size:13px; } table.res td { padding:2px 6px; }
     .panel { padding:10px; }
+    .brief { grid-template-columns:1fr 1fr; gap:8px; }
+    #bMap { aspect-ratio:5/2; }
+    .tname { font-size:20px; }
+    .wx { margin-top:6px; padding:6px; } .wxicon { font-size:32px; }
+    .tyre { width:48px; height:48px; border-width:5px; font-size:18px; }
+    .tinfo { margin-top:6px; font-size:12px; }
   }
-  #toast { position:fixed; left:50%; top:20%; transform:translateX(-50%); z-index:30; font-weight:900; font-style:italic; font-size:22px;
-    background:rgba(0,0,0,.6); padding:8px 18px; border-radius:10px; pointer-events:none; }
 </style>
 </head>
 <body>
 <canvas id="game"></canvas>
+<canvas id="hud"></canvas>
+<div id="loading">APEX GP</div>
 
 <div id="topBtns" class="hidden">
+  <button class="ibtn" id="btnCam" aria-label="Camera">🎥</button>
   <button class="ibtn" id="btnMute" aria-label="Mute">🔊</button>
   <button class="ibtn" id="btnPause" aria-label="Pause">❚❚</button>
 </div>
@@ -115,10 +155,33 @@
 </div>
 
 <div id="tracks" class="screen hidden">
-  <h2>Choose Circuit</h2>
+  <h2>Season Calendar</h2>
   <div class="cards" id="trackCards"></div>
-  <p class="hint">Finish in the top 3 to unlock the next circuit.</p>
+  <p class="hint">Finish in the top 3 to unlock the next round.</p>
   <button class="btn sec" data-back>Back</button>
+</div>
+
+<div id="brief" class="screen hidden">
+  <div class="brief">
+    <div class="panel">
+      <div class="tcountry" id="bRound"></div>
+      <div class="tname" id="bTrack"></div>
+      <canvas id="bMap" width="360" height="240"></canvas>
+      <div class="wx">
+        <div class="wxicon" id="bIcon"></div>
+        <div><div class="wxname" id="bWx"></div><div class="wxmeta" id="bWxMeta"></div></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="lbl2">Choose your tyres</div>
+      <div class="tyres" id="bTyres"></div>
+      <div class="tinfo" id="bTyreInfo"></div>
+    </div>
+  </div>
+  <div class="row">
+    <button class="btn sec" id="bBack">Back</button>
+    <button class="btn big" id="bStart">Start race</button>
+  </div>
 </div>
 
 <div id="garage" class="screen hidden">
@@ -148,14 +211,21 @@
   <div class="coins" id="resCoins">+0</div>
   <button class="btn gold" id="btnDouble">▶ Watch ad: 2× coins</button>
   <div class="row">
-    <button class="btn" id="btnNext">Next</button>
+    <button class="btn" id="btnNext">Next round</button>
     <button class="btn sec" id="btnRetry">Retry</button>
     <button class="btn sec" id="btnMenu">Menu</button>
   </div>
 </div>
 
+<div id="pit" class="screen hidden">
+  <h2>Pit Stop</h2>
+  <div class="panel" id="pitBody" style="text-align:left"></div>
+  <button class="btn big" id="pitGo">Go!</button>
+  <p class="hint">Your rivals keep racing while the crew works.</p>
+</div>
+
 <div id="toast" class="hidden"></div>
 
-<script src="game.js"></script>
+<script type="module" src="game.js"></script>
 </body>
 </html>
