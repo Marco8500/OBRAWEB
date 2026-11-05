@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OBRAWEB · Videos de relojes</title>
+<meta name="description" content="Crea videos profesionales de relojes para redes sociales a partir de fotos, directamente en tu móvil.">
+<meta name="theme-color" content="#0d0d0f">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="OBRAWEB">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<style>
+  :root {
+    --bg: #0d0d0f; --panel: #16161a; --line: #2a2a31; --text: #f2efe9; --muted: #9a968e;
+    --gold: #c9a45c; --gold-2: #e3c88f; --danger: #e5675c;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 24px 16px 64px; }
+  header { display: flex; gap: 14px; align-items: center; margin-bottom: 24px; }
+  header img { width: 56px; height: 56px; border-radius: 14px; flex: none; }
+  header h1 { font-weight: 300; letter-spacing: .18em; text-transform: uppercase; margin: 0; font-size: 26px; }
+  header h1 b { color: var(--gold); font-weight: 500; }
+  header p { color: var(--muted); margin: 2px 0 0; font-size: 15px; }
+  section { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 20px; margin-bottom: 16px; }
+  h2 { font-size: 15px; font-weight: 600; margin: 0 0 4px; }
+  h2 span { color: var(--gold); margin-right: 8px; }
+  .hint { color: var(--muted); font-size: 14px; margin: 0 0 14px; }
+  .drop { border: 1.5px dashed var(--line); border-radius: 12px; padding: 28px 16px; text-align: center; cursor: pointer; transition: .2s; }
+  .drop:hover, .drop.over { border-color: var(--gold); background: #1c1a16; }
+  .drop strong { color: var(--gold-2); }
+  .thumbs { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 10px; margin-top: 14px; }
+  .thumb { position: relative; aspect-ratio: 1; border-radius: 10px; overflow: hidden; background: #000; }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .thumb button { position: absolute; width: 28px; height: 28px; border-radius: 50%; border: 0; background: rgba(0,0,0,.7); color: #fff; cursor: pointer; font-size: 13px; }
+  .thumb .del { top: 4px; right: 4px; }
+  .thumb .left { bottom: 4px; right: 4px; }
+  .thumb i { position: absolute; left: 6px; bottom: 6px; font-style: normal; font-size: 12px; background: rgba(0,0,0,.6); padding: 0 6px; border-radius: 6px; }
+  label { display: block; font-size: 14px; color: var(--muted); margin: 12px 0 6px; }
+  input[type=text] { width: 100%; padding: 12px 14px; background: #0f0f12; border: 1px solid var(--line); border-radius: 10px; color: var(--text); font-size: 16px; }
+  input[type=text]:focus { outline: none; border-color: var(--gold); }
+  .options { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+  .opt { position: relative; margin: 0; }
+  .opt input { position: absolute; opacity: 0; }
+  .opt div { border: 1px solid var(--line); border-radius: 10px; padding: 12px; cursor: pointer; height: 100%; color: var(--text); }
+  .opt div b { display: block; }
+  .opt div small { color: var(--muted); }
+  .opt input:checked + div { border-color: var(--gold); background: #1c1a16; }
+  .go, .btn { width: 100%; padding: 16px; border: 0; border-radius: 12px; font-size: 17px; font-weight: 600; cursor: pointer;
+        background: linear-gradient(135deg, var(--gold), var(--gold-2)); color: #1a1408; display: block; text-align: center; text-decoration: none; }
+  .go:disabled { opacity: .5; cursor: wait; }
+  .btn.outline { background: none; border: 1px solid var(--gold); color: var(--gold-2); margin-top: 10px; }
+  .bar { height: 8px; background: #0f0f12; border-radius: 99px; overflow: hidden; margin: 12px 0 8px; }
+  .bar div { height: 100%; width: 0; background: var(--gold); }
+  .error { color: var(--danger); }
+  canvas, video { width: 100%; max-width: 320px; aspect-ratio: 9 / 16; display: block; margin: 12px auto; border-radius: 12px; background: #000; }
+  .hidden { display: none !important; }
+  footer { color: var(--muted); font-size: 13px; text-align: center; margin-top: 24px; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <img src="icons/icon-192.png" alt="">
+    <div>
+      <h1>OBRA<b>WEB</b></h1>
+      <p>Fotos de tu reloj → video profesional para Instagram, TikTok y Reels.</p>
+    </div>
+  </header>
+
+  <form id="form">
+    <section>
+      <h2><span>1</span>Fotos del reloj</h2>
+      <p class="hint">De 1 a 10 fotos, nítidas y con buena luz, desde distintos ángulos. Usa ◀ para cambiar el orden.</p>
+      <div class="drop" id="drop"><strong>Toca aquí</strong> para elegir tus fotos</div>
+      <input type="file" id="fileInput" accept="image/*" multiple hidden>
+      <div class="thumbs" id="thumbs"></div>
+    </section>
+
+    <section>
+      <h2><span>2</span>Textos del final <small style="color:var(--muted);font-weight:400">(opcional)</small></h2>
+      <label for="marca">Marca o nombre del reloj</label>
+      <input type="text" id="marca" maxlength="40" placeholder="Ej: Aurora Chrono">
+      <label for="frase">Frase</label>
+      <input type="text" id="frase" maxlength="60" placeholder="Ej: El tiempo, a tu manera">
+      <label for="cta">Llamada a la acción</label>
+      <input type="text" id="cta" maxlength="50" placeholder="Ej: Pídelo por mensaje directo">
+    </section>
+
+    <section>
+      <h2><span>3</span>Estilo</h2>
+      <div class="options">
+        <label class="opt"><input type="radio" name="estilo" value="lujo" checked><div><b>Lujo</b><small>Oscuro con detalles dorados</small></div></label>
+        <label class="opt"><input type="radio" name="estilo" value="minimal"><div><b>Minimal</b><small>Claro, limpio y elegante</small></div></label>
+        <label class="opt"><input type="radio" name="estilo" value="deportivo"><div><b>Deportivo</b><small>Contraste alto, con energía</small></div></label>
+      </div>
+      <label for="musica">Música (opcional)</label>
+      <input type="file" id="musica" accept="audio/*">
+    </section>
+
+    <button class="go" id="go" type="submit">Crear mi video</button>
+  </form>
+
+  <section id="status" class="hidden" style="margin-top:16px">
+    <h2 id="statusTitle">Creando tu video…</h2>
+    <p class="hint" id="statusMsg">No cambies de app ni apagues la pantalla hasta que termine.</p>
+    <div class="bar"><div id="barFill"></div></div>
+    <canvas id="canvas" width="1080" height="1920"></canvas>
+    <div id="result" class="hidden">
+      <video id="player" controls playsinline loop></video>
+      <a class="btn" id="download">⬇ Guardar video</a>
+      <button class="btn outline hidden" id="share" type="button">📤 Compartir (Instagram, TikTok…)</button>
+    </div>
+  </section>
+
+  <footer>🔒 Tus fotos no se suben a ningún sitio: el video se crea en tu propio dispositivo.</footer>
+</main>
+
+<script>
+'use strict';
+const W = 1080, H = 1920, FPS = 30, TRANSITION = 0.6, END_CARD = 3, ZMAX = 1.15;
+const STYLES = {
+  lujo:      { bg: '#0b0b0c', accent: '#c9a45c', text: '#ffffff', sub: '#d9d4ca', look: 'contrast(1.08) saturate(1.05)', shade: 'rgba(0,0,0,0.42)', vignette: 0.55, shine: true },
+  minimal:   { bg: '#f2f0ec', accent: '#1a1a1a', text: '#1a1a1a', sub: '#4a4743', look: 'contrast(1.04) saturate(0.95) brightness(1.02)', shade: 'rgba(242,240,236,0.45)', vignette: 0, shine: false },
+  deportivo: { bg: '#0a0f1a', accent: '#3fa9ff', text: '#ffffff', sub: '#c9d6e8', look: 'contrast(1.15) saturate(1.15)', shade: 'rgba(5,10,20,0.45)', vignette: 0.6, shine: true },
+};
+const MOTIONS = ['in', 'out', 'up', 'side'];
+const TRANSITIONS = ['fade', 'slide', 'fadeblack', 'zoom', 'fade'];
+
+const $ = (id) => document.getElementById(id);
+const files = [];
+const ease = (x) => (1 - Math.cos(Math.PI * Math.min(1, Math.max(0, x)))) / 2;
+const clamp01 = (x) => Math.min(1, Math.max(0, x));
+
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+
+// Fuentes incluidas (Inter, licencia OFL)
+const fontsReady = Promise.all([
+  new FontFace('ObraInter', 'url(fonts/Inter-Regular.otf)', { weight: '400' }).load(),
+  new FontFace('ObraInter', 'url(fonts/Inter-Light.otf)', { weight: '300' }).load(),
+]).then((fs) => fs.forEach((f) => document.fonts.add(f))).catch(() => {});
+
+// ---------- Selección de fotos ----------
+$('drop').onclick = () => $('fileInput').click();
+$('fileInput').onchange = (e) => { addFiles(e.target.files); e.target.value = ''; };
+['dragenter', 'dragover'].forEach((t) => $('drop').addEventListener(t, (e) => { e.preventDefault(); $('drop').classList.add('over'); }));
+['dragleave', 'drop'].forEach((t) => $('drop').addEventListener(t, (e) => { e.preventDefault(); $('drop').classList.remove('over'); }));
+$('drop').addEventListener('drop', (e) => addFiles(e.dataTransfer.files));
+
+function addFiles(list) {
+  for (const f of list) {
+    if (!f.type.startsWith('image/')) continue;
+    if (files.length >= 10) { alert('Máximo 10 fotos.'); break; }
+    files.push({ file: f, url: URL.createObjectURL(f) });
+  }
+  renderThumbs();
+}
+function renderThumbs() {
+  const box = $('thumbs');
+  box.innerHTML = '';
+  files.forEach((f, i) => {
+    const d = document.createElement('div');
+    d.className = 'thumb';
+    d.innerHTML = `<img alt=""><i>${i + 1}</i><button type="button" class="del" title="Quitar">✕</button>` +
+      (i > 0 ? '<button type="button" class="left" title="Mover antes">◀</button>' : '');
+    d.querySelector('img').src = f.url;
+    d.querySelector('.del').onclick = () => { URL.revokeObjectURL(f.url); files.splice(i, 1); renderThumbs(); };
+    if (i > 0) d.querySelector('.left').onclick = () => { [files[i - 1], files[i]] = [files[i], files[i - 1]]; renderThumbs(); };
+    box.appendChild(d);
+  });
+}
+
+// ---------- Preparación de escenas ----------
+function canvas2d(w, h) {
+  const c = document.createElement('canvas');
+  c.width = Math.max(1, Math.round(w)); c.height = Math.max(1, Math.round(h));
+  return [c, c.getContext('2d')];
+}
+function loadImage(url) {
+  return new Promise((ok, fail) => {
+    const img = new Image();
+    img.onload = () => ok(img);
+    img.onerror = () => fail(new Error('No se pudo leer una de las fotos.'));
+    img.src = url;
+  });
+}
+const filterSupported = (() => { const c = document.createElement('canvas').getContext('2d'); return 'filter' in c; })();
+
+async function prepareScene(url, index, style) {
+  const s = STYLES[style];
+  const img = await loadImage(url);
+  const iw = img.naturalWidth, ih = img.naturalHeight;
+  // Fondo: la misma foto muy desenfocada (reduciendo y ampliando) + capa de color.
+  const cover = Math.max(W / iw, H / ih);
+  const [tiny, tctx] = canvas2d(54, 96);
+  tctx.drawImage(img, (W - iw * cover) / 2 / 20, (H - ih * cover) / 2 / 20, iw * cover / 20, ih * cover / 20);
+  const [mid, mctx] = canvas2d(216, 384);
+  mctx.imageSmoothingQuality = 'high';
+  mctx.drawImage(tiny, 0, 0, 216, 384);
+  const [bg, bctx] = canvas2d(W, H);
+  bctx.imageSmoothingQuality = 'high';
+  bctx.drawImage(mid, 0, 0, W, H);
+  bctx.fillStyle = s.shade;
+  bctx.fillRect(0, 0, W, H);
+  // Producto: la foto completa (sin recortar el reloj), con un poco más de resolución para el zoom.
+  const fit = Math.min(W / iw, H / ih) * 0.94;
+  const fw = iw * fit, fh = ih * fit;
+  const [fg, fctx] = canvas2d(fw * ZMAX, fh * ZMAX);
+  fctx.imageSmoothingQuality = 'high';
+  if (filterSupported) fctx.filter = s.look;
+  fctx.drawImage(img, 0, 0, fg.width, fg.height);
+  return { type: 'photo', bg, fg, fw, fh, motion: MOTIONS[index % MOTIONS.length], shine: s.shine && index % 2 === 0 };
+}
+
+let vignetteCanvas = null;
+function vignette(strength) {
+  if (!strength) return null;
+  const [c, ctx] = canvas2d(W, H);
+  const g = ctx.createRadialGradient(W / 2, H / 2, H * 0.25, W / 2, H / 2, H * 0.72);
+  g.addColorStop(0, 'rgba(0,0,0,0)');
+  g.addColorStop(1, `rgba(0,0,0,${strength})`);
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, W, H);
+  return c;
+}
+
+// ---------- Dibujo de cada fotograma ----------
+function drawPhoto(ctx, sc, u, dur) {
+  const p = ease(u / dur);
+  let z = 1.12, dx = 0, dy = 0;
+  if (sc.motion === 'in') z = 1 + 0.14 * p;
+  else if (sc.motion === 'out') z = 1.14 - 0.14 * p;
+  else if (sc.motion === 'up') dy = (z - 1) * H / 2 * (1 - 2 * p);
+  else if (sc.motion === 'side') dx = (z - 1) * W / 2 * (1 - 2 * p);
+  ctx.save();
+  ctx.translate(W / 2 + dx, H / 2 + dy);
+  ctx.scale(z, z);
+  ctx.drawImage(sc.bg, -W / 2, -H / 2, W, H);
+  ctx.drawImage(sc.fg, -sc.fw / 2, -sc.fh / 2, sc.fw, sc.fh);
+  if (sc.shine) {
+    // Reflejo de luz que cruza el reloj, como en los anuncios.
+    ctx.beginPath();
+    ctx.rect(-sc.fw / 2, -sc.fh / 2, sc.fw, sc.fh);
+    ctx.clip();
+    const x = -sc.fw * 0.9 + sc.fw * 1.8 * ease((u / dur - 0.15) / 0.7);
+    const g = ctx.createLinearGradient(x - 160, -120, x + 160, 120);
+    g.addColorStop(0, 'rgba(255,255,255,0)');
+    g.addColorStop(0.5, 'rgba(255,255,255,0.16)');
+    g.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(-sc.fw / 2, -sc.fh / 2, sc.fw, sc.fh);
+  }
+  ctx.restore();
+  if (vignetteCanvas) ctx.drawImage(vignetteCanvas, 0, 0);
+}
+
+function spacedText(ctx, text, y, spacing) {
+  // Texto centrado con espaciado entre letras (compatible con todos los navegadores).
+  const chars = [...text];
+  const widths = chars.map((c) => ctx.measureText(c).width);
+  const total = widths.reduce((a, b) => a + b, 0) + spacing * (chars.length - 1);
+  let x = (W - total) / 2;
+  chars.forEach((c, i) => { ctx.fillText(c, x, y); x += widths[i] + spacing; });
+  return total;
+}
+function fitFont(ctx, text, weight, size, spacing, maxW) {
+  for (; size > 28; size -= 4) {
+    ctx.font = `${weight} ${size}px ObraInter, system-ui, sans-serif`;
+    const w = [...text].reduce((a, c) => a + ctx.measureText(c).width, 0) + spacing * ([...text].length - 1);
+    if (w <= maxW) break;
+  }
+  return size;
+}
+
+function drawEndCard(ctx, sc, u) {
+  const s = sc.s;
+  ctx.fillStyle = s.bg;
+  ctx.fillRect(0, 0, W, H);
+  ctx.textBaseline = 'middle';
+  const y0 = H * 0.42;
+  if (sc.brand) {
+    ctx.globalAlpha = clamp01((u - 0.2) / 0.6);
+    ctx.fillStyle = s.text;
+    fitFont(ctx, sc.brand, 400, 100, 12, W - 120);
+    spacedText(ctx, sc.brand, y0, 12);
+  }
+  ctx.globalAlpha = 1;
+  const lw = 240 * ease((u - 0.5) / 0.8);
+  ctx.fillStyle = s.accent;
+  ctx.fillRect((W - lw) / 2, y0 + 95, lw, 3);
+  if (sc.tagline) {
+    ctx.globalAlpha = clamp01((u - 0.7) / 0.6);
+    ctx.fillStyle = s.sub;
+    fitFont(ctx, sc.tagline, 300, 46, 2, W - 120);
+    spacedText(ctx, sc.tagline, y0 + 170, 2);
+  }
+  if (sc.cta) {
+    ctx.globalAlpha = clamp01((u - 1.2) / 0.6);
+    ctx.fillStyle = s.text;
+    fitFont(ctx, sc.cta, 400, 40, 1, W - 120);
+    spacedText(ctx, sc.cta, H * 0.8, 1);
+  }
+  ctx.globalAlpha = 1;
+}
+
+function drawScene(ctx, sc, u) {
+  if (sc.type === 'photo') drawPhoto(ctx, sc, u, sc.dur);
+  else drawEndCard(ctx, sc, u);
+}
+
+function drawFrame(ctx, scenes, t, total) {
+  // Escena actual y, si hay transición, la siguiente.
+  let i = scenes.findIndex((sc) => t >= sc.start && t < sc.start + sc.dur);
+  if (i < 0) i = scenes.length - 1;
+  const a = scenes[i];
+  const b = scenes[i + 1];
+  if (b && t >= b.start) {
+    const p = ease((t - b.start) / TRANSITION);
+    const kind = b.type === 'end' ? 'fade' : TRANSITIONS[i % TRANSITIONS.length];
+    if (kind === 'fadeblack') {
+      if (p < 0.5) drawScene(ctx, a, t - a.start); else drawScene(ctx, b, t - b.start);
+      ctx.fillStyle = `rgba(0,0,0,${1 - Math.abs(1 - 2 * p)})`;
+      ctx.fillRect(0, 0, W, H);
+    } else if (kind === 'slide') {
+      ctx.save(); ctx.translate(-W * 0.35 * p, 0); drawScene(ctx, a, t - a.start); ctx.restore();
+      ctx.save(); ctx.translate(W * (1 - p), 0); drawScene(ctx, b, t - b.start); ctx.restore();
+    } else if (kind === 'zoom') {
+      drawScene(ctx, a, t - a.start);
+      ctx.save(); ctx.globalAlpha = p;
+      const z = 1 + 0.18 * (1 - p);
+      ctx.translate(W / 2, H / 2); ctx.scale(z, z); ctx.translate(-W / 2, -H / 2);
+      drawScene(ctx, b, t - b.start); ctx.restore();
+    } else {
+      drawScene(ctx, a, t - a.start);
+      ctx.save(); ctx.globalAlpha = p; drawScene(ctx, b, t - b.start); ctx.restore();
+    }
+  } else {
+    drawScene(ctx, a, t - a.start);
+  }
+  // Entrada desde negro y salida suave.
+  const fade = Math.max(clamp01(1 - t / 0.4), clamp01((t - (total - 0.3)) / 0.3));
+  if (fade > 0) { ctx.fillStyle = `rgba(0,0,0,${fade})`; ctx.fillRect(0, 0, W, H); }
+}
+
+// ---------- Grabación ----------
+function pickMime(withAudio) {
+  const list = withAudio
+    ? ['video/mp4;codecs=avc1.640028,mp4a.40.2', 'video/mp4;codecs=avc1,mp4a.40.2', 'video/mp4;codecs=avc1.42E01F,mp4a.40.2', 'video/mp4', 'video/webm;codecs=vp9,opus', 'video/webm;codecs=vp8,opus', 'video/webm']
+    : ['video/mp4;codecs=avc1.640028', 'video/mp4;codecs=avc1', 'video/mp4;codecs=avc1.42E01F', 'video/mp4', 'video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/webm'];
+  return list.find((m) => window.MediaRecorder && MediaRecorder.isTypeSupported(m)) || '';
+}
+
+let lastBlob = null, lastName = '';
+
+$('form').onsubmit = async (ev) => {
+  ev.preventDefault();
+  if (!files.length) return alert('Primero elige al menos una foto del reloj.');
+  if (!window.MediaRecorder || !HTMLCanvasElement.prototype.captureStream) {
+    return alert('Tu navegador no puede crear videos. Usa Chrome (Android) o Safari actualizado (iPhone).');
+  }
+  const musicFile = $('musica').files[0];
+  // El audio debe iniciarse directamente tras tocar el botón (regla de los navegadores).
+  const audioCtx = musicFile ? new (window.AudioContext || window.webkitAudioContext)() : null;
+
+  const style = document.querySelector('[name=estilo]:checked').value;
+  const s = STYLES[style];
+  $('go').disabled = true;
+  $('status').classList.remove('hidden');
+  $('result').classList.add('hidden');
+  $('canvas').classList.remove('hidden');
+  $('statusTitle').textContent = 'Preparando fotos…';
+  $('statusMsg').className = 'hint';
+  $('statusMsg').textContent = 'No cambies de app ni apagues la pantalla hasta que termine.';
+  $('barFill').style.width = '0%';
+  $('status').scrollIntoView({ behavior: 'smooth' });
+
+  let wakeLock = null;
+  try { wakeLock = await navigator.wakeLock?.request('screen'); } catch {}
+
+  try {
+    await fontsReady;
+    vignetteCanvas = vignette(s.vignette);
+    const n = files.length;
+    const dur = n <= 3 ? 3.5 : 2.8;
+    const scenes = [];
+    for (let i = 0; i < n; i++) {
+      const sc = await prepareScene(files[i].url, i, style);
+      Object.assign(sc, { start: i * (dur - TRANSITION), dur });
+      scenes.push(sc);
+    }
+    const brand = $('marca').value.trim().toUpperCase(), tagline = $('frase').value.trim(), cta = $('cta').value.trim();
+    if (brand || tagline || cta) scenes.push({ type: 'end', s, brand, tagline, cta, start: n * (dur - TRANSITION), dur: END_CARD });
+    const last = scenes[scenes.length - 1];
+    const total = last.start + last.dur;
+
+    let audioTrack = null, source = null, gain = null;
+    if (audioCtx) {
+      await audioCtx.resume();
+      const buf = await audioCtx.decodeAudioData(await musicFile.arrayBuffer());
+      source = audioCtx.createBufferSource();
+      source.buffer = buf; source.loop = true;
+      gain = audioCtx.createGain();
+      const dest = audioCtx.createMediaStreamDestination();
+      source.connect(gain).connect(dest);
+      audioTrack = dest.stream.getAudioTracks()[0];
+    }
+
+    const canvas = $('canvas');
+    const ctx = canvas.getContext('2d');
+    ctx.imageSmoothingQuality = 'high';
+    drawFrame(ctx, scenes, 0, total);
+    const stream = canvas.captureStream(FPS);
+    if (audioTrack) stream.addTrack(audioTrack);
+    const mime = pickMime(Boolean(audioTrack));
+    const rec = new MediaRecorder(stream, { mimeType: mime || undefined, videoBitsPerSecond: 12_000_000, audioBitsPerSecond: 192_000 });
+    const chunks = [];
+    rec.ondataavailable = (e) => e.data.size && chunks.push(e.data);
+    const done = new Promise((ok) => (rec.onstop = ok));
+
+    $('statusTitle').textContent = 'Grabando tu video…';
+    rec.start(250);
+    const t0 = performance.now();
+    if (source) {
+      const now = audioCtx.currentTime;
+      gain.gain.setValueAtTime(0, now);
+      gain.gain.linearRampToValueAtTime(1, now + 0.8);
+      gain.gain.setValueAtTime(1, now + Math.max(0.8, total - 1.5));
+      gain.gain.linearRampToValueAtTime(0, now + total);
+      source.start();
+    }
+    await new Promise((ok) => {
+      const tick = () => {
+        const t = (performance.now() - t0) / 1000;
+        drawFrame(ctx, scenes, Math.min(t, total - 0.001), total);
+        $('barFill').style.width = Math.min(100, (t / total) * 100) + '%';
+        if (t < total) requestAnimationFrame(tick); else ok();
+      };
+      requestAnimationFrame(tick);
+    });
+    rec.stop();
+    await done;
+    if (source) source.stop();
+    if (audioCtx) audioCtx.close();
+
+    const type = (rec.mimeType || mime || 'video/webm').split(';')[0];
+    const ext = type.includes('mp4') ? 'mp4' : 'webm';
+    lastBlob = new Blob(chunks, { type });
+    lastName = `video-reloj-${Date.now()}.${ext}`;
+    const url = URL.createObjectURL(lastBlob);
+    $('player').src = url;
+    $('download').href = url;
+    $('download').download = lastName;
+    $('canvas').classList.add('hidden');
+    $('result').classList.remove('hidden');
+    $('statusTitle').textContent = `¡Listo! Video de ${Math.round(total)} segundos`;
+    $('statusMsg').textContent = ext === 'webm'
+      ? 'Tu navegador lo guardó en formato WEBM. Si Instagram no lo acepta, ábrelo en Chrome actualizado o Safari.'
+      : 'Guárdalo o compártelo directamente en tus redes.';
+    const shareFile = new File([lastBlob], lastName, { type });
+    $('share').classList.toggle('hidden', !(navigator.canShare && navigator.canShare({ files: [shareFile] })));
+    $('share').onclick = () => navigator.share({ files: [shareFile], title: 'Mi video' }).catch(() => {});
+  } catch (err) {
+    console.error(err);
+    $('statusTitle').textContent = 'Algo salió mal';
+    $('statusMsg').className = 'error';
+    $('statusMsg').textContent = err.message || String(err);
+  } finally {
+    $('go').disabled = false;
+    try { wakeLock && wakeLock.release(); } catch {}
+  }
+};
+</script>
+</body>
+</html>
