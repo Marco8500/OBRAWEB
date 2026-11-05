@@ -99,6 +99,7 @@
   #tRight { left:calc(36px + clamp(78px, 13vw, 110px)); }
   #tBrake { right:18px; font-size:17px; background:rgba(255,45,45,.3); border-color:rgba(255,90,90,.6); }
   #tBrake.on { background:rgba(255,45,45,.6); }
+  body.capture #topBtns, body.capture #touch, body.capture #toast { display:none !important; }
   #toast { position:fixed; left:50%; top:22%; transform:translateX(-50%); z-index:30; font-weight:900; font-style:italic; font-size:22px;
     background:rgba(0,0,0,.6); padding:8px 18px; border-radius:10px; pointer-events:none; }
   #loading { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:50; background:#101218;
@@ -243,6 +244,7 @@ const params = new URLSearchParams(location.search);
 const AUTOPILOT = params.has('autopilot');
 const TIME_SCALE = Math.min(20, Math.max(1, +params.get('timescale') || 1));
 const COVER = params.get('cover');
+const CAPTURE = params.has('capture');   // debug: fixed-step frames for recording trailers
 
 const LAPS = 5;
 const SP = 8;               // centre-line sample spacing (world units; ~9 units = 1 m)
@@ -555,7 +557,7 @@ function distToTrack(t, x, y) {
 // ================================================================ renderer & scene
 const canvas = $('game');
 const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0 && matchMedia('(pointer: coarse)').matches);
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: !isTouchDevice, powerPreference: 'high-performance', preserveDrawingBuffer: !!COVER });
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: !isTouchDevice, powerPreference: 'high-performance', preserveDrawingBuffer: !!COVER || CAPTURE });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isTouchDevice ? 1.3 : 1.75));
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -1100,7 +1102,7 @@ const particles = (() => {
   const geo = new THREE.BufferGeometry();
   geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
   geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
-  const mat = new THREE.PointsMaterial({ size: 26, vertexColors: true, transparent: true, opacity: 0.55, depthWrite: false, sizeAttenuation: true });
+  const mat = new THREE.PointsMaterial({ size: 7, vertexColors: true, transparent: true, opacity: 0.4, depthWrite: false, sizeAttenuation: true });
   const pts = new THREE.Points(geo, mat);
   pts.frustumCulled = false;
   let n = 0;
@@ -1896,7 +1898,7 @@ function drawHUD() {
   const ctx = hud.ctx, W = hud.W, H = hud.H;
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.clearRect(0, 0, hud.cv.width, hud.cv.height);
-  if (!race || COVER) return;
+  if (!race || COVER || CAPTURE) return;
   ctx.setTransform(hud.dpr, 0, 0, hud.dpr, 0, 0);
   const r = race, t = r.track, p = r.player;
   const small = W < 700 || H < 500;
@@ -2116,7 +2118,7 @@ click('btnDouble', async () => {
 // ================================================================ main loop
 let last = performance.now(), acc = 0;
 function frame(now) {
-  const dt = Math.min(0.1, (now - last) / 1000);
+  const dt = CAPTURE ? 1 / 30 : Math.min(0.1, (now - last) / 1000);
   last = now;
   if (race && state !== 'paused' && state !== 'cover' && state !== 'pitmenu') {
     acc += dt * TIME_SCALE;
@@ -2131,7 +2133,7 @@ function frame(now) {
   if (state !== 'cover') { syncCars(); updateCamera(dt); }
   renderer.render(scene, camera);
   drawHUD();
-  requestAnimationFrame(frame);
+  if (!CAPTURE) requestAnimationFrame(frame);
 }
 
 // ================================================================ boot
@@ -2156,7 +2158,10 @@ async function boot() {
   $('loading').classList.add('hidden');
   CG.loadingStop();
   window.__game = { get race() { return race; }, get state() { return state; } };
-  requestAnimationFrame(frame);
+  if (CAPTURE) {
+    document.body.classList.add('capture');
+    window.__advance = (n = 1) => { for (let i = 0; i < n; i++) frame(performance.now()); };
+  } else requestAnimationFrame(frame);
 }
 
 function setupCover() {
