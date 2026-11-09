@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Flor &amp; Atelier · Floristería botánica artesanal | Ramos con entrega el mismo día</title>
+  <meta name="description" content="Flor &amp; Atelier: ramos artesanales, plantas y flores para bodas y eventos. Pide antes de las 14:00 y lo entregamos hoy. Envío gratis desde 40 €. Reserva sin pago online.">
+  <meta name="theme-color" content="#2D4B3E">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/img/logo-mark.png">
+
+  <!-- Open Graph: vista previa al compartir por WhatsApp / redes -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:title" content="Flor &amp; Atelier · Floristería botánica artesanal">
+  <meta property="og:description" content="Ramos artesanales hechos a mano con entrega el mismo día. Bodas, eventos y plantas de interior.">
+  <meta property="og:image" content="assets/img/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+  <link rel="preload" as="image" href="assets/img/hero-900.webp" imagesrcset="assets/img/hero-900.webp 900w, assets/img/hero-1400.webp 1400w" imagesizes="(min-width: 960px) 55vw, 100vw">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script src="assets/js/main.js" defer></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Florist",
+    "name": "Flor & Atelier",
+    "description": "Floristería botánica artesanal: ramos, plantas y flores para bodas y eventos.",
+    "image": "assets/img/og-image.jpg",
+    "priceRange": "€€"
+  }
+  </script>
+</head>
+<body>
+<!-- ============ ICONOS (sprite SVG, sin dependencias externas) ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-truck" viewBox="0 0 24 24"><path d="M14 17V6H3v11h1"/><path d="M14 9h4l3 4v4h-1"/><path d="M9 17h6"/><circle cx="6.5" cy="17.5" r="2"/><circle cx="17.5" cy="17.5" r="2"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10Z"/><path d="M2 21c0-3 1.9-5.4 5.1-6C9.5 14.5 12 13 13 12"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-wa" viewBox="0 0 24 24"><path d="M3.5 20.5 4.8 16A8.5 8.5 0 1 1 8 19.3Z"/><path d="M9 8.6c.2-.5.6-.6 1-.6l.9 2-.8 1a5 5 0 0 0 2.9 2.9l1-.8 2 .9c0 .4-.1.8-.6 1-1.6.9-4.2-.3-5.8-2s-2.9-4-2-5.6"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="17" rx="2.5"/><path d="M16 2.5v4M8 2.5v4M3 10h18"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7Z"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 2.5 2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5-4.8-4.6 6.6-.9z"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="m12 3 1.8 4.7 4.7 1.8-4.7 1.8L12 16l-1.8-4.7-4.7-1.8 4.7-1.8z"/><path d="m19 15 .8 2.2 2.2.8-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="m21.5 7-9.5 6-9.5-6"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C10 3 12 8 12 8s2-5 4.5-5a2.5 2.5 0 0 1 0 5"/></symbol>
+    <symbol id="i-flower" viewBox="0 0 24 24"><circle cx="12" cy="7" r="3"/><circle cx="17" cy="12" r="3"/><circle cx="12" cy="17" r="3"/><circle cx="7" cy="12" r="3"/><circle cx="12" cy="12" r="1.2"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/></symbol>
+    <symbol id="i-rings" viewBox="0 0 24 24"><circle cx="9" cy="14.5" r="5.5"/><circle cx="15" cy="14.5" r="5.5"/><path d="m10.5 5 1.5-2 1.5 2-1.5 1.5z"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><rect x="2.5" y="5.5" width="19" height="14" rx="2.5"/><path d="M2.5 10h19M16 15h2"/></symbol>
+    <symbol id="i-store" viewBox="0 0 24 24"><path d="M3.5 9 5 4h14l1.5 5M4.5 9v11h15V9M3 9h18M9.5 20v-5.5h5V20"/></symbol>
+    <symbol id="i-snow" viewBox="0 0 24 24"><path d="M12 2v20M3.3 7l17.4 10M20.7 7 3.3 17"/><path d="m9 4 3 2 3-2M9 20l3-2 3 2"/></symbol>
+    <symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="m8.5 14-1.5 8 5-3 5 3-1.5-8"/></symbol>
+    <symbol id="i-plant" viewBox="0 0 24 24"><path d="M7 14h10l-1.5 7h-7z"/><path d="M12 14V8"/><path d="M12 10c0-3 2-5 6-5 0 3-2 5-6 5zM12 8C12 5.5 10.5 4 7 4c0 2.5 1.5 4 5 4z"/></symbol>
+  </defs>
+</svg>
+
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+<!-- ============ CABECERA ============ -->
+<div class="announce" role="note">
+  <div class="container announce__inner">
+    <svg class="ic" aria-hidden="true"><use href="#i-truck"/></svg>
+    <p><strong>Pide antes de las 14:00 y lo entregamos hoy</strong><span class="announce__sep" aria-hidden="true">·</span><span class="announce__extra">Envío gratis desde 40 €</span></p>
+  </div>
+</div>
+
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a class="brand" href="#inicio" aria-label="Flor &amp; Atelier — volver al inicio">
+      <img class="brand__mark" src="assets/img/logo-mark.png" alt="" width="29" height="40">
+      <span class="brand__text">
+        <span class="brand__name">Flor &amp; Atelier</span>
+        <span class="brand__tag">Floristería botánica</span>
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="Principal">
+      <a href="#colecciones" data-nav="colecciones">Colecciones</a>
+      <a href="#catalogo" data-nav="catalogo">Catálogo</a>
+      <a href="#bodas" data-nav="bodas">Bodas y eventos</a>
+      <a href="#como-funciona" data-nav="como-funciona">Cómo funciona</a>
+      <a href="#faq" data-nav="faq">Preguntas</a>
+    </nav>
+
+    <div class="header__actions">
+      <a class="icon-btn icon-btn--wa" data-wa href="https://wa.me/34600000000" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp">
+        <svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg>
+      </a>
+      <a class="btn btn--primary btn--sm header__cta" href="#pedido">Encargar ramo</a>
+      <button class="icon-btn menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="drawer">
+        <svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Menú móvil -->
+<div class="drawer" id="drawer" hidden>
+  <div class="drawer__backdrop" data-close-drawer></div>
+  <div class="drawer__panel" role="dialog" aria-modal="true" aria-label="Menú">
+    <div class="drawer__head">
+      <span class="brand__name">Flor &amp; Atelier</span>
+      <button class="icon-btn" type="button" data-close-drawer aria-label="Cerrar menú">
+        <svg class="ic" aria-hidden="true"><use href="#i-close"/></svg>
+      </button>
+    </div>
+    <nav class="drawer__nav" aria-label="Menú móvil">
+      <a href="#colecciones">Colecciones</a>
+      <a href="#catalogo">Catálogo</a>
+      <a href="#bodas">Bodas y eventos</a>
+      <a href="#como-funciona">Cómo funciona</a>
+      <a href="#opiniones">Opiniones</a>
+      <a href="#faq">Preguntas frecuentes</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <div class="drawer__foot">
+      <a class="btn btn--primary btn--block" href="#pedido">
+        <svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg> Encargar mi ramo
+      </a>
+      <a class="btn btn--wa btn--block" data-wa href="https://wa.me/34600000000" target="_blank" rel="noopener">
+        <svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg> Escribir por WhatsApp
+      </a>
+      <p class="drawer__note">Sin pago online · Confirmamos tu pedido por WhatsApp</p>
+    </div>
+  </div>
+</div>
+
+<main id="contenido">
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="inicio">
+  <div class="container hero__grid">
+    <div class="hero__media">
+      <picture>
+        <img src="assets/img/hero-900.webp" srcset="assets/img/hero-900.webp 900w, assets/img/hero-1400.webp 1400w" sizes="(min-width: 960px) 55vw, 100vw" width="900" height="490" alt="Ramo artesanal de rosas de jardín y ranúnculos en tonos melocotón sobre una mesa de lino en el taller" fetchpriority="high">
+      </picture>
+      <div class="hero__float hero__float--rating" aria-hidden="true">
+        <span class="stars"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span>
+        <span><strong>4,9/5</strong> clientes locales</span>
+      </div>
+      <div class="hero__float hero__float--time" aria-hidden="true">
+        <span class="hero__float-ic"><svg class="ic"><use href="#i-clock"/></svg></span>
+        <span><strong>Antes de las 14:00</strong><br>llega hoy mismo</span>
+      </div>
+    </div>
+
+    <div class="hero__content">
+      <p class="eyebrow eyebrow--hero"><span class="dot" aria-hidden="true"></span>Floristería botánica artesanal</p>
+      <h1 class="hero__title">Ramos hechos a mano que llegan <em>hoy mismo</em> a tu puerta</h1>
+      <p class="hero__lead">Diseños florales únicos para regalar o vestir tus momentos especiales, con tallos frescos de agricultores locales y una dedicatoria escrita a mano incluida.</p>
+      <div class="hero__ctas">
+        <a class="btn btn--primary btn--lg" href="#catalogo">
+          Elegir mi ramo <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </a>
+        <a class="btn btn--ghost btn--lg" href="#pedido" data-tipo="Ramo personalizado">
+          <svg class="ic" aria-hidden="true"><use href="#i-sparkle"/></svg> Encargar uno a medida
+        </a>
+      </div>
+      <ul class="hero__trust">
+        <li><svg class="ic" aria-hidden="true"><use href="#i-wallet"/></svg>Sin pago online</li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-pen"/></svg>Dedicatoria gratis</li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-truck"/></svg>Envío gratis desde 40 €</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COLECCIONES ============ -->
+<section class="section" id="colecciones">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Descubrir</p>
+      <h2 class="h2">Un detalle perfecto <em>para cada ocasión</em></h2>
+      <p class="section-head__lead">Cumpleaños, aniversarios, una casa nueva o el día más importante de tu vida: cada pieza se diseña a mano en nuestro taller.</p>
+    </div>
+
+    <div class="collections">
+      <a class="collection reveal" href="#catalogo" data-filter="all">
+        <img src="assets/img/cumpleanos-360.webp" srcset="assets/img/cumpleanos-360.webp 360w, assets/img/cumpleanos-540.webp 540w" sizes="(min-width: 960px) 280px, 48vw" width="360" height="450" loading="lazy" alt="Ramo de cumpleaños con dalias y claveles envuelto en papel kraft">
+        <span class="collection__body">
+          <span class="tag tag--rose">Los más deseados</span>
+          <span class="collection__title">Ramos de cumpleaños y regalo</span>
+          <span class="collection__link">Ver ramos <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+        </span>
+      </a>
+      <a class="collection reveal" href="#bodas">
+        <img src="assets/img/bodas-card-360.webp" srcset="assets/img/bodas-card-360.webp 360w, assets/img/bodas-card-540.webp 540w" sizes="(min-width: 960px) 280px, 48vw" width="360" height="450" loading="lazy" alt="Novia sosteniendo un ramo de rosas blancas de jardín y jazmín">
+        <span class="collection__body">
+          <span class="tag tag--sage">Diseño a medida</span>
+          <span class="collection__title">Flores para bodas y eventos</span>
+          <span class="collection__link">Pedir asesoría <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+        </span>
+      </a>
+      <a class="collection reveal" href="#catalogo" data-filter="plantas">
+        <img src="assets/img/plantas-360.webp" srcset="assets/img/plantas-360.webp 360w, assets/img/plantas-540.webp 540w" sizes="(min-width: 960px) 280px, 48vw" width="360" height="450" loading="lazy" alt="Plantas de interior en macetas de terracota junto a un ventanal">
+        <span class="collection__body">
+          <span class="tag tag--cream">Purifica tu hogar</span>
+          <span class="collection__title">Plantas de interior</span>
+          <span class="collection__link">Ver plantas <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+        </span>
+      </a>
+      <a class="collection reveal" href="#pedido" data-tipo="Centro / composición floral">
+        <img src="assets/img/centros-360.webp" srcset="assets/img/centros-360.webp 360w, assets/img/centros-540.webp 540w" sizes="(min-width: 960px) 280px, 48vw" width="360" height="450" loading="lazy" alt="Centro de mesa con protea, rosas pastel y espigas secas en jarrón de cerámica">
+        <span class="collection__body">
+          <span class="tag tag--terra">Artesanía floral</span>
+          <span class="collection__title">Centros y composiciones</span>
+          <span class="collection__link">Encargar <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CATÁLOGO ============ -->
+<section class="section section--tint" id="catalogo">
+  <div class="container">
+    <div class="section-head section-head--row reveal">
+      <div>
+        <p class="eyebrow">Favoritos del taller</p>
+        <h2 class="h2">Elige tu ramo, <em>nosotros lo creamos hoy</em></h2>
+        <p class="section-head__lead">Resérvalo en un minuto: lo preparamos con los tallos más frescos del día y te confirmamos por WhatsApp.</p>
+      </div>
+      <div class="filters" role="group" aria-label="Filtrar catálogo">
+        <button class="chip is-active" type="button" data-category="all" aria-pressed="true">Todos</button>
+        <button class="chip" type="button" data-category="silvestres" aria-pressed="false">Ramos silvestres</button>
+        <button class="chip" type="button" data-category="rosas" aria-pressed="false">Rosas y peonías</button>
+        <button class="chip" type="button" data-category="plantas" aria-pressed="false">Plantas</button>
+      </div>
+    </div>
+
+    <div class="products" id="productGrid" aria-live="polite">
+      <article class="product reveal" data-cat="silvestres" data-name="Ramo Silvestre Primavera" data-price="42" data-img="assets/img/silvestre-360.webp">
+        <div class="product__media">
+          <img src="assets/img/silvestre-360.webp" srcset="assets/img/silvestre-360.webp 360w, assets/img/silvestre-540.webp 540w" sizes="(min-width: 960px) 280px, 48vw" width="360" height="450" loading="lazy" alt="Ramo silvestre de lavanda, manzanilla, espigas de trigo y eucalipto atado con cordel">
+          <span class="badge badge--dark">Más vendido</span>
+          <button class="fav" type="button" aria-pressed="false" aria-label="Guardar Ramo Silvestre Primavera en favoritos"><svg aria-hidden="true"><use href="#i-heart"/></svg></button>
+        </div>
+        <div class="product__body">
+          <div class="rating" aria-label="Valoración 5 de 5, 48 opiniones"><span class="stars" aria-hidden="true"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span><span>(48)</span></div>
+          <h3 class="product__title">Ramo Silvestre Primavera</h3>
+          <p class="product__desc">Lavanda, manzanilla, espigas y eucalipto</p>
+          <div class="product__foot">
+            <span class="price">42,00 €</span>
+            <span class="product__ship"><svg class="ic" aria-hidden="true"><use href="#i-truck"/></svg>Envío gratis</span>
+          </div>
+          <div class="product__actions">
+            <button class="btn btn--primary btn--sm" type="button" data-pedir><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>Reservar</button>
+            <a class="btn btn--wa-soft btn--sm btn--square" data-wa-product href="https://wa.me/34600000000" target="_blank" rel="noopener" aria-label="Pedir Ramo Silvestre Primavera por WhatsApp"><svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="product reveal" data-cat="rosas" data-name="Sinfonía Pastel de Peonías" data-price="55" data-img="assets/img/peonias-360.webp">
+        <div class="product__media">
+          <img src="assets/img/peonias-360.webp" srcset="assets/img/peonias-360.webp 360w, assets/img/peonias-540.webp 540w" sizes="(min-width: 960px) 280px, 48vw" width="360" height="450" loading="lazy" alt="Composición de peonías rosa empolvado, rosas de jardín e hortensias blancas en jarrón de cristal">
+          <span class="badge badge--rose">Edición especial</span>
+          <button class="fav" type="button" aria-pressed="false" aria-label="Guardar Sinfonía Pastel de Peonías en favoritos"><svg aria-hidden="true"><use href="#i-heart"/></svg></button>
+        </div>
+        <div class="product__body">
+          <div class="rating" aria-label="Valoración 5 de 5, 32 opiniones"><span class="stars" aria-hidden="true"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span><span>(32)</span></div>
+          <h3 class="product__title">Sinfonía Pastel de Peonías</h3>
+          <p class="product__desc">Peonías, rosas de jardín e hortensias</p>
+          <div class="product__foot">
+            <span class="price">55,00 €</span>
+            <span class="product__ship"><svg class="ic" aria-hidden="true"><use href="#i-truck"/></svg>Envío gratis</span>
+          </div>
+          <div class="product__actions">
+            <button class="btn btn--primary btn--sm" type="button" data-pedir><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>Reservar</button>
+            <a class="btn btn--wa-soft btn--sm btn--square" data-wa-product href="https://wa.me/34600000000" target="_blank" rel="noopener" aria-label="Pedir Sinfonía Pastel de Peonías por WhatsApp"><svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="product reveal" data-cat="silvestres" data-name="Cesta Botánica Provenzal" data-price="38.5" data-img="assets/img/cesta-360.webp">
+        <div class="product__media">
+          <img src="assets/img/cesta-360.webp" srcset="assets/img/cesta-360.webp 360w, assets/img/cesta-540.webp 540w" sizes="(min-width: 960px) 280px, 48vw" width="360" height="450" loading="lazy" alt="Cesta de mimbre con ranúnculos amarillos, acianos y flores de jardín">
+          <span class="badge badge--sage">Novedad</span>
+          <button class="fav" type="button" aria-pressed="false" aria-label="Guardar Cesta Botánica Provenzal en favoritos"><svg aria-hidden="true"><use href="#i-heart"/></svg></button>
+        </div>
+        <div class="product__body">
+          <div class="rating" aria-label="Valoración 4,5 de 5, 19 opiniones"><span class="stars" aria-hidden="true"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg class="half"><use href="#i-star"/></svg></span><span>(19)</span></div>
+          <h3 class="product__title">Cesta Botánica Provenzal</h3>
+          <p class="product__desc">Flores de jardín, salvia y tomillo silvestre</p>
+          <div class="product__foot">
+            <span class="price">38,50 €</span>
+            <span class="product__ship product__ship--muted">Recogida o envío</span>
+          </div>
+          <div class="product__actions">
+            <button class="btn btn--primary btn--sm" type="button" data-pedir><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>Reservar</button>
+            <a class="btn btn--wa-soft btn--sm btn--square" data-wa-product href="https://wa.me/34600000000" target="_blank" rel="noopener" aria-label="Pedir Cesta Botánica Provenzal por WhatsApp"><svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg></a>
+          </div>
+        </div>
+      </article>
+
+      <article class="product reveal" data-cat="plantas" data-name="Orquídea Real en Maceta" data-price="46" data-img="assets/img/orquidea-360.webp">
+        <div class="product__media">
+          <img src="assets/img/orquidea-360.webp" srcset="assets/img/orquidea-360.webp 360w, assets/img/orquidea-540.webp 540w" sizes="(min-width: 960px) 280px, 48vw" width="360" height="450" loading="lazy" alt="Orquídea Phalaenopsis blanca de doble vara en maceta artesanal de cerámica">
+          <span class="badge badge--cream">Larga duración</span>
+          <button class="fav" type="button" aria-pressed="false" aria-label="Guardar Orquídea Real en Maceta en favoritos"><svg aria-hidden="true"><use href="#i-heart"/></svg></button>
+        </div>
+        <div class="product__body">
+          <div class="rating" aria-label="Valoración 5 de 5, 27 opiniones"><span class="stars" aria-hidden="true"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span><span>(27)</span></div>
+          <h3 class="product__title">Orquídea Real en Maceta</h3>
+          <p class="product__desc">Phalaenopsis blanca en cerámica artesanal</p>
+          <div class="product__foot">
+            <span class="price">46,00 €</span>
+            <span class="product__ship"><svg class="ic" aria-hidden="true"><use href="#i-truck"/></svg>Envío gratis</span>
+          </div>
+          <div class="product__actions">
+            <button class="btn btn--primary btn--sm" type="button" data-pedir><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>Reservar</button>
+            <a class="btn btn--wa-soft btn--sm btn--square" data-wa-product href="https://wa.me/34600000000" target="_blank" rel="noopener" aria-label="Pedir Orquídea Real en Maceta por WhatsApp"><svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg></a>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="custom-cta reveal">
+      <div class="custom-cta__ic"><svg class="ic" aria-hidden="true"><use href="#i-sparkle"/></svg></div>
+      <div>
+        <p class="custom-cta__title">¿Buscas algo distinto?</p>
+        <p class="custom-cta__text">Dinos colores, ocasión y presupuesto y diseñamos un ramo solo para ti.</p>
+      </div>
+      <a class="btn btn--outline" href="#pedido" data-tipo="Ramo personalizado">Diseñar mi ramo <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BENEFICIOS ============ -->
+<section class="section section--tight" aria-label="Por qué elegirnos">
+  <div class="container">
+    <ul class="benefits">
+      <li class="benefit reveal">
+        <span class="benefit__ic"><svg class="ic" aria-hidden="true"><use href="#i-truck"/></svg></span>
+        <h3>Entrega el mismo día</h3>
+        <p>Pide antes de las 14:00 y lo recibes hoy con nuestra flota local refrigerada.</p>
+      </li>
+      <li class="benefit reveal">
+        <span class="benefit__ic"><svg class="ic" aria-hidden="true"><use href="#i-leaf"/></svg></span>
+        <h3>Flores 100 % frescas</h3>
+        <p>Cosechadas a diario por agricultores locales, con criterio de flor cortada ética.</p>
+      </li>
+      <li class="benefit reveal">
+        <span class="benefit__ic"><svg class="ic" aria-hidden="true"><use href="#i-pen"/></svg></span>
+        <h3>Dedicatoria gratis</h3>
+        <p>Tarjeta de papel verjurado con tu mensaje caligrafiado a mano.</p>
+      </li>
+      <li class="benefit reveal">
+        <span class="benefit__ic"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg></span>
+        <h3>Reserva sin compromiso</h3>
+        <p>Sin pago online: confirmamos por WhatsApp y pagas al recibirlo o recogerlo.</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ CÓMO FUNCIONA ============ -->
+<section class="section" id="como-funciona">
+  <div class="container">
+    <div class="section-head section-head--center reveal">
+      <p class="eyebrow">Así de sencillo</p>
+      <h2 class="h2">Tu ramo, en <em>tres pasos</em></h2>
+    </div>
+    <ol class="steps">
+      <li class="step reveal">
+        <span class="step__num">01</span>
+        <h3>Elige o personaliza</h3>
+        <p>Escoge un ramo del catálogo o cuéntanos qué tienes en mente: colores, ocasión y presupuesto.</p>
+      </li>
+      <li class="step reveal">
+        <span class="step__num">02</span>
+        <h3>Reserva sin pagar</h3>
+        <p>Indica la fecha y si prefieres recogerlo en el taller o recibirlo a domicilio. No se paga nada en la web.</p>
+      </li>
+      <li class="step reveal">
+        <span class="step__num">03</span>
+        <h3>Confirmamos y lo entregamos</h3>
+        <p>Te escribimos por WhatsApp o teléfono para confirmar y pagas cómodamente al recibirlo o recogerlo.</p>
+      </li>
+    </ol>
+    <div class="center reveal">
+      <a class="btn btn--primary btn--lg" href="#pedido">Empezar mi pedido <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BODAS Y EVENTOS ============ -->
+<section class="weddings" id="bodas">
+  <div class="weddings__bg" aria-hidden="true">
+    <img src="assets/img/bodas-arco-800.webp" srcset="assets/img/bodas-arco-800.webp 800w, assets/img/bodas-arco-1376.webp 1376w" sizes="100vw" width="800" height="446" loading="lazy" alt="">
+  </div>
+  <div class="container weddings__grid">
+    <div class="weddings__content reveal">
+      <p class="eyebrow eyebrow--light"><svg class="ic" aria-hidden="true"><use href="#i-rings"/></svg>Servicio exclusivo y asesoría</p>
+      <h2 class="h2 h2--light">Bodas y eventos <em>con alma floral</em></h2>
+      <p class="weddings__lead">Convertimos tu celebración en una experiencia inolvidable. Creamos ramos de novia personalizados, arcos ceremoniales, centros de mesa y ambientación floral integral adaptada a tu visión.</p>
+      <ul class="checklist">
+        <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>Consulta botánica inicial sin compromiso</li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>Montaje completo in situ el día del evento</li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>Flores sostenibles y de rigurosa temporada</li>
+      </ul>
+      <div class="weddings__ctas">
+        <a class="btn btn--rose btn--lg" href="#pedido" data-tipo="Boda / evento">
+          <svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg> Solicitar asesoría y presupuesto
+        </a>
+        <a class="btn btn--glass btn--lg" data-wa data-wa-text="Hola, me gustaría información sobre flores para una boda o evento." href="https://wa.me/34600000000" target="_blank" rel="noopener">
+          <svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg> Consultar por WhatsApp
+        </a>
+      </div>
+    </div>
+    <figure class="weddings__photo reveal">
+      <img src="assets/img/bodas-novia-900.webp" width="900" height="675" loading="lazy" alt="Ramo de novia con rosas blancas de jardín, ranúnculos y jazmín colgante atado con cinta de seda">
+      <figcaption>Ramos de novia diseñados a medida</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ OPINIONES ============ -->
+<section class="section" id="opiniones">
+  <div class="container">
+    <div class="section-head section-head--row reveal">
+      <div>
+        <p class="eyebrow">Opiniones</p>
+        <h2 class="h2">Historias que <em>florecen</em></h2>
+      </div>
+      <div class="score">
+        <span class="score__num">4,9</span>
+        <span class="score__meta">
+          <span class="stars" aria-hidden="true"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></span>
+          <span>Valoración media de clientes locales</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="reviews">
+      <figure class="review reveal">
+        <span class="stars" aria-label="5 de 5"><svg aria-hidden="true"><use href="#i-star"/></svg><svg aria-hidden="true"><use href="#i-star"/></svg><svg aria-hidden="true"><use href="#i-star"/></svg><svg aria-hidden="true"><use href="#i-star"/></svg><svg aria-hidden="true"><use href="#i-star"/></svg></span>
+        <blockquote>«El ramo silvestre llegó en menos de tres horas y la dedicatoria caligrafiada parecía una carta antigua preciosa. Una maravilla de floristería.»</blockquote>
+        <figcaption><span class="avatar avatar--rose" aria-hidden="true">CL</span><span><strong>Clara Larrea</strong><small>Cliente verificada</small></span></figcaption>
+      </figure>
+      <figure class="review reveal">
+        <span class="stars" aria-label="5 de 5"><svg aria-hidden="true"><use href="#i-star"/></svg><svg aria-hidden="true"><use href="#i-star"/></svg><svg aria-hidden="true"><use href="#i-star"/></svg><svg aria-hidden="true"><use href="#i-star"/></svg><svg aria-hidden="true"><use href="#i-star"/></svg></span>
+        <blockquote>«Decoraron nuestra boda civil en una finca y el arco floral superó todo lo soñado. Duraron impecables días después en casa.»</blockquote>
+        <figcaption><span class="avatar avatar--sage" aria-hidden="true">MR</span><span><strong>Mateo Rivas</strong><small>Boda en septiembre</small></span></figcaption>
+      </figure>
+      <figure class="review reveal">
+        <span class="stars" aria-label="5 de 5"><svg aria-hidden="true"><use href="#i-star"/></svg><svg aria-hidden="true"><use href="#i-star"/></svg><svg aria-hidden="true"><use href="#i-star"/></svg><svg aria-hidden="true"><use href="#i-star"/></svg><svg aria-hidden="true"><use href="#i-star"/></svg></span>
+        <blockquote>«La orquídea blanca es de una calidad suprema, la maceta artesanal decora mi despacho de forma espectacular. Repetiré sin duda.»</blockquote>
+        <figcaption><span class="avatar avatar--terra" aria-hidden="true">SG</span><span><strong>Sara Galván</strong><small>Decoración floral</small></span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PEDIDO / RESERVA ============ -->
+<section class="section section--tint" id="pedido">
+  <div class="container order">
+    <aside class="order__aside reveal">
+      <p class="eyebrow">Pedidos y reservas</p>
+      <h2 class="h2">Encarga tu ramo <em>en un minuto</em></h2>
+      <p class="order__lead">Cuéntanos qué necesitas y te confirmamos por WhatsApp o teléfono. <strong>No se paga nada en la web.</strong></p>
+
+      <div class="summary" id="orderSummary" aria-live="polite">
+        <img class="summary__img" id="summaryImg" src="assets/img/silvestre-360.webp" width="360" height="450" alt="" loading="lazy">
+        <div class="summary__body">
+          <span class="summary__label">Tu selección</span>
+          <span class="summary__name" id="summaryName">Ramo Silvestre Primavera</span>
+          <span class="summary__price" id="summaryPrice">42,00 €</span>
+          <span class="summary__note" id="summaryNote"><svg class="ic" aria-hidden="true"><use href="#i-truck"/></svg>Incluye envío gratis</span>
+        </div>
+      </div>
+
+      <ul class="order__perks">
+        <li><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg>Antes de las 14:00, entrega el mismo día</li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-wallet"/></svg>Pago al recibir o al recoger en el taller</li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-pen"/></svg>Tarjeta con dedicatoria a mano incluida</li>
+      </ul>
+    </aside>
+
+    <div class="order__card reveal">
+      <form name="pedido" method="POST" action="/gracias.html" data-netlify="true" netlify-honeypot="bot-field" id="pedidoForm" class="form" novalidate>
+        <input type="hidden" name="form-name" value="pedido">
+        <p class="hp"><label>No rellenar <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+
+        <div class="form__row">
+          <div class="field">
+            <label for="f-nombre">Nombre</label>
+            <input id="f-nombre" name="nombre" required autocomplete="name" placeholder="Tu nombre">
+            <span class="field__error" data-error-for="f-nombre">Indícanos tu nombre.</span>
+          </div>
+          <div class="field">
+            <label for="f-telefono">Teléfono / WhatsApp</label>
+            <input id="f-telefono" name="telefono" type="tel" required autocomplete="tel" inputmode="tel" placeholder="600 000 000" pattern="[0-9+\s().-]{9,}">
+            <span class="field__error" data-error-for="f-telefono">Necesitamos un teléfono válido para confirmar.</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="productoSel">¿Qué quieres encargar?</label>
+          <div class="select">
+            <select name="producto" id="productoSel">
+              <option data-price="42" data-img="assets/img/silvestre-360.webp">Ramo Silvestre Primavera</option>
+              <option data-price="55" data-img="assets/img/peonias-360.webp">Sinfonía Pastel de Peonías</option>
+              <option data-price="38.5" data-img="assets/img/cesta-360.webp">Cesta Botánica Provenzal</option>
+              <option data-price="46" data-img="assets/img/orquidea-360.webp">Orquídea Real en Maceta</option>
+              <option data-img="assets/img/hero-portrait-600.webp">Ramo personalizado</option>
+              <option data-img="assets/img/centros-360.webp">Centro / composición floral</option>
+              <option data-img="assets/img/bodas-card-360.webp">Boda / evento</option>
+            </select>
+            <svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>
+          </div>
+        </div>
+
+        <div class="form__row">
+          <div class="field">
+            <label for="f-fecha">Fecha de entrega o recogida</label>
+            <input id="f-fecha" name="fecha" type="date" required>
+            <span class="field__hint" id="fechaHint"></span>
+            <span class="field__error" data-error-for="f-fecha">Elige una fecha a partir de hoy.</span>
+          </div>
+          <fieldset class="field field--toggle">
+            <legend>Entrega</legend>
+            <div class="segmented">
+              <label><input type="radio" name="entrega" value="Recogida en taller" checked><span><svg class="ic" aria-hidden="true"><use href="#i-store"/></svg>Recogida</span></label>
+              <label><input type="radio" name="entrega" value="Entrega a domicilio"><span><svg class="ic" aria-hidden="true"><use href="#i-truck"/></svg>A domicilio</span></label>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="field field--address" id="addressField" hidden>
+          <label for="f-direccion">Dirección de entrega</label>
+          <input id="f-direccion" name="direccion" autocomplete="street-address" placeholder="Calle, número, piso y localidad">
+          <span class="field__error" data-error-for="f-direccion">Indícanos la dirección de entrega.</span>
+        </div>
+
+        <div class="field">
+          <label for="f-mensaje">Dedicatoria y detalles <span class="optional">(opcional)</span></label>
+          <textarea id="f-mensaje" name="mensaje" rows="3" placeholder="Texto de la tarjeta, colores preferidos, presupuesto…"></textarea>
+        </div>
+
+        <div class="form__actions">
+          <button type="submit" class="btn btn--primary btn--lg btn--block" id="pedidoSubmit">
+            <span class="btn__label"><svg class="ic" aria-hidden="true"><use href="#i-send"/></svg>Enviar mi solicitud</span>
+            <span class="spinner" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="btn btn--wa btn--lg btn--block" id="pedidoWa">
+            <svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg>Enviar por WhatsApp
+          </button>
+        </div>
+        <p class="form__legal">Sin pago online ni compromiso. Usaremos tus datos solo para gestionar este pedido.</p>
+        <div class="form__alert" id="pedidoError" role="alert" hidden>
+          No hemos podido enviar la solicitud. Prueba de nuevo o usa el botón <strong>Enviar por WhatsApp</strong>: nos llegará al instante.
+        </div>
+      </form>
+
+      <div class="success" id="pedidoOk" hidden tabindex="-1">
+        <span class="success__ic"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+        <h3>¡Solicitud recibida!</h3>
+        <p>Te confirmaremos tu pedido muy pronto por WhatsApp o teléfono. Si lo necesitas con urgencia, escríbenos directamente.</p>
+        <div class="success__actions">
+          <a class="btn btn--wa" data-wa href="https://wa.me/34600000000" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg>Escribir por WhatsApp</a>
+          <button class="btn btn--outline" type="button" id="pedidoOtro">Hacer otro pedido</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PREGUNTAS FRECUENTES ============ -->
+<section class="section" id="faq">
+  <div class="container faq">
+    <div class="section-head reveal">
+      <p class="eyebrow">Preguntas frecuentes</p>
+      <h2 class="h2">Todo lo que necesitas <em>saber</em></h2>
+      <p class="section-head__lead">¿No encuentras tu respuesta? Escríbenos por WhatsApp y te contestamos enseguida.</p>
+      <a class="btn btn--wa-soft" data-wa href="https://wa.me/34600000000" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg>Preguntar por WhatsApp</a>
+    </div>
+    <div class="accordion reveal">
+      <details open>
+        <summary>¿Cuándo llega mi pedido?<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary>
+        <p>Si haces tu pedido antes de las 14:00, lo entregamos el mismo día en nuestra zona de reparto local con flota refrigerada. Después de esa hora, puedes elegir la fecha que prefieras en el formulario.</p>
+      </details>
+      <details>
+        <summary>¿Cómo y cuándo pago?<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary>
+        <p>No se paga nada en la web. Te confirmamos el pedido por WhatsApp o teléfono y pagas al recibirlo en casa o al recogerlo en el taller.</p>
+      </details>
+      <details>
+        <summary>¿Cuánto cuesta el envío?<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary>
+        <p>El envío es gratuito en pedidos a partir de 40 €. Para importes menores te indicaremos el coste al confirmar, o puedes recogerlo sin coste en el taller.</p>
+      </details>
+      <details>
+        <summary>¿Puedo añadir una dedicatoria?<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary>
+        <p>Sí, y es gratis. Escribe tu mensaje en el formulario y lo caligrafiamos a mano en una tarjeta de papel verjurado.</p>
+      </details>
+      <details>
+        <summary>¿Cuánto duran las flores?<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary>
+        <p>Trabajamos con flor cortada ética, cosechada a diario por agricultores locales, y garantizamos su frescura durante 5 días.</p>
+      </details>
+      <details>
+        <summary>¿Hacéis flores para bodas y eventos?<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary>
+        <p>Sí: ramos de novia, arcos ceremoniales, centros de mesa y ambientación floral completa, con una primera consulta sin compromiso y montaje in situ el día del evento.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CLUB ============ -->
+<section class="section section--tight" id="club">
+  <div class="container">
+    <div class="club reveal">
+      <div class="club__text">
+        <p class="eyebrow"><svg class="ic" aria-hidden="true"><use href="#i-flower"/></svg>Club Flor &amp; Atelier</p>
+        <h2 class="h2">Un 10 % de descuento <em>en tu primer ramo</em></h2>
+        <p>Únete a nuestro cuaderno de notas botánicas: avisos de temporada de peonías, guías para alargar la vida de tus flores y ofertas exclusivas.</p>
+      </div>
+      <div class="club__form-wrap">
+        <form class="club__form" id="newsletterForm" name="club" method="POST" action="/gracias.html" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+          <input type="hidden" name="form-name" value="club">
+          <p class="hp"><label>No rellenar <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+          <label class="sr-only" for="f-email">Correo electrónico</label>
+          <div class="club__input">
+            <svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg>
+            <input id="f-email" name="email" type="email" required autocomplete="email" placeholder="tu@correo.com">
+          </div>
+          <button class="btn btn--primary" type="submit">
+            <span class="btn__label">Quiero mi 10 %</span><span class="spinner" aria-hidden="true"></span>
+          </button>
+          <span class="field__error" data-error-for="f-email">Introduzca un correo válido.</span>
+        </form>
+        <p class="club__legal">Sin spam. Puedes darte de baja cuando quieras.</p>
+        <div class="success success--inline" id="newsletterSuccess" hidden tabindex="-1">
+          <span class="success__ic"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <p><strong>¡Ya formas parte del Club!</strong> Revisa tu bandeja de entrada para disfrutar de tu 10 % de bienvenida.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer" id="contacto">
+  <div class="container">
+    <div class="footer__cta">
+      <div>
+        <h2 class="footer__title">¿Hablamos de <em>flores</em>?</h2>
+        <p>Te ayudamos a elegir el ramo perfecto o a diseñar uno a medida.</p>
+      </div>
+      <div class="footer__cta-actions">
+        <a class="btn btn--wa btn--lg" data-wa href="https://wa.me/34600000000" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg>Escribir por WhatsApp</a>
+        <a class="btn btn--light btn--lg" href="#pedido">Hacer un pedido</a>
+      </div>
+    </div>
+
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a class="brand brand--light" href="#inicio">
+          <img class="brand__mark" src="assets/img/logo-mark.png" alt="" width="29" height="40" loading="lazy">
+          <span class="brand__text"><span class="brand__name">Flor &amp; Atelier</span><span class="brand__tag">Floristería botánica</span></span>
+        </a>
+        <p>Artesanía floral en armonía con la naturaleza. Creaciones botánicas vivas, frescas y de recolección consciente.</p>
+      </div>
+      <nav class="footer__col" aria-label="Atelier">
+        <h3>Atelier</h3>
+        <a href="#catalogo" data-filter="all">Catálogo vivo</a>
+        <a href="#catalogo" data-filter="silvestres">Ramos de temporada</a>
+        <a href="#bodas">Bodas y altares</a>
+        <a href="#club">Club y suscripciones</a>
+      </nav>
+      <nav class="footer__col" aria-label="Ayuda">
+        <h3>Cuidados y ayuda</h3>
+        <a href="#como-funciona">Cómo hacer un pedido</a>
+        <a href="#faq">Garantía de frescura</a>
+        <a href="#faq">Envíos y entregas</a>
+        <a href="#faq">Preguntas frecuentes</a>
+      </nav>
+      <div class="footer__col">
+        <h3>Contacto</h3>
+        <a data-wa href="https://wa.me/34600000000" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+        <a href="#pedido"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>Formulario de pedido</a>
+        <span><svg class="ic" aria-hidden="true"><use href="#i-store"/></svg>Recogida en el taller</span>
+      </div>
+    </div>
+
+    <ul class="footer__badges">
+      <li><svg class="ic" aria-hidden="true"><use href="#i-leaf"/></svg>Flor cortada ética</li>
+      <li><svg class="ic" aria-hidden="true"><use href="#i-award"/></svg>Frescura garantizada 5 días</li>
+      <li><svg class="ic" aria-hidden="true"><use href="#i-snow"/></svg>Envíos refrigerados</li>
+    </ul>
+
+    <div class="footer__bottom">
+      <p>© <span id="year">2026</span> Flor &amp; Atelier Floral Studio. Todos los derechos reservados.</p>
+      <a href="#inicio" class="to-top">Volver arriba <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ NAVEGACIÓN INFERIOR (móvil) ============ -->
+<nav class="tabbar" aria-label="Accesos rápidos">
+  <a href="#inicio" data-nav="inicio" class="is-active"><svg class="ic" aria-hidden="true"><use href="#i-home"/></svg><span>Inicio</span></a>
+  <a href="#catalogo" data-nav="catalogo"><svg class="ic" aria-hidden="true"><use href="#i-grid"/></svg><span>Catálogo</span></a>
+  <a href="#pedido" data-nav="pedido" class="tabbar__main"><span class="tabbar__fab"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg></span><span>Pedido</span></a>
+  <a href="#bodas" data-nav="bodas"><svg class="ic" aria-hidden="true"><use href="#i-rings"/></svg><span>Bodas</span></a>
+  <a href="#contacto" data-nav="contacto"><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg><span>Contacto</span></a>
+</nav>
+
+<!-- ============ ASISTENTE DE RESPUESTAS RÁPIDAS ============ -->
+<div class="assistant" id="assistant">
+  <div class="assistant__panel" id="assistantPanel" role="dialog" aria-label="Asistente del taller" hidden>
+    <div class="assistant__head">
+      <img src="assets/img/logo-mark.png" alt="" width="22" height="30">
+      <div><strong>Flor &amp; Atelier</strong><span>Respuestas rápidas</span></div>
+      <button class="icon-btn icon-btn--sm" type="button" data-close-assistant aria-label="Cerrar asistente"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button>
+    </div>
+    <div class="assistant__log" id="assistantLog" aria-live="polite"></div>
+    <div class="assistant__options" id="assistantOptions"></div>
+  </div>
+  <button class="assistant__fab" type="button" id="assistantToggle" aria-expanded="false" aria-controls="assistantPanel" aria-label="Abrir asistente de ayuda">
+    <svg class="ic ic--open" aria-hidden="true"><use href="#i-chat"/></svg>
+    <svg class="ic ic--close" aria-hidden="true"><use href="#i-close"/></svg>
+    <span class="assistant__bubble">¿Te ayudamos?</span>
+  </button>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
