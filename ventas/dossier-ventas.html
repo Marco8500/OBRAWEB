@@ -73,6 +73,13 @@ section { padding-top: 56px; display: grid; gap: 22px; scroll-margin-top: 64px; 
 .combo { display: grid; gap: 12px; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: stretch; }
 @media (max-width: 860px) { .combo { grid-template-columns: 1fr; } .mas { line-height: .6; } }
 
+/* oferta */
+.oferta { background: var(--naranja-fondo); border: 2px solid var(--naranja); border-radius: 16px; padding: 22px; display: grid; gap: 12px; }
+.oferta h3 { font-size: 24px; }
+.regalos { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.regalo { background: var(--papel); border-radius: 12px; padding: 14px 16px; display: grid; gap: 4px; }
+.regalo b { font-family: var(--display); font-size: 19px; color: var(--naranja); }
+
 /* tabla de beneficios */
 .tabla { overflow-x: auto; background: var(--papel); border: 1px solid var(--linea); border-radius: 14px; }
 table { border-collapse: collapse; width: 100%; min-width: 620px; font-size: 15px; }
@@ -256,6 +263,15 @@ html { scroll-behavior: smooth; }
         <div class="precio"><b>Precio:</b> se decide en la llamada</div>
       </div>
     </div>
+    <div class="oferta">
+      <span class="etiqueta">Oferta de bienvenida · se puede decir ya</span>
+      <h3>Al contratar la web, regalamos dos cosas</h3>
+      <div class="regalos">
+        <div class="regalo"><b>1.º año de dominio gratis</b><p>Su propia dirección (nombredelnegocio.es) sin coste el primer año.</p></div>
+        <div class="regalo"><b>1.º mes de mantenimiento incluido</b><p>El primer mes de cambios y soporte no se paga: empiezan a pagar la cuota a partir del segundo mes.</p></div>
+      </div>
+      <p class="suave">Sirve para cerrar: el cliente empieza sin pagar dominio ni la primera cuota, y prueba un mes cómo trabajamos.</p>
+    </div>
     <div class="rejilla">
       <div class="ficha">
         <span class="tipo etiqueta">Otros extras ya hechos alguna vez</span>
@@ -330,7 +346,7 @@ html { scroll-behavior: smooth; }
     </div>
     <div class="rejilla">
       <div class="ficha objecion"><p class="dice">No estoy interesado en una web</p><p class="responde">Pasó con una barbería, después de hacerle una demo completa. No era el precio. Ofrécele una pieza suelta: "¿Y algo que conteste solo los WhatsApp, o que te ordene las citas?". Si sigue en no, despídete bien y deja la puerta abierta.</p></div>
-      <div class="ficha objecion"><p class="dice">Es mucho dinero</p><p class="responde">El pago mensual pequeño quita el miedo a una factura grande de golpe. Compáralo con lo que cobran: con 2 o 3 clientas nuevas al mes se paga. Nunca digas "es barato" sin una cifra.</p></div>
+      <div class="ficha objecion"><p class="dice">Es mucho dinero</p><p class="responde">El pago mensual pequeño quita el miedo a una factura grande de golpe. Compáralo con lo que cobran: con 2 o 3 clientas nuevas al mes se paga. Nunca digas "es barato" sin una cifra. Y recuérdale la oferta: el primer año de dominio es gratis y el primer mes de mantenimiento va incluido.</p></div>
       <div class="ficha objecion"><p class="dice">Ya tengo Instagram</p><p class="responde">Instagram es alquiler y tu web es tu casa. Si mañana te cierran la cuenta o cambia el algoritmo, pierdes a tus clientas. Y desde Instagram no se reserva cita.</p></div>
       <div class="ficha objecion"><p class="dice">No tengo tiempo para esto</p><p class="responde">Justo por eso. Nos lo pasas por WhatsApp (fotos, precios, horario) y lo hacemos nosotros. Tú solo miras la demo desde el móvil.</p></div>
       <div class="ficha objecion"><p class="dice">¿Y si el chat dice algo que no es?</p><p class="responde">Solo contesta con los datos del negocio. Lo que no sabe lo pasa a tu WhatsApp con la pregunta ya escrita. No se inventa precios ni promesas.</p></div>
@@ -348,6 +364,7 @@ html { scroll-behavior: smooth; }
       <div class="frase"><q>Tu competencia te está quitando clientas ahora mismo.</q><button class="copiar" type="button">Copiar</button></div>
       <div class="frase"><q>Esto es lo que ve una clienta cuando te busca y no tienes web.</q><button class="copiar" type="button">Copiar</button></div>
       <div class="frase"><q>Instagram es alquiler. Tu web es tu casa.</q><button class="copiar" type="button">Copiar</button></div>
+      <div class="frase"><q>El primer año de dominio te lo regalamos y el primer mes de mantenimiento va incluido. Empiezas sin pagar cuota.</q><button class="copiar" type="button">Copiar</button></div>
       <div class="frase"><q>Si os interesa, os preparo una demo gratis de cómo quedaría vuestra web, sin compromiso.</q><button class="copiar" type="button">Copiar</button></div>
       <div class="frase"><q>Míratela desde el móvil y dime qué cambiarías. Lo que sale en amarillo es lo que me falta.</q><button class="copiar" type="button">Copiar</button></div>
       <div class="frase"><q>¡Perfecto! Aquí me tienes para lo que necesites. Mucha suerte con el negocio.</q><button class="copiar" type="button">Copiar</button></div>
@@ -380,12 +397,12 @@ html { scroll-behavior: smooth; }
         <li><strong>Mantenimiento</strong>: qué cambios entran cada mes y cuáles se cobran aparte.</li>
         <li><strong>Chatbot 24/7</strong>: precio del añadido. ¿Versión sencilla y versión con inteligencia artificial?</li>
         <li><strong>Permanencia</strong>: sí o no, y cuánto tiempo.</li>
-        <li><strong>Dominio</strong> (nombredelnegocio.es): ¿lo pagamos nosotros dentro de la cuota o lo paga el cliente?</li>
+        <li><strong>Dominio</strong> (nombredelnegocio.es): el primer año lo regalamos. ¿Y a partir del segundo, va en la cuota o lo paga el cliente?</li>
         <li><strong>Cómo cobra el productor</strong> y quién hace qué: él capta y cierra, Marco construye y mantiene.</li>
       </ul>
       <div class="costes">
         <div class="coste"><b>Publicar la web</b>Hoy es gratis (Netlify) para webs como estas.</div>
-        <div class="coste"><b>Dominio propio</b>Unos 10–15 € al año por cliente.</div>
+        <div class="coste"><b>Dominio propio</b>Unos 10–15 € al año por cliente. El primero lo pagamos nosotros (oferta).</div>
         <div class="coste"><b>Chatbot con IA</b>Cada mensaje gasta créditos de Make (unos 3). El plan gratis da 1.000 al mes y solo 2 escenarios activos: con varios clientes hará falta un plan de pago.</div>
         <div class="coste"><b>Referencia de mercado</b>Una web así a medida suele estar por encima de 400–600 € en España.</div>
       </div>
