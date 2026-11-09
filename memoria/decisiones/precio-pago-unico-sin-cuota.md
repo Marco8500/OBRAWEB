@@ -14,4 +14,6 @@ origen: sesión "INVICTO Barber Shop landing"
 - Pedir a cambio una reseña en Google y permiso para usarla en el portfolio.
 - Con 120 € la web queda muy barata para lo que lleva: usarlo solo como gancho, no como tarifa.
 
-Relacionado: [[sin-precios-en-la-web]], [[demo-antes-de-preguntar]], [[creditos-make]]
+**Actualización 09/11**: el modelo pasa a web + mantenimiento mensual; ver [[modelo-web-con-mantenimiento]]. Lo de aquí sigue valiendo como gancho para cerrar.
+
+Relacionado: [[modelo-web-con-mantenimiento]], [[sin-precios-en-la-web]], [[demo-antes-de-preguntar]], [[creditos-make]]

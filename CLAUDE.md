@@ -57,6 +57,7 @@ CLAUDE.md                 este archivo
 memoria/                  segundo cerebro (notas enlazadas)
 dev/grafo-memoria.py      genera el gráfico de memoria/ a partir de la plantilla
 dev/grafo-memoria.html    plantilla del gráfico
+ventas/dossier-ventas.html  dossier visual para el productor de ventas (sin precios todavía)
 instagram/                normas de estilo, guiones y scripts de vídeo e imagen (de la sesión "Instagram OBRAWEB")
 ```
 

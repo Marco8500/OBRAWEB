@@ -1,0 +1,413 @@
+<title>Dossier de ventas OBRAWEB</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap">
+<style>
+/* Layout: dossier de una columna, con índice fijo arriba; cada bloque es una "ficha" que el comercial puede leer en voz alta. Colores de marca OBRAWEB: azul marino, blanco y naranja. */
+:root {
+  --bg: #F6F7FA; --papel: #FFFFFF; --tinta: #0B192C; --suave: #55627A; --linea: #DDE3EC;
+  --naranja: #E8650A; --naranja-fondo: #FFF1E6; --marino: #0B192C; --sobre-marino: #F4F6FA;
+  --ok: #1E8A5A; --ok-fondo: #E7F5EE; --wa: #1EBE5A;
+  --display: "Bricolage Grotesque", "Plus Jakarta Sans", system-ui, sans-serif;
+  --texto: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #08111F; --papel: #0F1D33; --tinta: #EEF2F8; --suave: #A3B0C7; --linea: #22324D;
+  --naranja: #FF8A3D; --naranja-fondo: #2A1A0E; --marino: #050B16; --sobre-marino: #EEF2F8;
+  --ok: #5FD39A; --ok-fondo: #0F2A1F; --wa: #3CD579; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #08111F; --papel: #0F1D33; --tinta: #EEF2F8; --suave: #A3B0C7; --linea: #22324D;
+  --naranja: #FF8A3D; --naranja-fondo: #2A1A0E; --marino: #050B16; --sobre-marino: #EEF2F8;
+  --ok: #5FD39A; --ok-fondo: #0F2A1F; --wa: #3CD579; color-scheme: dark }
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--tinta); font: 16px/1.6 var(--texto); }
+.envoltura { max-width: 980px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 64px; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.1; text-wrap: balance; margin: 0; }
+h2 { font-size: clamp(26px, 4vw, 36px); font-weight: 800; letter-spacing: -.01em; }
+h3 { font-size: 20px; font-weight: 600; }
+p { margin: 0; }
+.etiqueta { font: 700 12px/1 var(--texto); letter-spacing: .12em; text-transform: uppercase; color: var(--naranja); }
+.suave { color: var(--suave); }
+strong { font-weight: 700; }
+
+/* portada */
+.portada { background: var(--marino); color: var(--sobre-marino); }
+.portada .envoltura { padding-block: 48px 40px; display: grid; gap: 18px; }
+.portada h1 { font-size: clamp(38px, 7vw, 68px); font-weight: 800; letter-spacing: -.02em; }
+.portada h1 span { color: var(--naranja); }
+.portada .lead { font-size: 19px; max-width: 60ch; opacity: .9; }
+.datos { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 14px; opacity: .85; }
+.datos b { color: var(--naranja); font-weight: 700; }
+.aviso { display: inline-flex; gap: 10px; align-items: baseline; background: rgba(255,138,61,.14); border: 1px solid rgba(255,138,61,.4); border-radius: 10px; padding: 10px 14px; font-size: 14px; max-width: 70ch; }
+
+/* índice */
+nav.indice { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--linea); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+nav.indice .envoltura { padding-block: 10px; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+nav.indice a { flex: none; text-decoration: none; color: var(--suave); font-size: 14px; font-weight: 500; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--linea); background: var(--papel); }
+nav.indice a:hover, nav.indice a:focus-visible { color: var(--tinta); border-color: var(--naranja); outline: none; }
+
+section { padding-top: 56px; display: grid; gap: 22px; scroll-margin-top: 64px; }
+.cabecera { display: grid; gap: 8px; }
+.cabecera p { max-width: 65ch; color: var(--suave); }
+
+.rejilla { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.ficha { background: var(--papel); border: 1px solid var(--linea); border-radius: 14px; padding: 20px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.ficha ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+
+/* el día de una peluquería */
+.dia { background: var(--papel); border: 1px solid var(--linea); border-radius: 14px; overflow: hidden; }
+.hora { display: grid; grid-template-columns: 112px 1fr; gap: 16px; padding: 16px 20px; border-top: 1px solid var(--linea); }
+.hora:first-child { border-top: 0; }
+.hora time { font: 800 22px/1.1 var(--display); font-variant-numeric: tabular-nums; color: var(--naranja); }
+.hora .pasa { font-weight: 700; }
+.hora .solucion { margin-top: 6px; font-size: 15px; color: var(--ok); background: var(--ok-fondo); border-radius: 8px; padding: 6px 10px; display: inline-block; }
+
+/* productos */
+.producto { position: relative; }
+.producto .tipo { font: 700 12px/1 var(--texto); letter-spacing: .1em; text-transform: uppercase; color: var(--suave); }
+.producto.base { border: 2px solid var(--naranja); }
+.precio { margin-top: 6px; border: 1px dashed var(--linea); border-radius: 10px; padding: 10px 12px; font-size: 14px; color: var(--suave); }
+.precio b { color: var(--tinta); }
+.mas { font-family: var(--display); font-size: 32px; font-weight: 800; color: var(--naranja); align-self: center; justify-self: center; }
+.combo { display: grid; gap: 12px; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: stretch; }
+@media (max-width: 860px) { .combo { grid-template-columns: 1fr; } .mas { line-height: .6; } }
+
+/* tabla de beneficios */
+.tabla { overflow-x: auto; background: var(--papel); border: 1px solid var(--linea); border-radius: 14px; }
+table { border-collapse: collapse; width: 100%; min-width: 620px; font-size: 15px; }
+th, td { text-align: left; vertical-align: top; padding: 14px 16px; border-top: 1px solid var(--linea); }
+thead th { border-top: 0; font: 700 12px/1.2 var(--texto); letter-spacing: .08em; text-transform: uppercase; color: var(--suave); background: var(--bg); }
+td:first-child { font-weight: 700; width: 30%; }
+
+/* objeciones */
+.objecion { display: grid; gap: 10px; }
+.dice { font-family: var(--display); font-size: 20px; font-weight: 600; }
+.dice::before { content: "«"; color: var(--naranja); } .dice::after { content: "»"; color: var(--naranja); }
+.responde { border-left: 3px solid var(--naranja); padding-left: 12px; }
+
+/* frases */
+.frase { background: var(--naranja-fondo); border-radius: 12px; padding: 16px 18px; display: grid; gap: 10px; }
+.frase q { font-size: 17px; font-weight: 500; quotes: "«" "»"; }
+.copiar { justify-self: start; font: 600 13px var(--texto); color: var(--naranja); background: transparent; border: 1px solid var(--naranja); border-radius: 999px; padding: 4px 12px; cursor: pointer; }
+.copiar:focus-visible { outline: 2px solid var(--naranja); outline-offset: 2px; }
+
+/* pasos */
+.pasos { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); counter-reset: paso; }
+.pasos li { counter-increment: paso; background: var(--papel); border: 1px solid var(--linea); border-radius: 14px; padding: 18px; display: grid; gap: 6px; }
+.pasos li::before { content: counter(paso); font: 800 30px/1 var(--display); color: var(--naranja); }
+
+/* reglas */
+.reglas { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.regla { display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: start; background: var(--papel); border: 1px solid var(--linea); border-radius: 12px; padding: 14px 16px; }
+.regla .ico { font: 800 18px/1.3 var(--display); }
+.si .ico { color: var(--ok); } .no .ico { color: var(--naranja); }
+
+/* llamada de mañana */
+.mañana { background: var(--marino); color: var(--sobre-marino); border-radius: 18px; padding: 28px 24px; display: grid; gap: 18px; }
+.mañana .etiqueta { color: var(--naranja); }
+.mañana ul { margin: 0; padding-left: 20px; display: grid; gap: 8px; }
+.mañana .costes { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.mañana .coste { border: 1px solid rgba(238,242,248,.2); border-radius: 12px; padding: 14px; font-size: 15px; }
+.mañana .coste b { display: block; color: var(--naranja); font-family: var(--display); font-size: 18px; }
+
+footer { padding-top: 48px; font-size: 14px; color: var(--suave); display: grid; gap: 6px; }
+a { color: var(--naranja); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+html { scroll-behavior: smooth; }
+</style>
+
+<header class="portada">
+  <div class="envoltura">
+    <span class="etiqueta">Dossier para el equipo de ventas</span>
+    <h1>Obra<span>Web</span>: webs que trabajan mientras tú cortas el pelo</h1>
+    <p class="lead">Todo lo que hace falta saber para vender OBRAWEB a peluquerías, barberías y negocios de barrio: qué vendemos, a quién, qué problema les quitamos y cómo responder cuando dicen que no.</p>
+    <div class="datos">
+      <span><b>Responsable</b> Marco Moreno</span>
+      <span><b>Zona</b> València y alrededores</span>
+      <span><b>WhatsApp</b> +34 641 409 181</span>
+      <span><b>Email</b> infoobraweb@gmail.com</span>
+      <span><b>Web</b> obratuweb.netlify.app</span>
+      <span><b>Instagram</b> @obratuweb</span>
+    </div>
+    <p class="aviso"><strong>Precios:</strong> se cierran en la llamada. En este dossier los huecos de precio están en blanco a propósito.</p>
+  </div>
+</header>
+
+<nav class="indice" aria-label="Secciones">
+  <div class="envoltura">
+    <a href="#que">Qué es</a>
+    <a href="#cliente">El cliente</a>
+    <a href="#dia">Un día en la pelu</a>
+    <a href="#productos">Productos</a>
+    <a href="#beneficios">Beneficios</a>
+    <a href="#demos">Demos</a>
+    <a href="#proceso">Proceso</a>
+    <a href="#objeciones">Objeciones</a>
+    <a href="#frases">Frases</a>
+    <a href="#reglas">Reglas</a>
+    <a href="#manana">Para mañana</a>
+  </div>
+</nav>
+
+<main class="envoltura">
+
+  <section id="que">
+    <div class="cabecera">
+      <span class="etiqueta">Qué es OBRAWEB</span>
+      <h2>Un negocio pequeño que hace webs, chatbots y automatizaciones para negocios pequeños</h2>
+      <p>Lo lleva Marco desde València. Trato directo, sin agencia de por medio. Hacemos la web, la dejamos funcionando y acompañamos al cliente después.</p>
+    </div>
+    <div class="rejilla">
+      <div class="ficha"><h3>Páginas web</h3><p>De una página, rápidas, pensadas para el móvil y para que el cliente pida cita o escriba por WhatsApp.</p></div>
+      <div class="ficha"><h3>Chatbot 24/7</h3><p>Responde al momento dudas de precios, horarios, servicios y cómo llegar. Si no sabe algo, pasa la conversación al WhatsApp del negocio.</p></div>
+      <div class="ficha"><h3>Captación de clientes</h3><p>Formularios y asistentes que recogen nombre, teléfono y lo que necesita la persona, y se lo mandan al negocio al instante.</p></div>
+      <div class="ficha"><h3>Automatizaciones</h3><p>Recordatorios de citas, respuestas fuera de horario, petición de reseñas en Google y avisos al equipo.</p></div>
+    </div>
+  </section>
+
+  <section id="cliente">
+    <div class="cabecera">
+      <span class="etiqueta">A quién vendemos</span>
+      <h2>Negocios de barrio que viven del teléfono y del WhatsApp</h2>
+      <p>No son marcas de lujo. Quieren más clientes y menos tiempo perdido, explicado sin tecnicismos. Hay que hablarles de citas, llamadas y clientas, nunca de "dominios" o "hosting".</p>
+    </div>
+    <div class="rejilla">
+      <div class="ficha">
+        <h3>Prioridad: peluquerías, barberías y estética</h3>
+        <ul>
+          <li>Trabajan con las manos ocupadas: no pueden coger el teléfono.</li>
+          <li>Viven de las citas y de que la clienta repita.</li>
+          <li>Muchos solo tienen Instagram y la ficha de Google Maps.</li>
+        </ul>
+      </div>
+      <div class="ficha">
+        <h3>También encajan</h3>
+        <ul>
+          <li>Clínicas, fisios y centros de estética.</li>
+          <li>Restaurantes y bares (carta, reservas, pedidos).</li>
+          <li>Reformas y oficios (presupuestos).</li>
+          <li>Tiendas y artesanos (encargos por WhatsApp).</li>
+        </ul>
+      </div>
+      <div class="ficha">
+        <h3>Lo que suelen querer de verdad</h3>
+        <p>Más que "una web", una pieza concreta: <strong>que el chat conteste solo</strong> o <strong>que las citas lleguen ordenadas por WhatsApp</strong>. Muchas veces se vende mejor la pieza que la web entera.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="dia">
+    <div class="cabecera">
+      <span class="etiqueta">Un día en una peluquería</span>
+      <h2>Dónde se le escapan clientas a una pelu sin web</h2>
+      <p>Úsalo para que el dueño se vea reflejado. Las horas son un ejemplo de un día normal.</p>
+    </div>
+    <div class="dia">
+      <div class="hora"><time>10:15</time><div><p class="pasa">Tinte en marcha y suena el teléfono.</p><p class="suave">No lo puede coger. La clienta llama a la peluquería de al lado.</p><span class="solucion">La web deja pedir cita sin llamar.</span></div></div>
+      <div class="hora"><time>12:40</time><div><p class="pasa">Tres WhatsApp seguidos: "¿cuánto cuestan las mechas?", "¿abrís el sábado?", "¿dónde estáis?".</p><p class="suave">Contesta a la hora de comer, o no contesta.</p><span class="solucion">El chatbot responde al momento con sus precios y su horario.</span></div></div>
+      <div class="hora"><time>15:30</time><div><p class="pasa">Una clienta no se presenta. Hueco perdido.</p><p class="suave">Se le olvidó la cita.</p><span class="solucion">Recordatorio automático de la cita.</span></div></div>
+      <div class="hora"><time>22:47</time><div><p class="pasa">Alguien busca "peluquería cerca" en Google desde el sofá.</p><p class="suave">Sin web, solo ve una ficha con fotos viejas. Con Instagram no basta: no está pensado para pedir cita.</p><span class="solucion">Web con servicios, precios y botón de cita, abierta a cualquier hora.</span></div></div>
+      <div class="hora"><time style="font-size:18px">Al día siguiente</time><div><p class="pasa">La clienta contenta se va sin dejar reseña.</p><p class="suave">El negocio no lo pide porque se le pasa.</p><span class="solucion">Mensaje automático pidiendo la reseña en Google.</span></div></div>
+    </div>
+  </section>
+
+  <section id="productos">
+    <div class="cabecera">
+      <span class="etiqueta">Lo que vendemos</span>
+      <h2>Web básica con mantenimiento, y el chatbot como añadido</h2>
+      <p>Propuesta de partida: la web y el mantenimiento van juntos con un pago mensual. El chatbot 24/7 se añade aparte. Lo que entra exactamente en cada uno se confirma en la llamada.</p>
+    </div>
+    <div class="combo">
+      <div class="ficha producto base">
+        <span class="tipo">Producto base</span>
+        <h3>Web básica</h3>
+        <ul>
+          <li>Una página adaptada al móvil con sus colores, logo y fotos.</li>
+          <li>Carta de servicios con precios y duración.</li>
+          <li>Botón de WhatsApp siempre visible y cita por WhatsApp con el mensaje ya escrito.</li>
+          <li>Horario con aviso de "abierto ahora / cerrado".</li>
+          <li>Mapa, dirección, teléfono e Instagram.</li>
+          <li>Galería de trabajos y antes/después.</li>
+          <li>Preparada para salir en Google.</li>
+        </ul>
+        <div class="precio"><b>Precio:</b> se decide en la llamada</div>
+      </div>
+      <span class="mas" aria-hidden="true">+</span>
+      <div class="ficha producto base">
+        <span class="tipo">Va con la web · pago mensual</span>
+        <h3>Mantenimiento</h3>
+        <ul>
+          <li>La web publicada y funcionando, sin que el negocio se preocupe de nada técnico.</li>
+          <li>Cambios cuando lo pidan: precios, horarios, fotos, servicios nuevos.</li>
+          <li>Revisión de que todo va bien (formularios, botones, móvil).</li>
+          <li>Una persona a la que escribir por WhatsApp si algo falla.</li>
+        </ul>
+        <div class="precio"><b>Cuota mensual:</b> se decide en la llamada · <b>Qué cambios entran cada mes:</b> por definir</div>
+      </div>
+      <span class="mas" aria-hidden="true">+</span>
+      <div class="ficha producto">
+        <span class="tipo">Añadido opcional</span>
+        <h3>Chatbot 24/7</h3>
+        <ul>
+          <li>Contesta solo, de día y de noche: precios, horario, servicios, cómo llegar, tarjeta regalo.</li>
+          <li>Entiende cosas como "tengo el pelo muy encrespado" y recomienda el servicio.</li>
+          <li>Puede añadir servicios a la cita y llevar a la clienta a reservar.</li>
+          <li>Si no sabe algo, no se lo inventa: pasa la pregunta al WhatsApp del negocio.</li>
+        </ul>
+        <div class="precio"><b>Precio:</b> se decide en la llamada</div>
+      </div>
+    </div>
+    <div class="rejilla">
+      <div class="ficha">
+        <span class="tipo etiqueta">Otros extras ya hechos alguna vez</span>
+        <ul>
+          <li><strong>Reservas por profesional</strong>: la clienta elige barbero o peluquera y solo ve sus horas libres. El negocio tiene una agenda privada con quién viene y cuándo.</li>
+          <li><strong>Test o diagnóstico</strong>: 5 o 6 preguntas y la web recomienda el servicio adecuado.</li>
+          <li><strong>Tarjeta regalo</strong> diseñada en la web y pedida por WhatsApp.</li>
+          <li><strong>Formulario de presupuesto</strong> con aviso al momento.</li>
+        </ul>
+      </div>
+      <div class="ficha">
+        <span class="tipo etiqueta">Cómo explicar el chatbot</span>
+        <p>Hay dos versiones. En las demos va uno que responde con los datos de la propia web: gratis y nunca dice nada falso. La versión con inteligencia artificial entiende cualquier pregunta, pero tiene un coste por uso y solo se monta si el cliente la contrata.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="beneficios">
+    <div class="cabecera">
+      <span class="etiqueta">Beneficios</span>
+      <h2>Cada función, contada como lo que gana el negocio</h2>
+      <p>Habla del resultado. La tecnología no le importa al dueño.</p>
+    </div>
+    <div class="tabla">
+      <table>
+        <thead><tr><th>Lo que hacemos</th><th>Lo que gana la peluquería</th><th>Cómo decirlo</th></tr></thead>
+        <tbody>
+          <tr><td>Cita por WhatsApp desde la web</td><td>Menos llamadas en mitad de un servicio. Las citas llegan con servicio, día y nombre ya escritos.</td><td>"Te llegan las citas ordenadas al WhatsApp, sin coger el teléfono con las manos llenas de tinte."</td></tr>
+          <tr><td>Chatbot 24/7</td><td>Las dudas de siempre se contestan solas, también a las once de la noche.</td><td>"Es como tener a alguien en recepción que nunca se va a casa."</td></tr>
+          <tr><td>Recordatorios de cita</td><td>Menos huecos por clientas que se olvidan.</td><td>"Cada clienta que no viene es una hora que no cobras."</td></tr>
+          <tr><td>Web propia (además de Instagram)</td><td>Un sitio suyo que sale en Google, que no depende del algoritmo y donde se puede reservar.</td><td>"Instagram es alquiler. Tu web es tu casa."</td></tr>
+          <tr><td>Carta con precios y horario</td><td>Menos preguntas repetidas y clientas que llegan sabiendo lo que quieren.</td><td>"La gente quiere saber cuánto cuesta antes de escribir."</td></tr>
+          <tr><td>Petición de reseñas</td><td>Más estrellas en Google, que es lo que mira quien busca peluquería cerca.</td><td>"Tus clientas contentas no dejan reseña porque nadie se lo pide."</td></tr>
+          <tr><td>Mantenimiento mensual</td><td>Cero preocupaciones técnicas y cambios cuando hagan falta.</td><td>"Tú me mandas un WhatsApp con el precio nuevo y yo lo cambio."</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="demos">
+    <div class="cabecera">
+      <span class="etiqueta">Trabajos y demos</span>
+      <h2>Lo que ya tenemos hecho para enseñar</h2>
+      <p>Las demos hechas para un negocio concreto llevan su marca. Se enseñan solo con su permiso; si no, se usa la plantilla genérica.</p>
+    </div>
+    <div class="rejilla">
+      <div class="ficha"><span class="etiqueta">Plantilla</span><h3>Barbería genérica "Tu Barbería"</h3><p>Web oscura y elegante con reservas por barbero, agenda privada, galería y chatbot. Se adapta a un cliente nuevo en unos 15 minutos con su nombre, logo y fotos. <strong>Se puede enseñar a cualquiera.</strong></p></div>
+      <div class="ficha"><span class="etiqueta">Demo · salón de belleza</span><h3>ROIG 44 (Benicalap)</h3><p>Estilo revista de moda en rojo. Diagnóstico de belleza, carta con "Mi cita", tarjeta regalo, antes/después y chatbot. Pendiente de respuesta de la clienta: no enseñar sin su permiso.</p></div>
+      <div class="ficha"><span class="etiqueta">Web publicada</span><h3>Distintivo</h3><p>Estudio creativo de marca. <a href="https://somosdistintivo.netlify.app" target="_blank" rel="noopener">somosdistintivo.netlify.app</a></p></div>
+      <div class="ficha"><span class="etiqueta">Web publicada</span><h3>Entra</h3><p>Plataforma con IA que crea exámenes de práctica a partir de los apuntes. Demuestra que sabemos hacer cosas con IA. <a href="https://entra.entraia.workers.dev" target="_blank" rel="noopener">entra.entraia.workers.dev</a></p></div>
+      <div class="ficha"><span class="etiqueta">Demo · artesano</span><h3>Sermak (relojes por encargo)</h3><p>Landing minimalista con test "descubre tu reloj ideal" que manda el diseño por WhatsApp, y chatbot.</p></div>
+      <div class="ficha"><span class="etiqueta">Nuestra web</span><h3>OBRAWEB</h3><p>Servicios, cómo trabajamos, formulario de presupuesto y asistente virtual. <a href="https://obratuweb.netlify.app" target="_blank" rel="noopener">obratuweb.netlify.app</a></p></div>
+    </div>
+  </section>
+
+  <section id="proceso">
+    <div class="cabecera">
+      <span class="etiqueta">Cómo trabajamos</span>
+      <h2>Del primer mensaje a la web funcionando</h2>
+    </div>
+    <ol class="pasos">
+      <li><h3>Primer contacto</h3><p>Mensaje corto o visita. Se pregunta qué les quita tiempo: llamadas, WhatsApp, citas que no vienen.</p></li>
+      <li><h3>Interés</h3><p>Solo si muestran interés: se les pide logo, fotos (vale su Instagram), servicios y horario.</p></li>
+      <li><h3>Demo gratis</h3><p>Una muestra de cómo quedaría su web, sin compromiso. Lo que falta sale marcado en amarillo.</p></li>
+      <li><h3>Cierre</h3><p>Se enseña desde el móvil, se ajusta lo que pidan y se cierra el precio.</p></li>
+      <li><h3>Publicación y acompañamiento</h3><p>La dejamos funcionando y el mantenimiento mensual cubre los cambios.</p></li>
+    </ol>
+  </section>
+
+  <section id="objeciones">
+    <div class="cabecera">
+      <span class="etiqueta">Objeciones</span>
+      <h2>Lo que dicen y cómo contestar</h2>
+      <p>Las dos primeras han pasado de verdad.</p>
+    </div>
+    <div class="rejilla">
+      <div class="ficha objecion"><p class="dice">No estoy interesado en una web</p><p class="responde">Pasó con una barbería, después de hacerle una demo completa. No era el precio. Ofrécele una pieza suelta: "¿Y algo que conteste solo los WhatsApp, o que te ordene las citas?". Si sigue en no, despídete bien y deja la puerta abierta.</p></div>
+      <div class="ficha objecion"><p class="dice">Es mucho dinero</p><p class="responde">El pago mensual pequeño quita el miedo a una factura grande de golpe. Compáralo con lo que cobran: con 2 o 3 clientas nuevas al mes se paga. Nunca digas "es barato" sin una cifra.</p></div>
+      <div class="ficha objecion"><p class="dice">Ya tengo Instagram</p><p class="responde">Instagram es alquiler y tu web es tu casa. Si mañana te cierran la cuenta o cambia el algoritmo, pierdes a tus clientas. Y desde Instagram no se reserva cita.</p></div>
+      <div class="ficha objecion"><p class="dice">No tengo tiempo para esto</p><p class="responde">Justo por eso. Nos lo pasas por WhatsApp (fotos, precios, horario) y lo hacemos nosotros. Tú solo miras la demo desde el móvil.</p></div>
+      <div class="ficha objecion"><p class="dice">¿Y si el chat dice algo que no es?</p><p class="responde">Solo contesta con los datos del negocio. Lo que no sabe lo pasa a tu WhatsApp con la pregunta ya escrita. No se inventa precios ni promesas.</p></div>
+      <div class="ficha objecion"><p class="dice">¿Me quedo atado?</p><p class="responde">Se aclara en la llamada de mañana: permanencia sí o no.</p></div>
+    </div>
+  </section>
+
+  <section id="frases">
+    <div class="cabecera">
+      <span class="etiqueta">Frases que funcionan</span>
+      <h2>Para el guion</h2>
+      <p>Estilo: cortas, cercanas, como un WhatsApp entre personas. Los mensajes largos con muchos emojis "suenan a IA" y la clienta lo nota.</p>
+    </div>
+    <div class="rejilla">
+      <div class="frase"><q>Tu competencia te está quitando clientas ahora mismo.</q><button class="copiar" type="button">Copiar</button></div>
+      <div class="frase"><q>Esto es lo que ve una clienta cuando te busca y no tienes web.</q><button class="copiar" type="button">Copiar</button></div>
+      <div class="frase"><q>Instagram es alquiler. Tu web es tu casa.</q><button class="copiar" type="button">Copiar</button></div>
+      <div class="frase"><q>Si os interesa, os preparo una demo gratis de cómo quedaría vuestra web, sin compromiso.</q><button class="copiar" type="button">Copiar</button></div>
+      <div class="frase"><q>Míratela desde el móvil y dime qué cambiarías. Lo que sale en amarillo es lo que me falta.</q><button class="copiar" type="button">Copiar</button></div>
+      <div class="frase"><q>¡Perfecto! Aquí me tienes para lo que necesites. Mucha suerte con el negocio.</q><button class="copiar" type="button">Copiar</button></div>
+    </div>
+  </section>
+
+  <section id="reglas">
+    <div class="cabecera">
+      <span class="etiqueta">Lo que ya hemos aprendido</span>
+      <h2>Reglas para vender</h2>
+    </div>
+    <div class="reglas">
+      <div class="regla si"><span class="ico">✓</span><p><strong>Pregunta antes de construir.</strong> La demo grande solo cuando han mostrado interés. Antes, un mensaje corto con una pregunta.</p></div>
+      <div class="regla si"><span class="ico">✓</span><p><strong>Escribe en las 24 horas</strong> después de conocer a alguien y, si no contesta, un recordatorio a los 3 o 4 días.</p></div>
+      <div class="regla si"><span class="ico">✓</span><p><strong>Personaliza</strong> con el nombre de la persona y del negocio. Pide su logo y sus fotos para la demo.</p></div>
+      <div class="regla si"><span class="ico">✓</span><p><strong>Pide algo que no cuesta dinero</strong>: una reseña en Google y permiso para enseñar su web a otros.</p></div>
+      <div class="regla no"><span class="ico">✕</span><p><strong>No insistas más de una vez</strong> a quien ya ha dicho que no. Se quema el contacto.</p></div>
+      <div class="regla no"><span class="ico">✕</span><p><strong>No prometas cifras</strong> ("te traerá 50 clientas"), ni testimonios inventados, ni "la más barata".</p></div>
+      <div class="regla no"><span class="ico">✕</span><p><strong>No inventes datos del cliente</strong> en la demo: lo que no sepamos va marcado y se le pregunta.</p></div>
+      <div class="regla no"><span class="ico">✕</span><p><strong>No pongas precios en redes ni en nuestra web.</strong> En Instagram la llamada a la acción es "escríbenos WEB por mensaje".</p></div>
+    </div>
+  </section>
+
+  <section id="manana">
+    <div class="mañana">
+      <span class="etiqueta">Para la llamada de mañana</span>
+      <h2>Lo que hay que decidir juntos</h2>
+      <ul>
+        <li><strong>Web básica + mantenimiento</strong>: ¿cuota mensual sola, o un pago de alta más la cuota?</li>
+        <li><strong>Mantenimiento</strong>: qué cambios entran cada mes y cuáles se cobran aparte.</li>
+        <li><strong>Chatbot 24/7</strong>: precio del añadido. ¿Versión sencilla y versión con inteligencia artificial?</li>
+        <li><strong>Permanencia</strong>: sí o no, y cuánto tiempo.</li>
+        <li><strong>Dominio</strong> (nombredelnegocio.es): ¿lo pagamos nosotros dentro de la cuota o lo paga el cliente?</li>
+        <li><strong>Cómo cobra el productor</strong> y quién hace qué: él capta y cierra, Marco construye y mantiene.</li>
+      </ul>
+      <div class="costes">
+        <div class="coste"><b>Publicar la web</b>Hoy es gratis (Netlify) para webs como estas.</div>
+        <div class="coste"><b>Dominio propio</b>Unos 10–15 € al año por cliente.</div>
+        <div class="coste"><b>Chatbot con IA</b>Cada mensaje gasta créditos de Make (unos 3). El plan gratis da 1.000 al mes y solo 2 automatizaciones activas: con varios clientes hará falta un plan de pago.</div>
+        <div class="coste"><b>Referencia de mercado</b>Una web así a medida suele estar por encima de 400–600 € en España.</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>OBRAWEB · Marco Moreno · WhatsApp +34 641 409 181 · infoobraweb@gmail.com</p>
+    <p>Documento interno para el equipo de ventas. Actualizado el 9 de noviembre de 2026.</p>
+  </footer>
+</main>
+
+<script>
+document.querySelectorAll(".copiar").forEach(b => b.addEventListener("click", () => {
+  const texto = b.previousElementSibling.textContent;
+  const hecho = () => { b.textContent = "Copiada"; setTimeout(() => b.textContent = "Copiar", 1600); };
+  const plan_b = () => { const r = document.createRange(); r.selectNodeContents(b.previousElementSibling); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = "Seleccionada: copia con Ctrl+C"; };
+  try { navigator.clipboard.writeText(texto).then(hecho, plan_b); } catch (e) { plan_b(); }
+}));
+</script>
