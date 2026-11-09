@@ -41,7 +41,7 @@ Se puede abrir esta carpeta como bóveda de **Obsidian** para ver el gráfico, o
 - [[sermak]] — Relojes personalizados por encargo (WhatsApp 645 763 617). Objetivo de la web: que el cliente escriba por W…
 
 ## Contenido y marca
-- [[linea-editorial-instagram]] — Cuenta @obratuweb. Feed cuadrado, look limpio, paleta azul marino / blanco / naranja (ver [[paleta-de-marca…
+- [[linea-editorial-instagram]] — Cuenta @obratuweb: paleta azul marino, blanco y naranja; reels con 3 reglas y nunca el precio.
 - [[material-instagram]] — El trabajo de la sesión "Instagram OBRAWEB" (sin git) está ya en `instagram/`.
 - [[plantillas-de-mensajes]] — Cortos y humanos (ver [[mensajes-que-suenan-a-ia]]). Personalizar con el nombre de la persona y del negocio.
 - [[portfolio]] — Webs que se enseñan como ejemplo:
