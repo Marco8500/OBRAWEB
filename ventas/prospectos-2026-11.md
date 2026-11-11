@@ -1,47 +1,45 @@
 # Prospectos sin web · noviembre 2026
 
-Búsqueda del 11/11/2026 en Benicalap, Burjassot y alrededores. "Sin web" = no se encontró web propia; algunos solo tienen Booksy, Fresha, Instagram o Facebook. **Antes de contactar**, mirar su ficha de Google Maps (que no tenga botón "Sitio web") y confirmar el teléfono: salen de directorios y pueden estar viejos.
+Sacados de **Google Maps** el 11/11/2026 con el escenario de Make "Captación" (SerpApi). Todos cumplen tres cosas en su ficha de Maps: **no tienen web enlazada**, **tienen teléfono** y **no están cerrados** (ni permanente ni temporalmente). Descartadas las cadenas (Brooklyn Barber Shop, Supreme Cuts).
+
+Sustituye a la lista anterior, que salió de directorios viejos y tenía negocios con web y cerrados.
 
 ## Barberías
-| Negocio | Dirección | Teléfono | Notas |
-|---|---|---|---|
-| Erick the Barber VIP | Av. Doctor Peset Aleixandre 146, Benicalap | 961 947 088 | Solo Booksy; 4,8 con 445 reseñas |
-| Barbería Miami | Av. de Burjassot 237, Benicalap | (en su ficha de Fresha) | 4,4 con 49 reseñas en Google |
-| Guason BarberShop (GSN) | Av. Maria Ros 24, Burjassot | 963 53 69 29 (confirmar) | Solo Instagram y Booksy; 5,0 con 535 reseñas |
-| Barbería El Cubano | Av. María Ros 34, Burjassot | (no encontrado) | Solo Booksy; 4,9, muchas reseñas |
-| Barber Mechanics | Av. de la Ilustración 6, Burjassot | 638 40 33 07 (confirmar) | Un directorio dice "no se conoce sitio web" |
-
-Descartadas: Invicto (Burjassot, ya dijo que no), Roque Barber Club y Barbaman (franquicia/cadena).
+| Negocio | Teléfono | Dirección | Google | Ficha |
+|---|---|---|---|---|
+| BARBERY | 745 09 91 41 | C/ de Ciscar 30, Ensanche, València | 5,0 (238) | [Maps](https://www.google.com/maps/place/?q=place_id:ChIJlfbqUdVJYA0Rr4559OWJmLM) |
+| Barbería i-Cut | 692 53 45 65 | Av. del Regne de València 75, Eixample, València | 4,7 (146) | [Maps](https://www.google.com/maps/place/?q=place_id:ChIJ78Bp6q5JYA0RkhGi2WSKWoU) |
+| Barbershopganster | 960 23 01 03 | Av. del Port 222, Camins al Grau, València | 4,8 (286) | [Maps](https://www.google.com/maps/place/?q=place_id:ChIJMxydzXBJYA0R185Z5zg-8Ig) |
+| UNI.CO Barber Lounge | 604 89 37 64 | C/ Reverend Rafael Tramoyeres 2, Benimaclet, València | 4,9 (229) | [Maps](https://www.google.com/maps/place/?q=place_id:ChIJuzy4XRRJYA0RzpkszNhK3f8) |
+| Dr Frankie Mustache Barbería | 963 37 11 30 | C/ Antiga Senda d'En Senent 10, El Llano del Real, València | 4,8 (254) | [Maps](https://www.google.com/maps/place/?q=place_id:ChIJ3U1MITVPYA0ROWVV6e_3Z60) |
 
 ## Empresas de reformas
-| Negocio | Dirección | Teléfono | Notas |
-|---|---|---|---|
-| Albañilería Hermanos Ferrer SL | C/ Laurí Volpi 17, Burjassot | 626 272 297 | Solo en Empresite |
-| Reformas Vicente Burguete | C/ Mariana Pineda 40, Burjassot | 665 908 997 | Directorio municipal, sin web |
-| Construcciones Gasco | C/ Luis Vives 1, Burjassot | 677 410 365 | Directorio municipal, sin web |
-| Reformas Quesada Hermanos S.L. | C/ Sixto Cámara 11, Burjassot | 96 390 40 68 | Más de 40 años; sin web propia encontrada |
-| Reformas y Construcción A.M. | C/ Mártires de la Libertad 11, Burjassot | 96 363 84 95 | Directorio municipal; web sin comprobar |
-
-Descartadas por tener web: Reformas Claiz, TMTA Multiservicios, Batecs, Reformas Doce, Reformas Stylo 34, Alarcón, Cargaur.
+| Negocio | Teléfono | Dirección | Google | Ficha |
+|---|---|---|---|---|
+| PEDROVAL.REFORMAS | 642 64 82 99 | C/ Pintor Velázquez 34, Burjassot | 5,0 (12) | [Maps](https://www.google.com/maps/place/?q=place_id:ChIJB9zmQgjylY8RxMtE0nDXqFI) |
+| Reformistas Valencia | 644 48 75 63 | C/ Mestre Lope 3, Burjassot | 4,6 (21) | [Maps](https://www.google.com/maps/place/?q=place_id:ChIJJZZrieTi5qgRE1VA5d-4eDM) |
+| Reformas NICER | 657 27 71 40 | C/ Enric Valor 15, Paterna | 5,0 (11) | [Maps](https://www.google.com/maps/place/?q=place_id:ChIJeXIElmRbYA0RLRlQCVN7N5U) |
+| ReforValencia | 698 41 96 39 | C/ Ramón y Cajal 1, Manises | 4,9 (33) | [Maps](https://www.google.com/maps/place/?q=place_id:ChIJ8erYT4pbYA0RboiGyDF_JEM) |
+| Construcciones Padre Méndez (Ecopadez) | 617 33 73 20 | C/ de les Germanies 81, Torrent | 5,0 (18) | [Maps](https://www.google.com/maps/place/?q=place_id:ChIJiwGjGrtRYA0R7c_mVbNHVVE) |
 
 ## Dentistas
-| Negocio | Dirección | Teléfono | Notas |
-|---|---|---|---|
-| Clínica Dental Azara | C/ Cora Raga 6, Benicalap | 653 68 54 41 | Solo directorios; 2 reseñas |
-| Clínica Dental Dra. Maite Viguer | Av. General Avilés 35, 2-5, València | 963 491 555 | Solo directorios y aseguradoras |
-| Clínica Dental Micó & Martínez | C/ Jorge Juan 106, Burjassot | 96 363 55 53 · 615 578 642 | 4,8 con 28 reseñas; más de 30 años |
-| Clínica Dental Dra. Susana Campos | C/ Doctor Moliner 4, Burjassot | 96 390 30 03 | Directorio municipal |
-| Clínica Dental Merino & Vivó | Pº Concepción Arenal 12, Burjassot | 96 364 02 02 | Directorio municipal |
-
-Descartadas por tener web: Nova Benicalap, Odéntitus, Milenium (Sanitas).
+| Negocio | Teléfono | Dirección | Google | Ficha |
+|---|---|---|---|---|
+| Clínica Dental Iofénix | 963 90 44 44 | C/ Isabel la Católica 29, Burjassot | 4,8 (24) | [Maps](https://www.google.com/maps/place/?q=place_id:ChIJ-0G28QlFYA0RLpgviJlnvv0) |
+| Centro Odontológico Mara Dental | 963 94 68 34 | C/ Lauri Volpi 81, Burjassot | 4,6 (169) | [Maps](https://www.google.com/maps/place/?q=place_id:ChIJlwgRowdFYA0RUQiQwzL07uA) |
+| Clínica Dental Susana Campos | 963 90 30 03 | C/ Dr. Moliner 4, Burjassot | 4,5 (22) | [Maps](https://www.google.com/maps/place/?q=place_id:ChIJnySLyQtFYA0RTOkSm01vo3w) |
+| Clínica Dental Javier Amores Molero | 963 64 13 38 | C/ Josep Lluch 6, Burjassot | 4,7 (31) | [Maps](https://www.google.com/maps/place/?q=place_id:ChIJv0sivglFYA0R4lUVaeW_JHA) |
 
 ## Floristerías
-| Negocio | Dirección | Teléfono | Notas |
-|---|---|---|---|
-| Flores Vendrell | Av. de Burjassot 166, Benicalap | 963 48 84 49 | Solo Facebook; bien valorada, ramos de novia |
-| Floristería El Edén | Av. Dr. Peset Aleixandre 100, Benicalap | 963 48 91 35 | 4,7 en un directorio |
-| Floristería Rote Rosen | Av. Pío XII 62 (frente a Hipercor) | 963 47 98 61 | Especializada en bodas |
-| Floristería Vitalflora | C/ Pintor Pedro Cabanes 102, Benicalap | 677 70 62 43 | Ramos a medida; dirección distinta según fuente |
-| Flores de Jacqueline | Av. de Campanar 51, Campanar | (no encontrado) | Reparto a domicilio |
+| Negocio | Teléfono | Dirección | Google | Ficha |
+|---|---|---|---|---|
+| Floristería Lavanda | 960 81 25 82 | C/ Totana 1, L'Olivereta, València | 4,8 (91) | [Maps](https://www.google.com/maps/place/?q=place_id:ChIJe8GlcRhPYA0RC9OxAOSbzi0) |
+| Flores Conchin | 623 28 39 22 | C/ Santo Domingo de Guzmán 9, Jesús, València | 4,7 (37) | [Maps](https://www.google.com/maps/place/?q=place_id:ChIJMcIEowVFYA0REzGe1fqN2z0) |
+| Flores Rodríguez | 607 59 82 04 | C/ Santo Domingo de Guzmán 6, Jesús, València | 4,6 (40) | [Maps](https://www.google.com/maps/place/?q=place_id:ChIJ62g7HR9PYA0RdEqqWREqR4E) |
+| Flores Vicenta Martínez | 963 51 85 40 | Pl. de l'Ajuntament 2, Ciutat Vella, València | 4,8 (12) | [Maps](https://www.google.com/maps/place/?q=place_id:ChIJQ0V3hExPYA0RGBugOo9oDlg) |
+| Flors la Caseta | 963 78 55 82 | Av. de Gaspar Aguilar 103, Jesús, València | 4,4 (125) | [Maps](https://www.google.com/maps/place/?q=place_id:ChIJD4wdnRhPYA0RV7_vMU8fVhw) |
 
-Descartada por tener web: Floristería Morris.
+Reservas por si alguno no sirve:
+- Barbería: Barbershop Barbería Fabián Fernández, C/ Vinatea 20, Ciutat Vella, 602 40 02 12 (4,9, 176).
+- Reformas: Sergio Nieva (Mislata) 627 50 48 90 · Reformas DN (Mislata) 614 81 10 24 · Reformas y Impresos Torrent 641 43 09 01.
+- Dentistas: solo salieron 4 sin web entre Valencia, Burjassot, Paterna, Torrent, Mislata, Godella, Alboraya y Xirivella; casi todas las clínicas tienen web.
