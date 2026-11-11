@@ -3,7 +3,7 @@
 OBRAWEB es el negocio de Marco Moreno: **páginas web, chatbots, asistentes de captación de clientes y automatizaciones para negocios locales**. Este repo es el "segundo cerebro" del proyecto: lo que se ha decidido, lo que ha fallado, los clientes y el contenido.
 
 - Web: obratuweb.netlify.app · Instagram: @obratuweb · Email: infoobraweb@gmail.com · WhatsApp: +34 641 409 181
-- Zona: València y alrededores (Burjassot, Benicalap…).
+- Zona: base en València; se vende a negocios de toda España (todo se hace a distancia).
 
 ## A quién vendo
 
