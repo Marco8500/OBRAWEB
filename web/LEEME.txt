@@ -1,0 +1,14 @@
+LA DESPENSA DEL BARRIO - Tienda online (prototipo educativo)
+============================================================
+Cómo abrirla: descomprime el ZIP y haz doble clic en index.html.
+No necesita internet ni instalar nada.
+
+Qué incluye (relacionado con las 5 medidas del documento):
+ 1. Segura      -> medidor de contraseñas, juego de phishing, pago simulado en 3 pasos, aviso RGPD y cookies.
+ 2. Accesible   -> panel ♿: tamaño de letra, alto contraste, letra legible, sin animaciones, lectura en voz alta; uso con teclado.
+ 3. Formación   -> quiz interactivo y canales alternativos (teléfono, WhatsApp, talleres).
+ 4. Logística   -> calculadora de CO2 según la forma de entrega.
+ 5. Local       -> etiquetas KM 0 y sección "Último día" contra el desperdicio.
+Extras: carrito con animación, modo oscuro, tarjetas ODS que giran, confeti.
+
+Archivos: index.html · css/styles.css · js/app.js

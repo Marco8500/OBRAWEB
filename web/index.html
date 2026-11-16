@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>La Despensa del Barrio · Tienda online</title>
+  <meta name="description" content="Tienda de barrio online: segura, inclusiva y sostenible.">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Saltar al contenido</a>
+
+  <!-- Barra superior -->
+  <header class="topbar" id="top">
+    <a href="#top" class="logo" aria-label="Inicio">🧺 <span>La Despensa<br><small>del Barrio</small></span></a>
+    <nav class="nav" aria-label="Principal">
+      <a href="#tienda">Tienda</a>
+      <a href="#medidas">Medidas</a>
+      <a href="#ods">ODS</a>
+      <a href="#co2">Reparto verde</a>
+      <a href="#seguridad">Seguridad</a>
+      <a href="#quiz">Quiz</a>
+    </nav>
+    <div class="actions">
+      <button class="icon-btn" id="a11yBtn" aria-label="Opciones de accesibilidad" aria-expanded="false">♿</button>
+      <button class="icon-btn" id="themeBtn" aria-label="Cambiar modo claro u oscuro">🌙</button>
+      <button class="icon-btn cart-btn" id="cartBtn" aria-label="Abrir carrito">🛒 <span class="badge" id="cartCount">0</span></button>
+    </div>
+  </header>
+
+  <!-- Panel de accesibilidad -->
+  <aside class="a11y-panel" id="a11yPanel" aria-label="Accesibilidad" hidden>
+    <h2>Accesibilidad</h2>
+    <div class="row"><span>Tamaño de letra</span>
+      <div><button data-font="-1" aria-label="Reducir letra">A−</button><button data-font="0" aria-label="Letra normal">A</button><button data-font="1" aria-label="Aumentar letra">A+</button></div></div>
+    <label class="switch-row"><input type="checkbox" id="contrastToggle"> Alto contraste</label>
+    <label class="switch-row"><input type="checkbox" id="dyslexiaToggle"> Letra legible y espaciada</label>
+    <label class="switch-row"><input type="checkbox" id="motionToggle"> Reducir animaciones</label>
+    <button class="btn small" id="readBtn">🔊 Leer la página en voz alta</button>
+  </aside>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+      <div class="hero-text reveal">
+        <p class="pill">🔒 Segura · ♿ Inclusiva · 🌱 Sostenible</p>
+        <h1>Tu tienda de siempre,<br><span class="grad">ahora también online</span></h1>
+        <p class="lead">Producto local, trato cercano y reparto a pie o en bici. Pide por la web, por teléfono o por WhatsApp: como te resulte más fácil.</p>
+        <div class="hero-cta">
+          <a href="#tienda" class="btn">Empezar a comprar</a>
+          <a href="#medidas" class="btn ghost">Ver las 5 medidas</a>
+        </div>
+        <div class="stats">
+          <div><strong data-count="92">0</strong><span>% producto local</span></div>
+          <div><strong data-count="340">0</strong><span>kg CO₂ ahorrados</span></div>
+          <div><strong data-count="120">0</strong><span>vecinos formados</span></div>
+        </div>
+      </div>
+      <div class="hero-art reveal" aria-hidden="true">
+        <div class="float f1">🍅</div><div class="float f2">🥖</div><div class="float f3">🧀</div>
+        <div class="float f4">🍎</div><div class="float f5">🥬</div><div class="float f6">🚲</div>
+        <div class="shop">🏪</div>
+      </div>
+    </section>
+
+    <!-- TIENDA -->
+    <section id="tienda" class="section">
+      <h2 class="title reveal">🛍️ Nuestra tienda</h2>
+      <p class="subtitle reveal">Filtra, busca y añade al carrito. Las etiquetas te dicen qué es de km 0 o está en «Último día».</p>
+      <div class="toolbar reveal">
+        <label class="search"><span class="sr">Buscar producto</span><input type="search" id="search" placeholder="🔎 Buscar producto…"></label>
+        <div class="chips" role="group" aria-label="Filtrar por categoría" id="chips">
+          <button class="chip active" data-cat="todo">Todo</button>
+          <button class="chip" data-cat="fruta">🍎 Fruta y verdura</button>
+          <button class="chip" data-cat="panaderia">🥖 Panadería</button>
+          <button class="chip" data-cat="lacteos">🧀 Lácteos</button>
+          <button class="chip" data-cat="despensa">🫙 Despensa</button>
+          <button class="chip" data-cat="ultimo">⏰ Último día</button>
+        </div>
+      </div>
+      <div class="grid" id="products" aria-live="polite"></div>
+    </section>
+
+    <!-- MEDIDAS -->
+    <section id="medidas" class="section alt">
+      <h2 class="title reveal">🧭 Las 5 medidas de nuestra transformación digital</h2>
+      <p class="subtitle reveal">Pulsa en cada medida para ver qué hacemos.</p>
+      <div class="timeline" id="timeline"></div>
+    </section>
+
+    <!-- ODS -->
+    <section id="ods" class="section">
+      <h2 class="title reveal">🌍 Objetivos de Desarrollo Sostenible</h2>
+      <p class="subtitle reveal">Gira cada tarjeta para descubrir cómo contribuimos a la Agenda 2030.</p>
+      <div class="ods-grid" id="odsGrid"></div>
+    </section>
+
+    <!-- CO2 -->
+    <section id="co2" class="section alt">
+      <h2 class="title reveal">🚲 Calculadora de reparto verde</h2>
+      <p class="subtitle reveal">Elige cómo recibir tu pedido y mira cuánto CO₂ ahorras frente a una furgoneta diésel.</p>
+      <div class="co2-box reveal">
+        <div class="co2-controls">
+          <label for="km">Distancia a la tienda: <strong><output id="kmOut">2</output> km</strong></label>
+          <input type="range" id="km" min="0.5" max="10" step="0.5" value="2">
+          <div class="delivery" role="radiogroup" aria-label="Forma de entrega">
+            <label><input type="radio" name="del" value="0" checked><span>🏪<b>Recojo en tienda</b></span></label>
+            <label><input type="radio" name="del" value="0.001"><span>🚲<b>Bici</b></span></label>
+            <label><input type="radio" name="del" value="0.05"><span>⚡<b>Furgoneta eléctrica</b></span></label>
+            <label><input type="radio" name="del" value="0.25"><span>🚐<b>Furgoneta diésel</b></span></label>
+          </div>
+        </div>
+        <div class="co2-result">
+          <div class="gauge"><svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="52" class="track"/><circle cx="60" cy="60" r="52" class="bar" id="gaugeBar"/></svg>
+            <div class="gauge-text"><strong id="savedPct">100%</strong><span>menos CO₂</span></div></div>
+          <p id="co2Text" aria-live="polite"></p>
+          <div class="trees" id="trees" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEGURIDAD -->
+    <section id="seguridad" class="section">
+      <h2 class="title reveal">🔐 Compra segura</h2>
+      <p class="subtitle reveal">Comprueba lo fuerte que es tu contraseña (no se envía a ningún sitio) y aprende a detectar fraudes.</p>
+      <div class="sec-wrap">
+        <div class="card reveal">
+          <h3>Medidor de contraseña</h3>
+          <label for="pwd" class="sr">Escribe una contraseña de prueba</label>
+          <div class="pwd-field"><input type="password" id="pwd" placeholder="Escribe una contraseña de prueba" autocomplete="off"><button id="pwdShow" class="icon-btn small" aria-label="Mostrar contraseña">👁️</button></div>
+          <div class="meter"><div id="pwdBar"></div></div>
+          <p id="pwdLabel" aria-live="polite">Empieza a escribir…</p>
+          <ul class="checks" id="pwdChecks">
+            <li data-k="len">12 caracteres o más</li>
+            <li data-k="up">Mayúsculas</li>
+            <li data-k="low">Minúsculas</li>
+            <li data-k="num">Números</li>
+            <li data-k="sym">Símbolos</li>
+          </ul>
+        </div>
+        <div class="card reveal">
+          <h3>¿Phishing o de fiar?</h3>
+          <p id="phishQ" class="phish-q"></p>
+          <div class="phish-btns"><button class="btn small" data-ans="ok">✅ De fiar</button><button class="btn small danger" data-ans="fake">🚩 Fraude</button></div>
+          <p id="phishFb" aria-live="polite"></p>
+        </div>
+        <div class="card reveal badges">
+          <h3>Lo que protege tu compra</h3>
+          <div class="badge-grid">
+            <div>🔒<span>HTTPS</span></div><div>💳<span>Pago certificado PCI DSS</span></div>
+            <div>🛡️<span>RGPD</span></div><div>🔑<span>2FA</span></div>
+            <div>💾<span>Copias diarias</span></div><div>🍪<span>Cookies opcionales</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section id="quiz" class="section alt">
+      <h2 class="title reveal">🧠 Quiz: ¿cuánto sabes de comercio digital responsable?</h2>
+      <div class="quiz card reveal" id="quizBox"></div>
+    </section>
+
+    <!-- CANALES -->
+    <section class="section channels">
+      <h2 class="title reveal">📞 Compra como prefieras</h2>
+      <div class="ch-grid">
+        <div class="card reveal"><div class="big">💻</div><h3>Web</h3><p>Accesible desde cualquier móvil.</p></div>
+        <div class="card reveal"><div class="big">📱</div><h3>WhatsApp</h3><p>Envíanos tu lista y te la preparamos.</p></div>
+        <div class="card reveal"><div class="big">☎️</div><h3>Teléfono</h3><p>Te atendemos de 9 a 20 h.</p></div>
+        <div class="card reveal"><div class="big">🎓</div><h3>Talleres</h3><p>Sábados: aprende a comprar online seguro.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>🧺 La Despensa del Barrio · Proyecto educativo de transformación digital</p>
+    <p><a href="#" data-modal="legal">Aviso legal</a> · <a href="#" data-modal="legal">Privacidad</a> · <a href="#" data-modal="legal">Cookies</a></p>
+    <p class="small">Alojamiento con energía 100 % renovable · Web ligera sin imágenes pesadas</p>
+  </footer>
+
+  <!-- Carrito -->
+  <div class="overlay" id="overlay" hidden></div>
+  <aside class="drawer" id="drawer" aria-label="Carrito" aria-hidden="true">
+    <div class="drawer-head"><h2>🛒 Tu carrito</h2><button class="icon-btn" id="closeCart" aria-label="Cerrar carrito">✕</button></div>
+    <ul class="cart-list" id="cartList"></ul>
+    <div class="cart-foot">
+      <p class="eco" id="ecoMsg"></p>
+      <p class="total">Total: <strong id="cartTotal">0,00 €</strong></p>
+      <button class="btn full" id="checkoutBtn">Finalizar compra 🔒</button>
+    </div>
+  </aside>
+
+  <!-- Modal pago -->
+  <div class="modal" id="checkout" role="dialog" aria-modal="true" aria-labelledby="coTitle" hidden>
+    <div class="modal-card">
+      <button class="icon-btn close" data-close aria-label="Cerrar">✕</button>
+      <h2 id="coTitle">Pago seguro 🔒</h2>
+      <div class="steps"><span class="on">1. Datos</span><span>2. Entrega</span><span>3. Pago</span></div>
+      <form id="coForm" novalidate>
+        <div class="step on">
+          <label>Nombre<input name="nombre" required autocomplete="name"></label>
+          <label>Teléfono<input name="tel" required pattern="[0-9 +]{9,}" autocomplete="tel" inputmode="tel"></label>
+          <label class="check"><input type="checkbox" name="rgpd" required> Acepto la política de privacidad (solo usamos tus datos para el pedido)</label>
+        </div>
+        <div class="step">
+          <div class="delivery small">
+            <label><input type="radio" name="entrega" value="Recogida en tienda" checked><span>🏪<b>Recoger en tienda</b><i>Gratis</i></span></label>
+            <label><input type="radio" name="entrega" value="Reparto en bici"><span>🚲<b>Reparto en bici</b><i>1,50 €</i></span></label>
+          </div>
+          <label class="check"><input type="checkbox" name="envase"> Quiero envase retornable (depósito 1 €)</label>
+        </div>
+        <div class="step">
+          <div class="pay-opts">
+            <label><input type="radio" name="pago" value="Bizum" checked><span>📲 Bizum</span></label>
+            <label><input type="radio" name="pago" value="Tarjeta"><span>💳 Tarjeta</span></label>
+            <label><input type="radio" name="pago" value="Efectivo"><span>💶 Efectivo al recoger</span></label>
+          </div>
+          <p class="note">🔐 Simulación: el pago real se haría en una pasarela certificada. Nunca guardamos tu tarjeta.</p>
+        </div>
+        <p class="form-err" id="formErr" aria-live="assertive"></p>
+        <div class="modal-actions"><button type="button" class="btn ghost" id="prevStep">Atrás</button><button type="submit" class="btn" id="nextStep">Siguiente</button></div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" id="legal" role="dialog" aria-modal="true" hidden>
+    <div class="modal-card"><button class="icon-btn close" data-close aria-label="Cerrar">✕</button>
+      <h2>Privacidad y cookies</h2>
+      <p>Solo recogemos los datos necesarios para preparar tu pedido. No los cedemos a terceros. Puedes pedir su borrado escribiéndonos. Usamos solo cookies técnicas; las de analítica son opcionales.</p></div>
+  </div>
+
+  <!-- Cookies -->
+  <div class="cookie" id="cookie" role="region" aria-label="Aviso de cookies">
+    <p>🍪 Usamos cookies técnicas necesarias. ¿Aceptas también las de analítica?</p>
+    <div><button class="btn small ghost" data-cookie="no">Rechazar</button><button class="btn small" data-cookie="si">Aceptar</button></div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <canvas id="confetti" aria-hidden="true"></canvas>
+  <button class="to-top" id="toTop" aria-label="Volver arriba">↑</button>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
