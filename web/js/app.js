@@ -12,19 +12,40 @@
 
   /* ---------- Datos ---------- */
   const PRODUCTS = [
-    { id: 1, n: 'Tomates de la huerta', e: '🍅', cat: 'fruta', p: 2.40, u: 'kg', o: 'Huerta de Paco · 4 km', km0: true },
-    { id: 2, n: 'Manzanas golden', e: '🍎', cat: 'fruta', p: 1.95, u: 'kg', o: 'Finca Las Eras · 12 km', km0: true },
-    { id: 3, n: 'Lechugas ecológicas', e: '🥬', cat: 'fruta', p: 1.10, u: 'ud', o: 'Coop. Verde Vivo · 8 km', km0: true, eco: true },
-    { id: 4, n: 'Pan de masa madre', e: '🥖', cat: 'panaderia', p: 2.80, u: 'ud', o: 'Horno San Juan · 1 km', km0: true },
-    { id: 5, n: 'Croissants de mantequilla', e: '🥐', cat: 'panaderia', p: 3.20, old: 4.80, u: '4 uds', o: 'Horno San Juan · 1 km', last: true },
-    { id: 6, n: 'Queso curado artesano', e: '🧀', cat: 'lacteos', p: 9.50, u: '500 g', o: 'Quesería La Vega · 25 km', km0: true },
-    { id: 7, n: 'Leche fresca de granja', e: '🥛', cat: 'lacteos', p: 1.30, u: 'l', o: 'Granja El Prado · 18 km', km0: true },
-    { id: 8, n: 'Yogures naturales', e: '🍶', cat: 'lacteos', p: 1.60, old: 2.40, u: 'pack 4', o: 'Granja El Prado · 18 km', last: true },
-    { id: 9, n: 'Miel de romero', e: '🍯', cat: 'despensa', p: 6.90, u: '500 g', o: 'Apicultura Sierra · 30 km', km0: true, eco: true },
-    { id: 10, n: 'Aceite de oliva virgen extra', e: '🫒', cat: 'despensa', p: 8.40, u: 'l', o: 'Almazara del Valle · 40 km', eco: true },
-    { id: 11, n: 'Huevos camperos', e: '🥚', cat: 'despensa', p: 3.10, u: 'docena', o: 'Gallinas Felices · 9 km', km0: true },
-    { id: 12, n: 'Plátanos maduros', e: '🍌', cat: 'fruta', p: 0.90, old: 1.80, u: 'kg', o: 'Canarias', last: true }
+    { id: 1, k: 'tomate', n: 'Tomates de la huerta', cat: 'fruta', p: 2.40, u: 'kg', o: 'Huerta de Paco · 4 km', c: '#b8341f', km0: true, season: 'Jun – Oct', kcal: 18,
+      d: 'Tomate en rama madurado en la planta, con su olor a verde. Carnoso y dulce, perfecto para ensaladas, gazpacho o pan con tomate.',
+      how: 'Paco los recoge a mano a primera hora, cuando ya están rojos pero firmes, cortando el racimo con tijera para no dañar la planta. Llegan a la tienda ese mismo día, sin cámaras frigoríficas.' },
+    { id: 2, k: 'lechuga', n: 'Lechuga romana', cat: 'fruta', p: 1.10, u: 'ud', o: 'Coop. Verde Vivo · 8 km', c: '#3f7d2c', km0: true, eco: true, season: 'Todo el año', kcal: 17,
+      d: 'Hojas largas, crujientes y frescas. Cultivo ecológico sin pesticidas de síntesis: la base de cualquier ensalada.',
+      how: 'Se cortan a ras de suelo con cuchillo cuando el cogollo está prieto, se lavan con agua fría del pozo y se colocan en cajas de madera retornables.' },
+    { id: 3, k: 'manzana', n: 'Manzanas de la finca', cat: 'fruta', p: 1.95, u: 'kg', o: 'Finca Las Eras · 12 km', c: '#c0392b', km0: true, season: 'Sep – Mar', kcal: 52,
+      d: 'Manzana roja, crujiente y jugosa, con el equilibrio justo entre dulce y ácido. Ideal para comer a mordiscos o para hacer compota.',
+      how: 'La recogida se hace a mano, girando la fruta hacia arriba para que el rabillo se suelte sin romper la rama. Se guardan en un almacén fresco y ventilado.' },
+    { id: 4, k: 'pan', n: 'Pan de masa madre', cat: 'panaderia', p: 2.80, u: 'ud', o: 'Horno San Juan · 1 km', c: '#9a5b25', km0: true, season: 'Cada mañana', kcal: 250,
+      d: 'Fermentación lenta de 24 horas con masa madre natural. Corteza crujiente, miga húmeda y aroma que dura varios días.',
+      how: 'Luis empieza a las 4 de la madrugada: forma las piezas a mano y las cuece en horno de piedra. A las 8 ya están en la tienda, todavía calientes.' },
+    { id: 5, k: 'croissant', n: 'Croissants de mantequilla', cat: 'panaderia', p: 3.20, old: 4.80, u: '4 uds', o: 'Horno San Juan · 1 km', c: '#c07a1e', last: true, season: 'Cada mañana', kcal: 406,
+      d: 'Hojaldre de mantequilla con 27 capas. Son de ayer y por eso cuestan menos: en el horno 3 minutos y quedan como recién hechos.',
+      how: 'La masa se lamina y se dobla tres veces, se forma cada croissant a mano y se hornea a 190 °C hasta que la superficie queda dorada y brillante.' },
+    { id: 6, k: 'queso', n: 'Queso artesano semicurado', cat: 'despensa', p: 9.50, u: '500 g', o: 'Quesería La Vega · 25 km', c: '#b98a1b', km0: true, season: '3 meses de curación', kcal: 380,
+      d: 'Queso de leche cruda de vaca, suave y con ojos. Sabor a pradera y un final ligeramente avellanado.',
+      how: 'Se cuaja la leche recién ordeñada, se prensa en moldes y madura tres meses en una cueva natural, donde cada pieza se voltea a mano cada semana.' },
+    { id: 7, k: 'miel', n: 'Miel de flores', cat: 'despensa', p: 6.90, u: '500 g', o: 'Apicultura Sierra · 30 km', c: '#c98411', km0: true, eco: true, season: 'Jun – Sep', kcal: 304,
+      d: 'Miel cruda sin pasteurizar, de romero, tomillo y flores silvestres de la sierra. Con el frío cristaliza: es señal de que es pura.',
+      how: 'Ana retira los cuadros de las colmenas con humo suave, quita la cera con un cuchillo caliente y extrae la miel por centrifugado, sin calentar.' },
+    { id: 8, k: 'aceite', n: 'Aceite de oliva virgen extra', cat: 'despensa', p: 8.40, u: '750 ml', o: 'Almazara del Valle · 40 km', c: '#6b7a1c', eco: true, season: 'Nov – Ene', kcal: 884,
+      d: 'Primera presión en frío de aceituna picual. Afrutado, con un toque amargo y picante: el oro líquido de la cocina.',
+      how: 'La aceituna se varea y se recoge en mantos sobre el suelo. En menos de 24 horas se muele en la almazara y se extrae el aceite en frío, sin químicos.' },
+    { id: 9, k: 'huevos', n: 'Huevos camperos', cat: 'despensa', p: 3.10, u: 'media docena', o: 'Gallinas Felices · 9 km', c: '#a0662f', km0: true, season: 'Todo el año', kcal: 143,
+      d: 'De gallinas que pasean al aire libre y comen cereal y hierba. Yema de color intenso y clara firme.',
+      how: 'Se recogen a mano dos veces al día de los ponederos, se revisan a contraluz y se envasan en hueveras de cartón reciclado.' },
+    { id: 10, k: 'platano', n: 'Plátanos de Canarias', cat: 'fruta', p: 0.90, old: 1.80, u: 'kg', o: 'Canarias', c: '#c9a10f', last: true, season: 'Todo el año', kcal: 89,
+      d: 'Con sus famosas motitas: están en su punto de dulzor. A mitad de precio para que no se desperdicien. Perfectos para batidos o bizcocho.',
+      how: 'Las piñas se cortan verdes en la plantación, viajan en barco a la península y maduran de forma natural, sin cámaras de gas.' }
   ];
+  const CREDITS = {"tomate": {"p": "Softeis (CC BY-SA 3.0)", "h": "U.S. Department of Agriculture / Preston Keres/Office of Communications-Photography Services Center (Public domain)"}, "manzana": {"p": "Abhijit Tembhekar from Mumbai, India (CC BY 2.0)", "h": "W.carter (CC0)"}, "lechuga": {"p": "Rainer Zenz (CC BY-SA 3.0)", "h": "Zolfeqar Fatihzadeh (CC BY-SA 4.0)"}, "pan": {"p": "Dmitry Makeev (CC BY-SA 4.0)", "h": "Ensie & Matthias (CC BY-SA 2.0)"}, "croissant": {"p": "Petr Kratochvil (CC0)", "h": "Jeremy Keith from Brighton & Hove, United Kingdom (CC BY 2.0)"}, "queso": {"p": "Renee Comet (Photographer) (Public domain)", "h": "Baynard (CC BY-SA 3.0)"}, "miel": {"p": "Hayden Soloviev (CC BY 4.0)", "h": "KNOW MALTA by Peter Grima from MALTA (CC BY-SA 2.0)"}, "aceite": {"p": "Mervat Salman (CC BY-SA 4.0)", "h": "Ввласенко (CC BY-SA 3.0)"}, "huevos": {"p": "Evan-Amos (Public domain)", "h": "Bill Boaden (CC BY-SA 2.0)"}, "platano": {"p": "robin_24 (CC BY 2.0)", "h": "Frank Vincentz (CC BY-SA 3.0)"}};
+  const CREDITS_FULL = [{"k": "h_aceite", "t": "Air Olive 1.JPG", "a": "Ввласенко", "l": "CC BY-SA 3.0", "u": "https://commons.wikimedia.org/wiki/File:Air_Olive_1.JPG"}, {"k": "h_croissant", "t": "Putting bread in the oven (5958998763).jpg", "a": "Jeremy Keith from Brighton & Hove, United Kingdom", "l": "CC BY 2.0", "u": "https://commons.wikimedia.org/wiki/File:Putting_bread_in_the_oven_(5958998763).jpg"}, {"k": "h_huevos", "t": "Farm with free range hens - geograph.org.uk - 1729447.jpg", "a": "Bill Boaden", "l": "CC BY-SA 2.0", "u": "https://commons.wikimedia.org/wiki/File:Farm_with_free_range_hens_-_geograph.org.uk_-_1729447.jpg"}, {"k": "h_lechuga", "t": "Iceberg lettuce in Poplar Farmhouse (14827).jpg", "a": "Zolfeqar Fatihzadeh", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Iceberg_lettuce_in_Poplar_Farmhouse_(14827).jpg"}, {"k": "h_manzana", "t": "Tree with red apples in Barkedal 4.jpg", "a": "W.carter", "l": "CC0", "u": "https://commons.wikimedia.org/wiki/File:Tree_with_red_apples_in_Barkedal_4.jpg"}, {"k": "h_miel", "t": "Maltese honey (3044867663).jpg", "a": "KNOW MALTA by Peter Grima from MALTA", "l": "CC BY-SA 2.0", "u": "https://commons.wikimedia.org/wiki/File:Maltese_honey_(3044867663).jpg"}, {"k": "h_pan", "t": "Barbary Baker.jpg", "a": "Ensie & Matthias", "l": "CC BY-SA 2.0", "u": "https://commons.wikimedia.org/wiki/File:Barbary_Baker.jpg"}, {"k": "h_platano", "t": "Banana plantation (San Andrés) 04 ies.jpg", "a": "Frank Vincentz", "l": "CC BY-SA 3.0", "u": "https://commons.wikimedia.org/wiki/File:Banana_plantation_(San_Andr%C3%A9s)_04_ies.jpg"}, {"k": "h_queso", "t": "Cheese Aging Cave.jpg", "a": "Baynard", "l": "CC BY-SA 3.0", "u": "https://commons.wikimedia.org/wiki/File:Cheese_Aging_Cave.jpg"}, {"k": "h_tomate", "t": "Tomato harvest at Miller Farms in Clinton, MD 20170728-RD-PJK-0672 TONED (36224627815).jpg", "a": "U.S. Department of Agriculture / Preston Keres/Office of Communications-Photography Services Center", "l": "Public domain", "u": "https://commons.wikimedia.org/wiki/File:Tomato_harvest_at_Miller_Farms_in_Clinton,_MD_20170728-RD-PJK-0672_TONED_(36224627815).jpg"}, {"k": "p_aceite", "t": "Bottle of Extra Virgin Olive Oil.jpg", "a": "Mervat Salman", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Bottle_of_Extra_Virgin_Olive_Oil.jpg"}, {"k": "p_croissant", "t": "Croissant-Petr Kratochvil.jpg", "a": "Petr Kratochvil", "l": "CC0", "u": "https://commons.wikimedia.org/wiki/File:Croissant-Petr_Kratochvil.jpg"}, {"k": "p_huevos", "t": "6-Pack-Chicken-Eggs.jpg", "a": "Evan-Amos", "l": "Public domain", "u": "https://commons.wikimedia.org/wiki/File:6-Pack-Chicken-Eggs.jpg"}, {"k": "p_lechuga", "t": "Romaine lettuce.jpg", "a": "Rainer Zenz", "l": "CC BY-SA 3.0", "u": "https://commons.wikimedia.org/wiki/File:Romaine_lettuce.jpg"}, {"k": "p_manzana", "t": "Red Apple.jpg", "a": "Abhijit Tembhekar from Mumbai, India", "l": "CC BY 2.0", "u": "https://commons.wikimedia.org/wiki/File:Red_Apple.jpg"}, {"k": "p_miel", "t": "Three French monofloral honey jars.jpg", "a": "Hayden Soloviev", "l": "CC BY 4.0", "u": "https://commons.wikimedia.org/wiki/File:Three_French_monofloral_honey_jars.jpg"}, {"k": "p_pan", "t": "Breads of Moskovskaya Oblast. img 008.jpg", "a": "Dmitry Makeev", "l": "CC BY-SA 4.0", "u": "https://commons.wikimedia.org/wiki/File:Breads_of_Moskovskaya_Oblast._img_008.jpg"}, {"k": "p_platano", "t": "Banana isolated on white.jpg", "a": "robin_24", "l": "CC BY 2.0", "u": "https://commons.wikimedia.org/wiki/File:Banana_isolated_on_white.jpg"}, {"k": "p_queso", "t": "Cheese.jpg", "a": "Renee Comet (Photographer)", "l": "Public domain", "u": "https://commons.wikimedia.org/wiki/File:Cheese.jpg"}, {"k": "p_tomate", "t": "Tomato je.jpg", "a": "Softeis", "l": "CC BY-SA 3.0", "u": "https://commons.wikimedia.org/wiki/File:Tomato_je.jpg"}];
+  const img = k => `img/${k}.webp`, field = k => `img/campo_${k}.webp`;
   const MEASURES = [
     { i: '🔒', t: 'Web y pagos seguros + RGPD', s: 'Segura', c: '#1f7a4d', p: 100,
       a: ['Certificado HTTPS en toda la web', 'Pasarela de pago certificada (Bizum, Redsys)', 'Contraseñas robustas y verificación en dos pasos', 'Copias de seguridad diarias y actualizaciones', 'Política de privacidad y cookies que se pueden rechazar'], ods: [9, 16] },
@@ -82,14 +103,21 @@
     const q = query.trim().toLowerCase();
     const list = PRODUCTS.filter(p => (filter === 'todo' || p.cat === filter || (filter === 'ultimo' && p.last)) && p.n.toLowerCase().includes(q));
     grid.innerHTML = list.length ? list.map((p, i) => `
-      <article class="product" style="animation-delay:${i * 50}ms">
+      <article class="product" style="animation-delay:${i * 50}ms; --pc:${p.c}">
         <div class="tags">${p.km0 ? '<span class="tag">KM 0</span>' : ''}${p.eco ? '<span class="tag eco">ECO</span>' : ''}${p.last ? '<span class="tag last">ÚLTIMO DÍA</span>' : ''}</div>
-        <span class="emoji" role="img" aria-label="${p.n}">${p.e}</span>
-        <h3>${p.n}</h3>
-        <p class="origin">📍 ${p.o}</p>
-        <div><span class="price">${eur(p.p)}</span>${p.old ? `<span class="old">${eur(p.old)}</span>` : ''} <small>/ ${p.u}</small></div>
-        <div class="qty"><button class="btn small" data-add="${p.id}" aria-label="Añadir ${p.n} al carrito">+ Añadir</button></div>
-      </article>`).join('') : '<p class="empty">😕 No hay productos con ese filtro.</p>';
+        <button class="photo" data-ficha="${p.id}" aria-label="Ver ficha de ${p.n}">
+          <img class="harvest" src="${field(p.k)}" alt="" loading="lazy">
+          <span class="harvest-label">Ver cómo se cosecha</span>
+          <img class="cut" src="${img(p.k)}" alt="${p.n}" loading="lazy" style="animation-delay:${-i * 0.7}s">
+        </button>
+        <div class="pbody">
+          <h3>${p.n}</h3>
+          <p class="origin">${p.o}</p>
+          <p class="short">${p.d.split('.')[0]}.</p>
+          <div class="row-buy"><div><span class="price">${eur(p.p)}</span>${p.old ? `<span class="old">${eur(p.old)}</span>` : ''} <small>/ ${p.u}</small></div>
+          <button class="btn small" data-add="${p.id}" aria-label="Añadir ${p.n} a la cesta">Añadir</button></div>
+        </div>
+      </article>`).join('') : '<p class="empty">No hay productos con ese filtro.</p>';
   }
   $('#chips').addEventListener('click', e => {
     const b = e.target.closest('.chip'); if (!b) return;
@@ -97,20 +125,22 @@
   });
   $('#search').addEventListener('input', e => { query = e.target.value; renderProducts(); });
   grid.addEventListener('click', e => {
+    const f = e.target.closest('[data-ficha]'); if (f) return openFicha(+f.dataset.ficha);
     const b = e.target.closest('[data-add]'); if (!b) return;
     const id = +b.dataset.add; cart[id] = (cart[id] || 0) + 1; saveCart();
-    const p = PRODUCTS.find(x => x.id === id); toast(`${p.e} ${p.n} añadido`);
-    flyToCart(b.closest('.product').querySelector('.emoji'));
+    const p = PRODUCTS.find(x => x.id === id); toast(`${p.n} añadido a la cesta`);
+    flyToCart(b.closest('.product').querySelector('.cut'));
   });
   function flyToCart(el) {
-    if (root.classList.contains('no-motion')) return;
+    if (!el || root.classList.contains('no-motion')) return;
     const r = el.getBoundingClientRect(), t = $('#cartBtn').getBoundingClientRect();
-    const f = document.createElement('div'); f.textContent = el.textContent;
-    Object.assign(f.style, { position: 'fixed', left: r.left + r.width / 2 - 24 + 'px', top: r.top + 'px', fontSize: '3rem', zIndex: 200, pointerEvents: 'none', transition: 'all .8s cubic-bezier(.5,-0.4,.7,1)' });
+    const f = el.cloneNode(); f.removeAttribute('class'); f.alt = '';
+    Object.assign(f.style, { position: 'fixed', left: r.left + 'px', top: r.top + 'px', width: r.width + 'px', height: r.height + 'px', objectFit: 'contain', zIndex: 200, pointerEvents: 'none', transition: 'all .8s cubic-bezier(.5,-0.3,.7,1)', filter: 'drop-shadow(0 10px 10px rgba(0,0,0,.3))' });
     document.body.appendChild(f);
-    requestAnimationFrame(() => Object.assign(f.style, { left: t.left + 'px', top: t.top + 'px', fontSize: '1rem', opacity: .3 }));
+    requestAnimationFrame(() => Object.assign(f.style, { left: t.left + 'px', top: t.top + 'px', width: '30px', height: '30px', opacity: .4, transform: 'rotate(360deg)' }));
     setTimeout(() => f.remove(), 850);
   }
+  const addToCart = (id, el) => { cart[id] = (cart[id] || 0) + 1; saveCart(); const p = PRODUCTS.find(x => x.id === id); toast(`${p.n} añadido a la cesta`); flyToCart(el); };
 
   /* ---------- Carrito ---------- */
   const drawer = $('#drawer'), overlay = $('#overlay');
@@ -130,9 +160,9 @@
     $('#cartCount').textContent = items.reduce((s, [, q]) => s + q, 0);
     $('#cartList').innerHTML = items.length ? items.map(([id, q]) => {
       const p = PRODUCTS.find(x => x.id == id);
-      return `<li><span class="e">${p.e}</span><div class="info"><strong>${p.n}</strong><br><small>${eur(p.p)} / ${p.u}</small></div>
+      return `<li><span class="e"><img src="${img(p.k)}" alt=""></span><div class="info"><strong>${p.n}</strong><br><small>${eur(p.p)} / ${p.u}</small></div>
         <div class="q"><button data-dec="${id}" aria-label="Quitar uno">−</button><span>${q}</span><button data-inc="${id}" aria-label="Añadir uno">+</button></div></li>`;
-    }).join('') : '<li>Tu carrito está vacío 🧺</li>';
+    }).join('') : '<li>Tu cesta está vacía</li>';
     $('#cartTotal').textContent = eur(cartTotal());
     const local = items.filter(([id]) => PRODUCTS.find(p => p.id == id).km0).length;
     const saved = items.filter(([id]) => PRODUCTS.find(p => p.id == id).last).reduce((s, [, q]) => s + q, 0);
@@ -180,6 +210,104 @@
       <p>🌱 Has elegido una compra local y responsable.</p><button class="btn" onclick="location.reload()">Volver a la tienda</button></div>`;
     cart = {}; saveCart(); confetti();
   });
+
+  /* ---------- Escaparate 3D ---------- */
+  const sc = $('#escaparate'), scImg = $('#scImg'), stage = $('#scStage');
+  let cur = 0, busy = false, auto;
+  const AUTO_MS = 7000;
+  PRODUCTS.forEach(p => { const i = new Image(); i.src = img(p.k); });
+  $('#scTotal').textContent = String(PRODUCTS.length).padStart(2, '0');
+  $('#scThumbs').innerHTML = PRODUCTS.map((p, i) => `<button role="tab" aria-selected="${i === 0}" aria-label="${p.n}" data-go="${i}"><img src="${img(p.k)}" alt=""></button>`).join('');
+  function paintText(p, i) {
+    sc.style.setProperty('--pc', p.c);
+    $('#scIndex').textContent = String(i + 1).padStart(2, '0');
+    $('#scName').textContent = p.n; $('#scOrigin').textContent = p.o; $('#scDesc').textContent = p.d;
+    $('#scTags').innerHTML = [p.km0 && 'Km 0', p.eco && 'Ecológico', p.last && 'Último día · −50 %', 'Temporada: ' + p.season].filter(Boolean).map(t => `<span>${t}</span>`).join('');
+    $('#scPrice').textContent = eur(p.p); $('#scUnit').textContent = '/ ' + p.u;
+    $$('#scThumbs button').forEach((b, j) => b.setAttribute('aria-selected', j === i));
+    const th = $$('#scThumbs button')[i]; th && th.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+  }
+  function paintBg(p, first) {
+    const a = $('#scBg'), b = $('#scBg2');
+    if (first) { a.style.backgroundImage = `url(${field(p.k)})`; return; }
+    b.style.backgroundImage = `url(${field(p.k)})`; b.style.opacity = 1;
+    setTimeout(() => { a.style.backgroundImage = b.style.backgroundImage; b.style.opacity = 0; }, 900);
+  }
+  function go(i, dir) {
+    if (busy || i === cur) return; busy = true;
+    const p = PRODUCTS[i], noMo = root.classList.contains('no-motion');
+    const txt = $('#scText'); txt.classList.remove('swap'); void txt.offsetWidth; txt.classList.add('swap');
+    paintBg(p);
+    if (noMo) { scImg.src = img(p.k); scImg.alt = p.n; paintText(p, i); cur = i; busy = false; return restartAuto(); }
+    scImg.className = 'sc-img ' + (dir > 0 ? 'out-left' : 'out-right');
+    setTimeout(() => paintText(p, i), 250);
+    setTimeout(() => {
+      scImg.src = img(p.k); scImg.alt = p.n;
+      scImg.className = 'sc-img ' + (dir > 0 ? 'in-right' : 'in-left');
+      cur = i; setTimeout(() => { scImg.className = 'sc-img'; busy = false; }, 700);
+    }, 480);
+    restartAuto();
+  }
+  const next = () => go((cur + 1) % PRODUCTS.length, 1), prev = () => go((cur - 1 + PRODUCTS.length) % PRODUCTS.length, -1);
+  $('#scNext').addEventListener('click', next); $('#scPrev').addEventListener('click', prev);
+  $('#scThumbs').addEventListener('click', e => { const b = e.target.closest('[data-go]'); if (b) go(+b.dataset.go, +b.dataset.go > cur ? 1 : -1); });
+  $('#scAdd').addEventListener('click', () => addToCart(PRODUCTS[cur].id, scImg));
+  $('#scMore').addEventListener('click', () => openFicha(PRODUCTS[cur].id));
+  document.addEventListener('keydown', e => {
+    if (document.querySelector('.modal:not([hidden])') || /INPUT|TEXTAREA/.test(document.activeElement.tagName)) return;
+    const r = sc.getBoundingClientRect(); if (r.bottom < 100 || r.top > innerHeight - 100) return;
+    if (e.key === 'ArrowRight') next(); if (e.key === 'ArrowLeft') prev();
+  });
+  let sx = null;
+  stage.addEventListener('pointerdown', e => { sx = e.clientX; });
+  addEventListener('pointerup', e => { if (sx === null) return; const dx = e.clientX - sx; sx = null; if (Math.abs(dx) > 50) dx < 0 ? next() : prev(); });
+  // flotación + inclinación 3D siguiendo el ratón
+  let mx = 0, my = 0;
+  stage.addEventListener('pointermove', e => { const r = stage.getBoundingClientRect(); mx = (e.clientX - r.left) / r.width - .5; my = (e.clientY - r.top) / r.height - .5; });
+  stage.addEventListener('pointerleave', () => { mx = my = 0; });
+  (function floatLoop(t) {
+    if (!root.classList.contains('no-motion')) {
+      const fy = Math.sin(t / 900) * 18;
+      scImg.style.setProperty('--fy', fy + 'px');
+      scImg.style.setProperty('--ry', (mx * 30 + Math.sin(t / 1600) * 6) + 'deg');
+      scImg.style.setProperty('--rx', (-my * 22) + 'deg');
+      scImg.style.setProperty('--rz', (Math.sin(t / 1300) * 3) + 'deg');
+      sc.style.setProperty('--ss', (1 - fy / 60).toFixed(3)); sc.style.setProperty('--so', (0.75 - fy / 60).toFixed(3));
+      $('.sc-shadow').style.transform = `scaleX(${1 + fy / 60})`; $('.sc-shadow').style.opacity = .75 + fy / 70;
+    }
+    requestAnimationFrame(floatLoop);
+  })(0);
+  function restartAuto() {
+    clearInterval(auto); const bar = $('#scBar');
+    bar.style.transition = 'none'; bar.style.width = '0';
+    if (root.classList.contains('no-motion')) return;
+    requestAnimationFrame(() => requestAnimationFrame(() => { bar.style.transition = `width ${AUTO_MS}ms linear`; bar.style.width = '100%'; }));
+    auto = setInterval(() => { if (!document.hidden && !sc.matches(':hover')) next(); else restartAuto(); }, AUTO_MS);
+  }
+  scImg.src = img(PRODUCTS[0].k); scImg.alt = PRODUCTS[0].n; paintText(PRODUCTS[0], 0); paintBg(PRODUCTS[0], true); restartAuto();
+
+  /* ---------- Del campo (mosaico) ---------- */
+  $('#mosaic').innerHTML = PRODUCTS.map((p, i) => `
+    <button class="reveal" data-ficha="${p.id}" aria-label="Ficha de ${p.n}">
+      <img class="bg" src="${field(p.k)}" alt="" loading="lazy"><img class="mini" src="${img(p.k)}" alt="" loading="lazy">
+      <span class="cap"><strong>${p.n}</strong><small>${p.o}</small></span>
+    </button>`).join('');
+  $('#mosaic').addEventListener('click', e => { const b = e.target.closest('[data-ficha]'); if (b) openFicha(+b.dataset.ficha); });
+
+  /* ---------- Ficha de producto ---------- */
+  let fichaId = null;
+  function openFicha(id) {
+    const p = PRODUCTS.find(x => x.id === id); fichaId = id;
+    $('#fHarvest').src = field(p.k); $('#fProd').src = img(p.k); $('#fProd').alt = p.n;
+    $('#fOrigin').textContent = p.o; $('#fName').textContent = p.n; $('#fDesc').textContent = p.d; $('#fHow').textContent = p.how;
+    $('#fFacts').innerHTML = `<div><b>${p.season}</b>Temporada</div><div><b>${p.kcal} kcal</b>por 100 g</div><div><b>${p.o.includes('km') ? p.o.split('· ')[1] : 'Península'}</b>Distancia</div>`;
+    $('#fPrice').textContent = eur(p.p); $('#fUnit').textContent = ' / ' + p.u;
+    const cr = CREDITS[p.k] || {}; $('#fCredit').textContent = `Fotos: ${cr.h || ''} · ${cr.p || ''}`;
+    openModal($('#ficha'));
+  }
+  $('#fAdd').addEventListener('click', () => { addToCart(fichaId, $('#fProd')); });
+
+  $('#creditsList').innerHTML = CREDITS_FULL.map(c => `<li><b>${c.k.startsWith('p_') ? 'Producto' : 'Campo'} · ${c.k.slice(2)}:</b> «${c.t}» — ${c.a} — ${c.l} — <a href="${c.u}" target="_blank" rel="noopener">ver original</a></li>`).join('');
 
   /* ---------- Medidas ---------- */
   $('#timeline').innerHTML = MEASURES.map((m, i) => `

@@ -1,0 +1,24 @@
+CRÉDITOS DE LAS FOTOGRAFÍAS (Wikimedia Commons, licencias libres)
+Los productos (p_) se han recortado eliminando el fondo; las fotos de campo (h_) se han redimensionado.
+Las licencias CC BY-SA obligan a compartir las obras derivadas con la misma licencia.
+
+h_aceite: «Air Olive 1.JPG» — Ввласенко — CC BY-SA 3.0 — https://commons.wikimedia.org/wiki/File:Air_Olive_1.JPG
+h_croissant: «Putting bread in the oven (5958998763).jpg» — Jeremy Keith from Brighton & Hove, United Kingdom — CC BY 2.0 — https://commons.wikimedia.org/wiki/File:Putting_bread_in_the_oven_(5958998763).jpg
+h_huevos: «Farm with free range hens - geograph.org.uk - 1729447.jpg» — Bill Boaden — CC BY-SA 2.0 — https://commons.wikimedia.org/wiki/File:Farm_with_free_range_hens_-_geograph.org.uk_-_1729447.jpg
+h_lechuga: «Iceberg lettuce in Poplar Farmhouse (14827).jpg» — Zolfeqar Fatihzadeh — CC BY-SA 4.0 — https://commons.wikimedia.org/wiki/File:Iceberg_lettuce_in_Poplar_Farmhouse_(14827).jpg
+h_manzana: «Tree with red apples in Barkedal 4.jpg» — W.carter — CC0 — https://commons.wikimedia.org/wiki/File:Tree_with_red_apples_in_Barkedal_4.jpg
+h_miel: «Maltese honey (3044867663).jpg» — KNOW MALTA by Peter Grima from MALTA — CC BY-SA 2.0 — https://commons.wikimedia.org/wiki/File:Maltese_honey_(3044867663).jpg
+h_pan: «Barbary Baker.jpg» — Ensie & Matthias — CC BY-SA 2.0 — https://commons.wikimedia.org/wiki/File:Barbary_Baker.jpg
+h_platano: «Banana plantation (San Andrés) 04 ies.jpg» — Frank Vincentz — CC BY-SA 3.0 — https://commons.wikimedia.org/wiki/File:Banana_plantation_(San_Andr%C3%A9s)_04_ies.jpg
+h_queso: «Cheese Aging Cave.jpg» — Baynard — CC BY-SA 3.0 — https://commons.wikimedia.org/wiki/File:Cheese_Aging_Cave.jpg
+h_tomate: «Tomato harvest at Miller Farms in Clinton, MD 20170728-RD-PJK-0672 TONED (36224627815).jpg» — U.S. Department of Agriculture / Preston Keres/Office of Communications-Photography Services Center — Public domain — https://commons.wikimedia.org/wiki/File:Tomato_harvest_at_Miller_Farms_in_Clinton,_MD_20170728-RD-PJK-0672_TONED_(36224627815).jpg
+p_aceite: «Bottle of Extra Virgin Olive Oil.jpg» — Mervat Salman — CC BY-SA 4.0 — https://commons.wikimedia.org/wiki/File:Bottle_of_Extra_Virgin_Olive_Oil.jpg
+p_croissant: «Croissant-Petr Kratochvil.jpg» — Petr Kratochvil — CC0 — https://commons.wikimedia.org/wiki/File:Croissant-Petr_Kratochvil.jpg
+p_huevos: «6-Pack-Chicken-Eggs.jpg» — Evan-Amos — Public domain — https://commons.wikimedia.org/wiki/File:6-Pack-Chicken-Eggs.jpg
+p_lechuga: «Romaine lettuce.jpg» — Rainer Zenz — CC BY-SA 3.0 — https://commons.wikimedia.org/wiki/File:Romaine_lettuce.jpg
+p_manzana: «Red Apple.jpg» — Abhijit Tembhekar from Mumbai, India — CC BY 2.0 — https://commons.wikimedia.org/wiki/File:Red_Apple.jpg
+p_miel: «Three French monofloral honey jars.jpg» — Hayden Soloviev — CC BY 4.0 — https://commons.wikimedia.org/wiki/File:Three_French_monofloral_honey_jars.jpg
+p_pan: «Breads of Moskovskaya Oblast. img 008.jpg» — Dmitry Makeev — CC BY-SA 4.0 — https://commons.wikimedia.org/wiki/File:Breads_of_Moskovskaya_Oblast._img_008.jpg
+p_platano: «Banana isolated on white.jpg» — robin_24 — CC BY 2.0 — https://commons.wikimedia.org/wiki/File:Banana_isolated_on_white.jpg
+p_queso: «Cheese.jpg» — Renee Comet (Photographer) — Public domain — https://commons.wikimedia.org/wiki/File:Cheese.jpg
+p_tomate: «Tomato je.jpg» — Softeis — CC BY-SA 3.0 — https://commons.wikimedia.org/wiki/File:Tomato_je.jpg

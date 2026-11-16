@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>La Despensa del Barrio · Tienda online</title>
   <meta name="description" content="Tienda de barrio online: segura, inclusiva y sostenible.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -12,15 +14,16 @@
 
   <!-- Barra superior -->
   <header class="topbar" id="top">
-    <a href="#top" class="logo" aria-label="Inicio">🧺 <span>La Despensa<br><small>del Barrio</small></span></a>
+    <a href="#top" class="logo" aria-label="Inicio"><span class="logo-mark">D</span><span>La Despensa<br><small>del Barrio</small></span></a>
     <nav class="nav" aria-label="Principal">
+      <a href="#escaparate">Escaparate</a>
       <a href="#tienda">Tienda</a>
+      <a href="#campo">Del campo</a>
       <a href="#medidas">Medidas</a>
       <a href="#ods">ODS</a>
       <a href="#co2">Reparto verde</a>
       <a href="#seguridad">Seguridad</a>
-      <a href="#quiz">Quiz</a>
-    </nav>
+          </nav>
     <div class="actions">
       <button class="icon-btn" id="a11yBtn" aria-label="Opciones de accesibilidad" aria-expanded="false">♿</button>
       <button class="icon-btn" id="themeBtn" aria-label="Cambiar modo claro u oscuro">🌙</button>
@@ -40,65 +43,92 @@
   </aside>
 
   <main id="main">
-    <!-- HERO -->
-    <section class="hero">
-      <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
-      <div class="hero-text reveal">
-        <p class="pill">🔒 Segura · ♿ Inclusiva · 🌱 Sostenible</p>
-        <h1>Tu tienda de siempre,<br><span class="grad">ahora también online</span></h1>
-        <p class="lead">Producto local, trato cercano y reparto a pie o en bici. Pide por la web, por teléfono o por WhatsApp: como te resulte más fácil.</p>
-        <div class="hero-cta">
-          <a href="#tienda" class="btn">Empezar a comprar</a>
-          <a href="#medidas" class="btn ghost">Ver las 5 medidas</a>
+    <!-- ESCAPARATE 3D -->
+    <section class="showcase" id="escaparate" aria-roledescription="carrusel" aria-label="Escaparate de productos">
+      <div class="sc-bg" id="scBg"></div><div class="sc-bg next" id="scBg2"></div>
+      <div class="sc-shade"></div>
+      <div class="sc-inner">
+        <div class="sc-text" id="scText" aria-live="polite">
+          <p class="kicker"><span id="scIndex">01</span> / <span id="scTotal">10</span> · Del campo a tu cesta</p>
+          <h1 id="scName">Tomates de la huerta</h1>
+          <p class="sc-origin" id="scOrigin"></p>
+          <p class="sc-desc" id="scDesc"></p>
+          <div class="sc-tags" id="scTags"></div>
+          <div class="sc-buy">
+            <div class="sc-price"><strong id="scPrice"></strong><small id="scUnit"></small></div>
+            <button class="btn" id="scAdd">Añadir a la cesta</button>
+            <button class="btn ghost light" id="scMore">Ver cómo se cosecha</button>
+          </div>
         </div>
-        <div class="stats">
-          <div><strong data-count="92">0</strong><span>% producto local</span></div>
-          <div><strong data-count="340">0</strong><span>kg CO₂ ahorrados</span></div>
-          <div><strong data-count="120">0</strong><span>vecinos formados</span></div>
+        <div class="sc-stage" id="scStage">
+          <div class="sc-glow"></div>
+          <img class="sc-img" id="scImg" alt="" draggable="false">
+          <div class="sc-shadow"></div>
         </div>
       </div>
-      <div class="hero-art reveal" aria-hidden="true">
-        <div class="float f1">🍅</div><div class="float f2">🥖</div><div class="float f3">🧀</div>
-        <div class="float f4">🍎</div><div class="float f5">🥬</div><div class="float f6">🚲</div>
-        <div class="shop">🏪</div>
+      <div class="sc-nav">
+        <button class="arrow" id="scPrev" aria-label="Producto anterior"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <div class="sc-thumbs" id="scThumbs" role="tablist" aria-label="Elegir producto"></div>
+        <button class="arrow" id="scNext" aria-label="Producto siguiente"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+      </div>
+      <div class="sc-progress"><div id="scBar"></div></div>
+    </section>
+
+    <!-- INTRO -->
+    <section class="intro">
+      <div class="intro-text reveal">
+        <p class="eyebrow">Tienda de barrio desde 1987</p>
+        <h2>Tu tienda de siempre, <em>ahora también online</em></h2>
+        <p>Producto local, trato cercano y reparto a pie o en bici. Pide por la web, por teléfono o por WhatsApp: como te resulte más fácil.</p>
+      </div>
+      <div class="stats reveal">
+        <div><strong data-count="92">0</strong><span>% producto local</span></div>
+        <div><strong data-count="340">0</strong><span>kg de CO₂ ahorrados</span></div>
+        <div><strong data-count="120">0</strong><span>vecinos formados</span></div>
       </div>
     </section>
 
     <!-- TIENDA -->
     <section id="tienda" class="section">
-      <h2 class="title reveal">🛍️ Nuestra tienda</h2>
+      <h2 class="title reveal">Nuestra tienda</h2>
       <p class="subtitle reveal">Filtra, busca y añade al carrito. Las etiquetas te dicen qué es de km 0 o está en «Último día».</p>
       <div class="toolbar reveal">
-        <label class="search"><span class="sr">Buscar producto</span><input type="search" id="search" placeholder="🔎 Buscar producto…"></label>
+        <label class="search"><span class="sr">Buscar producto</span><input type="search" id="search" placeholder="Buscar producto…"></label>
         <div class="chips" role="group" aria-label="Filtrar por categoría" id="chips">
           <button class="chip active" data-cat="todo">Todo</button>
-          <button class="chip" data-cat="fruta">🍎 Fruta y verdura</button>
-          <button class="chip" data-cat="panaderia">🥖 Panadería</button>
-          <button class="chip" data-cat="lacteos">🧀 Lácteos</button>
-          <button class="chip" data-cat="despensa">🫙 Despensa</button>
-          <button class="chip" data-cat="ultimo">⏰ Último día</button>
+          <button class="chip" data-cat="fruta">Fruta y verdura</button>
+          <button class="chip" data-cat="panaderia">Panadería</button>
+          <button class="chip" data-cat="despensa">Despensa y lácteos</button>
+          <button class="chip" data-cat="ultimo">Último día</button>
         </div>
       </div>
       <div class="grid" id="products" aria-live="polite"></div>
     </section>
 
+    <!-- DEL CAMPO -->
+    <section id="campo" class="section campo">
+      <h2 class="title reveal">Del campo a tu mesa</h2>
+      <p class="subtitle reveal">Conocemos a quien cultiva, hornea y recoge cada producto. Pulsa una foto para ver la ficha.</p>
+      <div class="mosaic" id="mosaic"></div>
+    </section>
+
     <!-- MEDIDAS -->
     <section id="medidas" class="section alt">
-      <h2 class="title reveal">🧭 Las 5 medidas de nuestra transformación digital</h2>
+      <h2 class="title reveal">Las 5 medidas de nuestra transformación digital</h2>
       <p class="subtitle reveal">Pulsa en cada medida para ver qué hacemos.</p>
       <div class="timeline" id="timeline"></div>
     </section>
 
     <!-- ODS -->
     <section id="ods" class="section">
-      <h2 class="title reveal">🌍 Objetivos de Desarrollo Sostenible</h2>
+      <h2 class="title reveal">Objetivos de Desarrollo Sostenible</h2>
       <p class="subtitle reveal">Gira cada tarjeta para descubrir cómo contribuimos a la Agenda 2030.</p>
       <div class="ods-grid" id="odsGrid"></div>
     </section>
 
     <!-- CO2 -->
     <section id="co2" class="section alt">
-      <h2 class="title reveal">🚲 Calculadora de reparto verde</h2>
+      <h2 class="title reveal">Calculadora de reparto verde</h2>
       <p class="subtitle reveal">Elige cómo recibir tu pedido y mira cuánto CO₂ ahorras frente a una furgoneta diésel.</p>
       <div class="co2-box reveal">
         <div class="co2-controls">
@@ -122,7 +152,7 @@
 
     <!-- SEGURIDAD -->
     <section id="seguridad" class="section">
-      <h2 class="title reveal">🔐 Compra segura</h2>
+      <h2 class="title reveal">Compra segura</h2>
       <p class="subtitle reveal">Comprueba lo fuerte que es tu contraseña (no se envía a ningún sitio) y aprende a detectar fraudes.</p>
       <div class="sec-wrap">
         <div class="card reveal">
@@ -158,13 +188,13 @@
 
     <!-- QUIZ -->
     <section id="quiz" class="section alt">
-      <h2 class="title reveal">🧠 Quiz: ¿cuánto sabes de comercio digital responsable?</h2>
+      <h2 class="title reveal">Quiz: ¿cuánto sabes de comercio digital responsable?</h2>
       <div class="quiz card reveal" id="quizBox"></div>
     </section>
 
     <!-- CANALES -->
     <section class="section channels">
-      <h2 class="title reveal">📞 Compra como prefieras</h2>
+      <h2 class="title reveal">Compra como prefieras</h2>
       <div class="ch-grid">
         <div class="card reveal"><div class="big">💻</div><h3>Web</h3><p>Accesible desde cualquier móvil.</p></div>
         <div class="card reveal"><div class="big">📱</div><h3>WhatsApp</h3><p>Envíanos tu lista y te la preparamos.</p></div>
@@ -175,15 +205,15 @@
   </main>
 
   <footer class="footer">
-    <p>🧺 La Despensa del Barrio · Proyecto educativo de transformación digital</p>
+    <p>La Despensa del Barrio · Proyecto educativo de transformación digital</p>
     <p><a href="#" data-modal="legal">Aviso legal</a> · <a href="#" data-modal="legal">Privacidad</a> · <a href="#" data-modal="legal">Cookies</a></p>
-    <p class="small">Alojamiento con energía 100 % renovable · Web ligera sin imágenes pesadas</p>
+    <p class="small">Alojamiento con energía 100 % renovable · Imágenes optimizadas en WebP · <a href="#" data-modal="creditos">Créditos de fotos</a></p>
   </footer>
 
   <!-- Carrito -->
   <div class="overlay" id="overlay" hidden></div>
   <aside class="drawer" id="drawer" aria-label="Carrito" aria-hidden="true">
-    <div class="drawer-head"><h2>🛒 Tu carrito</h2><button class="icon-btn" id="closeCart" aria-label="Cerrar carrito">✕</button></div>
+    <div class="drawer-head"><h2>Tu cesta</h2><button class="icon-btn" id="closeCart" aria-label="Cerrar carrito">✕</button></div>
     <ul class="cart-list" id="cartList"></ul>
     <div class="cart-foot">
       <p class="eco" id="ecoMsg"></p>
@@ -223,6 +253,30 @@
         <div class="modal-actions"><button type="button" class="btn ghost" id="prevStep">Atrás</button><button type="submit" class="btn" id="nextStep">Siguiente</button></div>
       </form>
     </div>
+  </div>
+
+  <div class="modal" id="ficha" role="dialog" aria-modal="true" aria-labelledby="fName" hidden>
+    <div class="modal-card ficha">
+      <button class="icon-btn close" data-close aria-label="Cerrar">✕</button>
+      <div class="ficha-photo" id="fPhoto"><img id="fHarvest" alt=""><img id="fProd" class="ficha-prod" alt=""></div>
+      <div class="ficha-body">
+        <p class="kicker" id="fOrigin"></p>
+        <h2 id="fName"></h2>
+        <p id="fDesc"></p>
+        <h3>Cómo se cosecha</h3>
+        <p id="fHow"></p>
+        <div class="ficha-facts" id="fFacts"></div>
+        <div class="sc-buy"><div class="sc-price"><strong id="fPrice"></strong><small id="fUnit"></small></div><button class="btn" id="fAdd">Añadir a la cesta</button></div>
+        <p class="credit" id="fCredit"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="creditos" role="dialog" aria-modal="true" hidden>
+    <div class="modal-card"><button class="icon-btn close" data-close aria-label="Cerrar">✕</button>
+      <h2>Créditos de las fotografías</h2>
+      <p class="note">Fotos reales de Wikimedia Commons con licencias libres. Los productos se han recortado (fondo eliminado).</p>
+      <ul class="credits-list" id="creditsList"></ul></div>
   </div>
 
   <div class="modal" id="legal" role="dialog" aria-modal="true" hidden>
