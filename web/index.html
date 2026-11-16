@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>La Despensa del Barrio · Tienda online</title>
+  <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+  <link rel="apple-touch-icon" href="img/favicon-180.png">
+  <meta name="theme-color" content="#1f7a4d">
   <meta name="description" content="Tienda de barrio online: segura, inclusiva y sostenible.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
@@ -14,7 +18,7 @@
 
   <!-- Barra superior -->
   <header class="topbar" id="top">
-    <a href="#top" class="logo" aria-label="Inicio"><span class="logo-mark">D</span><span>La Despensa<br><small>del Barrio</small></span></a>
+    <a href="#top" class="logo" aria-label="Inicio"><img class="logo-mark" src="img/favicon.svg" alt=""><span>La Despensa<br><small>del Barrio</small></span></a>
     <nav class="nav" aria-label="Principal">
       <a href="#escaparate">Escaparate</a>
       <a href="#tienda">Tienda</a>
@@ -294,6 +298,23 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <canvas id="confetti" aria-hidden="true"></canvas>
   <button class="to-top" id="toTop" aria-label="Volver arriba">↑</button>
+
+  <!-- Asistente -->
+  <div class="chat-bubble" id="chatBubble" role="status">
+    <button class="bubble-close" id="bubbleClose" aria-label="Cerrar aviso">✕</button>
+    <img src="img/favicon.svg" alt=""><p><b>¡Hola! Soy Rosa, la asistente de la tienda.</b><br>¿Tienes alguna duda? ¡Pregúntame!</p>
+  </div>
+  <button class="chat-fab" id="chatFab" aria-label="Abrir asistente de preguntas frecuentes" aria-expanded="false" aria-controls="chatbot">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><circle cx="9" cy="10.5" r="1"/><circle cx="12" cy="10.5" r="1"/><circle cx="15" cy="10.5" r="1"/></svg>
+  </button>
+  <section class="chatbot" id="chatbot" aria-label="Asistente de la tienda" hidden>
+    <header class="chat-head"><img src="img/favicon.svg" alt=""><div><strong>Rosa · Asistente</strong><small><span class="online"></span> Respuestas automáticas al momento</small></div>
+      <button class="icon-btn small" id="chatClose" aria-label="Cerrar asistente">✕</button></header>
+    <ul class="chat-log" id="chatLog" aria-live="polite"></ul>
+    <div class="chat-chips" id="chatChips"></div>
+    <form class="chat-form" id="chatForm"><label for="chatInput" class="sr">Escribe tu pregunta</label>
+      <input id="chatInput" autocomplete="off" placeholder="Escribe tu pregunta…"><button class="btn small" aria-label="Enviar">➤</button></form>
+  </section>
 
   <script src="js/app.js"></script>
 </body>

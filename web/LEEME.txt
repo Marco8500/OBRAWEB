@@ -12,6 +12,7 @@ Qué incluye (relacionado con las 5 medidas del documento):
 NOVEDAD v2: escaparate 3D con fotos reales recortadas que flotan con sombra, flechas (o teclas ← →, o deslizar en el móvil)
 para pasar de un producto a otro, fondo con la foto real de la cosecha, ficha de cada producto con «Cómo se cosecha»,
 tarjetas que muestran la foto del campo al pasar el ratón y galería «Del campo a tu mesa».
+NOVEDAD v3: asistente «Rosa» de preguntas frecuentes (aparece al bajar un poco), nuevo favicon.
 Extras: carrito con animación, modo oscuro, tarjetas ODS que giran, confeti.
 
 Archivos: index.html · css/styles.css · js/app.js · img/ (fotos WebP) · CREDITOS.txt (autores y licencias de las fotos)

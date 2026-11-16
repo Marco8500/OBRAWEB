@@ -181,7 +181,7 @@
   $$('[data-close]').forEach(b => b.addEventListener('click', () => closeModal(b.closest('.modal'))));
   $$('.modal').forEach(m => m.addEventListener('click', e => { if (e.target === m) closeModal(m); }));
   $$('[data-modal]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); openModal($('#' + a.dataset.modal)); }));
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') { $$('.modal').forEach(closeModal); closeCart(); a11yPanel.hidden = true; } });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { $$('.modal').forEach(closeModal); $('#chatbot').hidden = true; closeCart(); a11yPanel.hidden = true; } });
 
   $('#checkoutBtn').addEventListener('click', () => {
     if (!Object.keys(cart).length) return toast('Añade algún producto primero 🧺');
@@ -213,7 +213,8 @@
 
   /* ---------- Escaparate 3D ---------- */
   const sc = $('#escaparate'), scImg = $('#scImg'), stage = $('#scStage');
-  let cur = 0, busy = false, auto;
+  let cur = 0, busy = false, auto, scVisible = true;
+  new IntersectionObserver(([e]) => { scVisible = e.isIntersecting; }, { threshold: .35 }).observe(sc);
   const AUTO_MS = 7000;
   PRODUCTS.forEach(p => { const i = new Image(); i.src = img(p.k); });
   $('#scTotal').textContent = String(PRODUCTS.length).padStart(2, '0');
@@ -225,7 +226,8 @@
     $('#scTags').innerHTML = [p.km0 && 'Km 0', p.eco && 'Ecológico', p.last && 'Último día · −50 %', 'Temporada: ' + p.season].filter(Boolean).map(t => `<span>${t}</span>`).join('');
     $('#scPrice').textContent = eur(p.p); $('#scUnit').textContent = '/ ' + p.u;
     $$('#scThumbs button').forEach((b, j) => b.setAttribute('aria-selected', j === i));
-    const th = $$('#scThumbs button')[i]; th && th.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+    const th = $$('#scThumbs button')[i], strip = $('#scThumbs');
+    if (th) strip.scrollTo({ left: th.offsetLeft - strip.clientWidth / 2 + th.clientWidth / 2, behavior: 'smooth' });
   }
   function paintBg(p, first) {
     const a = $('#scBg'), b = $('#scBg2');
@@ -282,7 +284,7 @@
     bar.style.transition = 'none'; bar.style.width = '0';
     if (root.classList.contains('no-motion')) return;
     requestAnimationFrame(() => requestAnimationFrame(() => { bar.style.transition = `width ${AUTO_MS}ms linear`; bar.style.width = '100%'; }));
-    auto = setInterval(() => { if (!document.hidden && !sc.matches(':hover')) next(); else restartAuto(); }, AUTO_MS);
+    auto = setInterval(() => { if (!document.hidden && !sc.matches(':hover') && scVisible) next(); else restartAuto(); }, AUTO_MS);
   }
   scImg.src = img(PRODUCTS[0].k); scImg.alt = PRODUCTS[0].n; paintText(PRODUCTS[0], 0); paintBg(PRODUCTS[0], true); restartAuto();
 
@@ -438,6 +440,81 @@
   const toTop = $('#toTop');
   addEventListener('scroll', () => toTop.classList.toggle('show', scrollY > 600), { passive: true });
   toTop.addEventListener('click', () => scrollTo({ top: 0 }));
+
+
+  /* ---------- Asistente (preguntas frecuentes automatizadas) ---------- */
+  const FAQ = [
+    { q: '¿Cuál es el horario?', k: ['horario', 'hora', 'abr', 'cierr', 'abierto', 'domingo', 'sabado', 'sábado'],
+      a: 'Abrimos de <b>lunes a sábado de 9:00 a 20:00</b>. Los domingos, de 10:00 a 14:00. Los pedidos online se pueden hacer a cualquier hora.' },
+    { q: '¿Hacéis reparto a domicilio?', k: ['reparto', 'domicilio', 'envio', 'envío', 'llev', 'bici', 'entrega', 'casa'],
+      a: 'Sí: repartimos <b>a pie o en bici</b> dentro del barrio por <b>1,50 €</b>, en el día si pides antes de las 13:00. También puedes <b>recogerlo gratis en la tienda</b>.' },
+    { q: '¿Cómo puedo pagar?', k: ['pag', 'bizum', 'tarjeta', 'efectivo', 'dinero', 'cobr'],
+      a: 'Con <b>Bizum, tarjeta o efectivo</b> al recoger. Los pagos online pasan por una pasarela certificada: nunca guardamos los datos de tu tarjeta. 🔒' },
+    { q: '¿Puedo pedir por teléfono o WhatsApp?', k: ['telefono', 'teléfono', 'whatsapp', 'llamar', 'movil', 'móvil', 'internet'],
+      a: 'Claro. Llámanos o escríbenos por WhatsApp al <b>600 000 000</b> con tu lista y te la preparamos. Mismo precio que en la web.' },
+    { q: '¿De dónde vienen los productos?', k: ['donde', 'dónde', 'origen', 'local', 'km', 'productor', 'proximidad', 'vienen'],
+      a: 'El <b>92 %</b> es de productores a menos de 50 km: la Huerta de Paco, el Horno San Juan, la Quesería La Vega... Pulsa <b>«Ver cómo se cosecha»</b> en cada producto para conocerlos.' },
+    { q: '¿Qué es la sección «Último día»?', k: ['ultimo', 'último', 'oferta', 'descuento', 'desperdicio', 'barato', 'caduc'],
+      a: 'Son productos en su punto óptimo que hay que consumir pronto, con <b>hasta un 50 % de descuento</b>. Así evitamos tirar comida. Lo que no se vende lo donamos al banco de alimentos.' },
+    { q: '¿Qué hacéis con mis datos?', k: ['datos', 'privacidad', 'rgpd', 'cookie', 'seguridad', 'seguro'],
+      a: 'Solo usamos tus datos para preparar el pedido, no los cedemos a nadie y puedes pedir que los borremos cuando quieras (RGPD). La web va siempre con candado HTTPS.' },
+    { q: '¿Tenéis envases retornables?', k: ['envase', 'bolsa', 'plastico', 'plástico', 'retornable', 'caja', 'reciclar'],
+      a: 'Sí: bolsas de tela y cajas retornables con un <b>depósito de 1 €</b> que te devolvemos al traerlas. Nada de plástico de un solo uso. ♻️' },
+    { q: '¿Hacéis talleres para aprender a comprar online?', k: ['taller', 'aprender', 'curso', 'ayuda', 'mayor', 'enseñ', 'formacion', 'formación'],
+      a: 'Sí, <b>un sábado al mes a las 11:00</b>, gratis. Te enseñamos a hacer pedidos y a pagar de forma segura desde el móvil. Apúntate en la tienda.' },
+    { q: '¿Puedo devolver un producto?', k: ['devol', 'cambi', 'mal', 'queja', 'reclam', 'roto'],
+      a: 'Si algo no está bien, tráelo o avísanos en <b>48 horas</b> y te lo cambiamos o te devolvemos el dinero, sin preguntas.' }
+  ];
+  const norm = t => t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  const chat = $('#chatbot'), chatLog = $('#chatLog'), chatFab = $('#chatFab'), chatBubble = $('#chatBubble');
+  function addMsg(html, who = 'bot') {
+    const li = document.createElement('li'); li.className = 'msg ' + who; li.innerHTML = html; chatLog.appendChild(li);
+    chatLog.scrollTop = chatLog.scrollHeight; return li;
+  }
+  function botReply(html) {
+    const typing = addMsg('<span class="dots"><i></i><i></i><i></i></span>', 'bot typing');
+    setTimeout(() => { typing.remove(); addMsg(html); showChips(); }, 650 + Math.random() * 400);
+  }
+  function showChips(list = FAQ.slice(0, 4)) {
+    $('#chatChips').innerHTML = list.map(f => `<button class="chat-chip" data-q="${FAQ.indexOf(f)}">${f.q}</button>`).join('') + '<button class="chat-chip alt" data-q="all">Ver todas las preguntas</button>';
+  }
+  function answer(text) {
+    const t = norm(text);
+    let best = null, score = 0;
+    FAQ.forEach(f => { const s = f.k.filter(k => t.includes(norm(k))).length; if (s > score) { score = s; best = f; } });
+    const prod = PRODUCTS.find(p => norm(p.n).split(' ').some(w => w.length > 4 && t.includes(w)));
+    if (best) return botReply(best.a);
+    if (prod) return botReply(`<b>${prod.n}</b>: ${eur(prod.p)} / ${prod.u}. ${prod.d} <button class="link-btn" data-ficha-chat="${prod.id}">Ver ficha</button>`);
+    if (/^(hola|buenas|hey|buenos)/.test(t)) return botReply('¡Hola! 😊 ¿En qué te ayudo? Elige una pregunta o escríbela.');
+    if (/gracias/.test(t)) return botReply('¡A ti! Que disfrutes de tu compra. 🧺');
+    botReply('No tengo esa respuesta todavía 🤔. Prueba con una de estas preguntas o llámanos al <b>600 000 000</b> y te atendemos en persona.');
+  }
+  function openChat() {
+    chat.hidden = false; chatFab.setAttribute('aria-expanded', 'true'); chatBubble.classList.remove('show'); chatFab.classList.remove('ping');
+    if (!chatLog.children.length) { addMsg('¡Hola! Soy <b>Rosa</b>, la asistente de La Despensa del Barrio. 👋'); botReply('Estas son las preguntas más frecuentes. Pulsa una o escribe la tuya:'); }
+    setTimeout(() => $('#chatInput').focus(), 100);
+  }
+  const closeChat = () => { chat.hidden = true; chatFab.setAttribute('aria-expanded', 'false'); };
+  chatFab.addEventListener('click', () => chat.hidden ? openChat() : closeChat());
+  chatBubble.addEventListener('click', openChat);
+  $('#chatClose').addEventListener('click', closeChat);
+  $('#bubbleClose').addEventListener('click', e => { e.stopPropagation(); chatBubble.classList.remove('show'); bubbleDone = true; });
+  $('#chatChips').addEventListener('click', e => {
+    const b = e.target.closest('[data-q]'); if (!b) return;
+    if (b.dataset.q === 'all') { addMsg('Quiero ver todas las preguntas', 'user'); return botReply('Aquí las tienes todas 👇'), setTimeout(() => showChips(FAQ), 1100); }
+    const f = FAQ[+b.dataset.q]; addMsg(f.q, 'user'); botReply(f.a);
+  });
+  chatLog.addEventListener('click', e => { const b = e.target.closest('[data-ficha-chat]'); if (b) openFicha(+b.dataset.fichaChat); });
+  $('#chatForm').addEventListener('submit', e => {
+    e.preventDefault(); const i = $('#chatInput'), v = i.value.trim(); if (!v) return;
+    addMsg(v.replace(/[<>&]/g, c => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c])), 'user'); i.value = ''; answer(v);
+  });
+  // al bajar un poco aparece el asistente con su mensaje
+  let bubbleDone = false;
+  addEventListener('scroll', () => {
+    if (scrollY > 350) chatFab.classList.add('show');
+    if (!bubbleDone && scrollY > 450 && chat.hidden) { bubbleDone = true; chatBubble.classList.add('show'); chatFab.classList.add('ping'); setTimeout(() => chatBubble.classList.remove('show'), 12000); }
+  }, { passive: true });
 
   /* ---------- Confeti ---------- */
   function confetti() {
