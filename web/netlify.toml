@@ -1,4 +1,6 @@
 [build]
+  # La web no necesita compilarse; este comando sustituye al del panel de Netlify.
+  command = "echo 'Web estatica: sin paso de build'"
   publish = "."
   functions = "netlify/functions"
 
