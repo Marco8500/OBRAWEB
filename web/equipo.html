@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Equipo · OBRAWEB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = { theme: { extend: {
+      colors: { brand: { orange:"#F97316", orangeHover:"#EA580C", navy:"#0B192C", slate:"#1E293B", muted:"#64748B", light:"#F8FAFC", border:"#E2E8F0" } },
+      fontFamily: { sans: ['"Plus Jakarta Sans"','system-ui','sans-serif'] } } } };
+  </script>
+  <style>
+    body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;-webkit-tap-highlight-color:transparent;background:#F1F5F9}
+    .ms{font-family:'Material Symbols Outlined';font-weight:normal;font-style:normal;line-height:1;display:inline-block;vertical-align:middle;-webkit-font-feature-settings:'liga';font-feature-settings:'liga'}
+    .safe-b{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 4px)}
+    input,select,textarea{font-size:16px}
+    [hidden]{display:none!important}
+    .bar{height:8px;border-radius:999px;background:#E2E8F0;overflow:hidden}.bar>i{display:block;height:100%;border-radius:999px}
+  </style>
+</head>
+<body class="text-brand-navy min-h-screen">
+
+<!-- ============ ENTRAR ============ -->
+<section id="v-login" class="min-h-screen flex items-center justify-center px-4 bg-brand-navy">
+  <form id="f-login" class="w-full max-w-sm bg-white rounded-2xl p-6 shadow-xl flex flex-col gap-4">
+    <div class="flex items-center gap-2">
+      <div class="w-9 h-9 rounded-lg bg-brand-orange flex items-center justify-center text-white"><span class="ms text-[20px]">construction</span></div>
+      <span class="font-extrabold text-xl tracking-tight">OBRA<span class="text-brand-orange">WEB</span></span>
+    </div>
+    <div>
+      <h1 class="text-2xl font-extrabold">Área del equipo</h1>
+      <p class="text-brand-muted text-sm mt-1">Entra con tu código personal.</p>
+    </div>
+    <label class="flex flex-col gap-1.5 text-sm font-semibold" for="codigo">Código de acceso
+      <input id="codigo" type="password" autocomplete="current-password" required class="border border-brand-border rounded-xl px-4 py-3 font-normal focus:outline-none focus:ring-2 focus:ring-brand-orange" placeholder="••••••••">
+    </label>
+    <p id="login-err" class="text-red-600 text-sm" hidden></p>
+    <button class="bg-brand-orange hover:bg-brand-orangeHover text-white font-bold rounded-xl py-3 transition">Entrar</button>
+    <a href="/" class="text-center text-sm text-brand-muted hover:underline">← Volver a la web</a>
+  </form>
+</section>
+
+<!-- ============ APP ============ -->
+<div id="v-app" hidden class="min-h-screen pb-24">
+  <header class="sticky top-0 z-30 bg-brand-navy text-white" style="padding-top:env(safe-area-inset-top,0px)">
+    <div class="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="w-7 h-7 rounded-lg bg-brand-orange flex items-center justify-center"><span class="ms text-[16px]">construction</span></div>
+        <span class="font-extrabold tracking-tight">Equipo</span>
+      </div>
+      <div class="flex items-center gap-3 text-sm">
+        <span id="yo-nombre" class="text-slate-300"></span>
+        <button id="b-salir" class="text-slate-300 hover:text-white flex items-center gap-1"><span class="ms text-[18px]">logout</span>Salir</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-3xl mx-auto px-4 py-4">
+    <!-- LEADS -->
+    <section id="t-leads" class="flex flex-col gap-3">
+      <div class="flex items-center justify-between gap-2">
+        <h2 class="text-xl font-extrabold">Leads</h2>
+        <div class="flex gap-2">
+          <button id="b-importar" hidden class="text-sm font-semibold border border-brand-border bg-white rounded-xl px-3 py-2 flex items-center gap-1"><span class="ms text-[18px]">upload</span>Importar</button>
+          <button id="b-nuevo" class="text-sm font-bold bg-brand-orange text-white rounded-xl px-3 py-2 flex items-center gap-1"><span class="ms text-[18px]">add</span>Nuevo</button>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <input id="buscar" type="search" placeholder="Buscar negocio, sector, ciudad…" class="flex-1 min-w-0 border border-brand-border rounded-xl px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-brand-orange">
+        <select id="f-closer" hidden class="border border-brand-border rounded-xl px-2 py-2 bg-white"></select>
+      </div>
+      <div id="chips" class="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1"></div>
+      <div id="lista" class="flex flex-col gap-2"></div>
+    </section>
+
+    <!-- GRUPO -->
+    <section id="t-grupo" hidden class="flex flex-col h-[calc(100vh-13rem)]">
+      <h2 class="text-xl font-extrabold mb-3">Grupo del equipo</h2>
+      <div id="chat" class="flex-1 overflow-y-auto flex flex-col gap-2 bg-white rounded-2xl border border-brand-border p-3"></div>
+      <form id="f-chat" class="flex gap-2 mt-3">
+        <label for="chat-txt" class="sr-only">Mensaje</label>
+        <input id="chat-txt" autocomplete="off" placeholder="Escribe un mensaje…" class="flex-1 min-w-0 border border-brand-border rounded-xl px-3 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-brand-orange">
+        <button class="bg-brand-orange text-white rounded-xl px-4 font-bold" aria-label="Enviar"><span class="ms">send</span></button>
+      </form>
+    </section>
+
+    <!-- INFORME -->
+    <section id="t-informe" hidden class="flex flex-col gap-4">
+      <h2 class="text-xl font-extrabold">Informe del día</h2>
+      <form id="f-informe" class="bg-white rounded-2xl border border-brand-border p-4 grid grid-cols-2 gap-3">
+        <label class="col-span-2 flex flex-col gap-1 text-sm font-semibold" for="i-fecha">Fecha<input id="i-fecha" type="date" class="border border-brand-border rounded-xl px-3 py-2 font-normal"></label>
+        <label class="flex flex-col gap-1 text-sm font-semibold" for="i-llamadas">Llamadas<input id="i-llamadas" type="number" min="0" inputmode="numeric" class="border border-brand-border rounded-xl px-3 py-2 font-normal"></label>
+        <label class="flex flex-col gap-1 text-sm font-semibold" for="i-conv">Conversaciones<input id="i-conv" type="number" min="0" inputmode="numeric" class="border border-brand-border rounded-xl px-3 py-2 font-normal"></label>
+        <label class="flex flex-col gap-1 text-sm font-semibold" for="i-mag">Muestras agendadas<input id="i-mag" type="number" min="0" inputmode="numeric" class="border border-brand-border rounded-xl px-3 py-2 font-normal"></label>
+        <label class="flex flex-col gap-1 text-sm font-semibold" for="i-mpr">Muestras presentadas<input id="i-mpr" type="number" min="0" inputmode="numeric" class="border border-brand-border rounded-xl px-3 py-2 font-normal"></label>
+        <label class="flex flex-col gap-1 text-sm font-semibold" for="i-ventas">Ventas<input id="i-ventas" type="number" min="0" inputmode="numeric" class="border border-brand-border rounded-xl px-3 py-2 font-normal"></label>
+        <label class="col-span-2 flex flex-col gap-1 text-sm font-semibold" for="i-bloqueo">Lo que más te ha frenado hoy<textarea id="i-bloqueo" rows="2" class="border border-brand-border rounded-xl px-3 py-2 font-normal" placeholder="Ej: muchos me dicen que ya tienen Instagram"></textarea></label>
+        <button class="col-span-2 bg-brand-orange text-white font-bold rounded-xl py-3">Guardar informe</button>
+      </form>
+      <div>
+        <h3 class="font-bold mb-2">Últimos informes</h3>
+        <div id="informes" class="flex flex-col gap-2"></div>
+      </div>
+    </section>
+
+    <!-- PANEL -->
+    <section id="t-panel" hidden class="flex flex-col gap-4">
+      <div class="flex items-center justify-between gap-2">
+        <h2 class="text-xl font-extrabold">Panel</h2>
+        <select id="periodo" class="border border-brand-border rounded-xl px-3 py-2 bg-white font-semibold text-brand-orange">
+          <option value="semana">Esta semana</option><option value="semana-1">Semana pasada</option>
+          <option value="mes">Este mes</option><option value="mes-1">Mes pasado</option><option value="todo">Todo</option>
+        </select>
+      </div>
+      <p id="periodo-txt" class="text-sm text-brand-muted -mt-3"></p>
+      <div id="panel"></div>
+    </section>
+  </main>
+
+  <!-- pestañas -->
+  <nav class="fixed bottom-0 inset-x-0 z-30 bg-white border-t border-brand-border safe-b">
+    <div class="max-w-3xl mx-auto grid grid-cols-4">
+      <button data-tab="leads" class="tab py-2 flex flex-col items-center text-xs font-semibold"><span class="ms">list_alt</span>Leads</button>
+      <button data-tab="grupo" class="tab py-2 flex flex-col items-center text-xs font-semibold relative"><span class="ms">forum</span>Grupo<i id="dot" hidden class="absolute top-1.5 right-[35%] w-2 h-2 rounded-full bg-brand-orange"></i></button>
+      <button data-tab="informe" class="tab py-2 flex flex-col items-center text-xs font-semibold"><span class="ms">edit_note</span>Informe</button>
+      <button data-tab="panel" class="tab py-2 flex flex-col items-center text-xs font-semibold"><span class="ms">monitoring</span>Panel</button>
+    </div>
+  </nav>
+</div>
+
+<!-- ============ FICHA DE LEAD ============ -->
+<div id="m-lead" hidden class="fixed inset-0 z-40 bg-black/50 flex items-end sm:items-center justify-center">
+  <form id="f-lead" class="bg-white w-full sm:max-w-lg max-h-[92vh] overflow-y-auto rounded-t-2xl sm:rounded-2xl p-4 flex flex-col gap-3 safe-b">
+    <div class="flex items-center justify-between">
+      <h3 id="m-titulo" class="text-lg font-extrabold">Lead</h3>
+      <button type="button" data-cerrar class="w-9 h-9 rounded-full hover:bg-slate-100" aria-label="Cerrar"><span class="ms">close</span></button>
+    </div>
+    <div id="m-contacto" class="flex gap-2"></div>
+    <label class="flex flex-col gap-1 text-sm font-semibold" for="l-estado">Estado (hasta dónde ha llegado)
+      <select id="l-estado" class="border-2 border-brand-orange rounded-xl px-3 py-2.5 font-semibold"></select>
+    </label>
+    <div class="grid grid-cols-2 gap-3">
+      <label class="col-span-2 flex flex-col gap-1 text-sm font-semibold" for="l-negocio">Negocio<input id="l-negocio" required class="border border-brand-border rounded-xl px-3 py-2 font-normal"></label>
+      <label class="flex flex-col gap-1 text-sm font-semibold" for="l-telefono">Teléfono<input id="l-telefono" type="tel" class="border border-brand-border rounded-xl px-3 py-2 font-normal"></label>
+      <label class="flex flex-col gap-1 text-sm font-semibold" for="l-sector">Sector<input id="l-sector" class="border border-brand-border rounded-xl px-3 py-2 font-normal"></label>
+      <label class="flex flex-col gap-1 text-sm font-semibold" for="l-ciudad">Ciudad<input id="l-ciudad" class="border border-brand-border rounded-xl px-3 py-2 font-normal"></label>
+      <label class="flex flex-col gap-1 text-sm font-semibold" for="l-resenas">Reseñas Google<input id="l-resenas" inputmode="numeric" class="border border-brand-border rounded-xl px-3 py-2 font-normal"></label>
+      <label class="col-span-2 flex flex-col gap-1 text-sm font-semibold" for="l-web">Web actual
+        <select id="l-web" class="border border-brand-border rounded-xl px-3 py-2 font-normal"><option value=""></option><option>Sin web</option><option>Web obsoleta / no móvil</option><option>Solo redes sociales</option><option>Web correcta</option></select></label>
+      <div class="col-span-2 flex items-center justify-between bg-slate-50 rounded-xl px-3 py-2">
+        <span class="text-sm font-semibold">Intentos de llamada: <b id="l-intentos-v">0</b></span>
+        <button type="button" id="l-mas1" class="text-sm font-bold bg-white border border-brand-border rounded-lg px-3 py-1.5">+1 intento hoy</button>
+      </div>
+      <label class="col-span-2 flex flex-col gap-1 text-sm font-semibold" for="l-proxima">Próxima acción<input id="l-proxima" placeholder="Ej: llamar a las 10, enseñar muestra…" class="border border-brand-border rounded-xl px-3 py-2 font-normal"></label>
+      <label class="flex flex-col gap-1 text-sm font-semibold" for="l-fproxima">Fecha próxima acción<input id="l-fproxima" type="date" class="border border-brand-border rounded-xl px-3 py-2 font-normal"></label>
+      <label class="flex flex-col gap-1 text-sm font-semibold" for="l-ultimo">Último contacto<input id="l-ultimo" type="date" class="border border-brand-border rounded-xl px-3 py-2 font-normal"></label>
+      <label class="col-span-2 flex flex-col gap-1 text-sm font-semibold" for="l-motivo">Motivo si se pierde <span class="font-normal text-brand-muted">(al elegirlo, el lead pasa a perdido)</span>
+        <select id="l-motivo" class="border border-brand-border rounded-xl px-3 py-2 font-normal"></select></label>
+      <div id="l-venta" class="col-span-2 grid grid-cols-2 gap-3 bg-emerald-50 rounded-xl p-3">
+        <label class="flex flex-col gap-1 text-sm font-semibold" for="l-servicio">Servicio vendido
+          <select id="l-servicio" class="border border-brand-border rounded-xl px-3 py-2 font-normal bg-white"><option value=""></option><option>Web 450 €</option><option>Web + Chatbot 550 €</option></select></label>
+        <label class="flex flex-col gap-1 text-sm font-semibold" for="l-fventa">Fecha de venta<input id="l-fventa" type="date" class="border border-brand-border rounded-xl px-3 py-2 font-normal bg-white"></label>
+      </div>
+      <label class="flex flex-col gap-1 text-sm font-semibold" for="l-closer">Closer del lead<select id="l-closer" class="border border-brand-border rounded-xl px-3 py-2 font-normal"></select></label>
+      <label class="flex flex-col gap-1 text-sm font-semibold" for="l-presenta">Presenta la muestra<select id="l-presenta" class="border border-brand-border rounded-xl px-3 py-2 font-normal"></select></label>
+      <label class="col-span-2 flex flex-col gap-1 text-sm font-semibold" for="l-notas">Notas<textarea id="l-notas" rows="3" class="border border-brand-border rounded-xl px-3 py-2 font-normal" placeholder="Frase personal, lo que dijo el cliente, objeciones…"></textarea></label>
+    </div>
+    <p id="l-err" class="text-red-600 text-sm" hidden></p>
+    <div class="flex gap-2">
+      <button id="l-borrar" type="button" hidden class="border border-red-200 text-red-600 rounded-xl px-4 font-semibold">Borrar</button>
+      <button class="flex-1 bg-brand-orange text-white font-bold rounded-xl py-3">Guardar</button>
+    </div>
+  </form>
+</div>
+
+<!-- ============ IMPORTAR ============ -->
+<div id="m-import" hidden class="fixed inset-0 z-40 bg-black/50 flex items-end sm:items-center justify-center">
+  <form id="f-import" class="bg-white w-full sm:max-w-lg rounded-t-2xl sm:rounded-2xl p-4 flex flex-col gap-3 safe-b">
+    <div class="flex items-center justify-between">
+      <h3 class="text-lg font-extrabold">Importar leads</h3>
+      <button type="button" data-cerrar class="w-9 h-9 rounded-full hover:bg-slate-100" aria-label="Cerrar"><span class="ms">close</span></button>
+    </div>
+    <p class="text-sm text-brand-muted">Pega filas copiadas de Google Sheets o de la automatización, una por negocio, en este orden:<br><b>Negocio · Teléfono · Sector · Ciudad · Reseñas</b> (separadas por tabulador, punto y coma o coma).</p>
+    <label class="flex flex-col gap-1 text-sm font-semibold" for="imp-closer">Asignar a<select id="imp-closer" class="border border-brand-border rounded-xl px-3 py-2 font-normal"></select></label>
+    <label class="flex flex-col gap-1 text-sm font-semibold" for="imp-txt">Filas<textarea id="imp-txt" rows="8" class="border border-brand-border rounded-xl px-3 py-2 font-mono text-sm" placeholder="Reformas Turia;612345678;Reformas;Valencia;84"></textarea></label>
+    <p id="imp-info" class="text-sm text-brand-muted"></p>
+    <button class="bg-brand-orange text-white font-bold rounded-xl py-3">Importar</button>
+  </form>
+</div>
+
+<div id="toast" hidden class="fixed left-1/2 -translate-x-1/2 bottom-24 z-50 bg-brand-navy text-white text-sm font-semibold px-4 py-2 rounded-xl shadow-lg"></div>
+
+<script>
+(function(){
+  "use strict";
+  const API = "/api/equipo/";
+  const ESTADOS = ["", "1 · Sin contactar","2 · Llamado, no contesta","3 · Hablé con el negocio","4 · Interesado","5 · Muestra agendada","6 · Muestra presentada","7 · VENTA (anticipo cobrado)","8 · COBRADO 100 %"];
+  const MOTIVOS = ["Ya tiene web","No le ve utilidad","Precio","No es buen momento","Desconfianza / no nos conoce","No quiere pagar por adelantado","Lo hace un conocido / sobrino","Kit Digital / se la dieron gratis","No contesta tras 3 llamadas","Otro (explicar en notas)"];
+  const PRECIO = { "Web 450 €": 450, "Web + Chatbot 550 €": 550 };
+  const OBJ_SEMANA = 2, COMISION = 0.10;
+  const $ = (s) => document.querySelector(s), $$ = (s) => [...document.querySelectorAll(s)];
+  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+  const hoyISO = () => { const d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0,10); };
+  const fmtF = (iso) => iso ? iso.slice(8,10) + "/" + iso.slice(5,7) : "";
+  const eur = (n) => Math.round(n).toLocaleString("es-ES") + " €";
+  const store = { get(k){ try { return localStorage.getItem(k); } catch { return null; } }, set(k,v){ try { localStorage.setItem(k,v); } catch {} }, del(k){ try { localStorage.removeItem(k); } catch {} } };
+
+  let token = store.get("obw_token"), yo = null, equipo = [], leads = [], informes = [], mensajes = [];
+  let filtro = "activos", tabActual = "leads", chatTimer = null, editando = null;
+
+  function toast(t){ const el = $("#toast"); el.textContent = t; el.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => el.hidden = true, 2200); }
+  async function api(ruta, opts = {}){
+    const r = await fetch(API + ruta, { method: opts.method || "GET", headers: { "content-type": "application/json", ...(token ? { authorization: "Bearer " + token } : {}) }, body: opts.body ? JSON.stringify(opts.body) : undefined });
+    const data = await r.json().catch(() => ({}));
+    if (r.status === 401 && ruta !== "login") { salir(); throw new Error(data.error || "Sesión caducada."); }
+    if (!r.ok) throw new Error(data.error || "Algo ha fallado. Inténtalo de nuevo.");
+    return data;
+  }
+  const nombre = (id) => (equipo.find((u) => u.id === id) || {}).nombre || id || "—";
+  const closers = () => equipo.filter((u) => u.rol === "closer");
+  const esAdmin = () => yo && yo.rol === "admin";
+
+  // ---------- entrar / salir ----------
+  $("#f-login").addEventListener("submit", async (e) => {
+    e.preventDefault(); const err = $("#login-err"); err.hidden = true;
+    try { const d = await api("login", { method: "POST", body: { codigo: $("#codigo").value } }); token = d.token; store.set("obw_token", token); arrancar(d); }
+    catch (x) { err.textContent = x.message; err.hidden = false; }
+  });
+  function salir(){ token = null; store.del("obw_token"); clearInterval(chatTimer); $("#v-app").hidden = true; $("#v-login").hidden = false; }
+  $("#b-salir").addEventListener("click", salir);
+
+  async function arrancar(d){
+    yo = d.usuario; equipo = d.equipo;
+    $("#v-login").hidden = true; $("#v-app").hidden = false;
+    $("#yo-nombre").textContent = yo.nombre;
+    $("#b-importar").hidden = !esAdmin(); $("#f-closer").hidden = !esAdmin(); $("#l-borrar").hidden = !esAdmin();
+    const opts = (lista, vacio) => (vacio !== undefined ? `<option value="">${vacio}</option>` : "") + lista.map((u) => `<option value="${esc(u.id)}">${esc(u.nombre)}</option>`).join("");
+    $("#f-closer").innerHTML = opts(closers(), "Todos");
+    $("#l-closer").innerHTML = opts(equipo); $("#l-presenta").innerHTML = opts(equipo, "El mismo closer");
+    $("#imp-closer").innerHTML = opts(closers());
+    $("#l-estado").innerHTML = ESTADOS.slice(1).map((t, i) => `<option value="${i+1}">${t}</option>`).join("");
+    $("#l-motivo").innerHTML = `<option value="">— No se ha perdido —</option>` + MOTIVOS.map((m) => `<option>${m}</option>`).join("");
+    $("#i-fecha").value = hoyISO();
+    await Promise.all([cargarLeads(), cargarInformes(), cargarChat()]);
+    clearInterval(chatTimer); chatTimer = setInterval(cargarChat, 8000);
+    ir(store.get("obw_tab") || "leads");
+  }
+
+  // ---------- pestañas ----------
+  function ir(tab){
+    tabActual = tab; store.set("obw_tab", tab);
+    ["leads","grupo","informe","panel"].forEach((t) => $("#t-" + t).hidden = t !== tab);
+    $$(".tab").forEach((b) => { const on = b.dataset.tab === tab; b.classList.toggle("text-brand-orange", on); b.classList.toggle("text-brand-muted", !on); });
+    if (tab === "grupo") { $("#dot").hidden = true; store.set("obw_visto", mensajes.length ? mensajes[mensajes.length-1].id : ""); pintarChat(true); }
+    if (tab === "panel") pintarPanel();
+  }
+  $$(".tab").forEach((b) => b.addEventListener("click", () => ir(b.dataset.tab)));
+
+  // ---------- LEADS ----------
+  async function cargarLeads(){ try { leads = (await api("leads")).leads; pintarLeads(); } catch (x) { toast(x.message); } }
+  const perdido = (l) => !!l.motivo;
+  const vencido = (l) => l.fechaProxima && l.fechaProxima <= hoyISO() && !perdido(l) && l.estado < 8;
+  const FILTROS = [
+    ["activos","Activos", (l) => !perdido(l) && l.estado < 7],
+    ["hoy","Para hoy", vencido],
+    ["nuevos","Sin contactar", (l) => !perdido(l) && l.estado === 1],
+    ["muestras","Muestras", (l) => !perdido(l) && (l.estado === 5 || l.estado === 6)],
+    ["ventas","Ventas", (l) => l.estado >= 7],
+    ["perdidos","Perdidos", perdido],
+    ["todos","Todos", () => true]];
+  function colorEstado(l){
+    if (perdido(l)) return "bg-red-100 text-red-700";
+    if (l.estado >= 7) return "bg-emerald-100 text-emerald-700";
+    if (l.estado >= 5) return "bg-amber-100 text-amber-800";
+    if (l.estado >= 3) return "bg-sky-100 text-sky-800";
+    return "bg-slate-100 text-slate-600";
+  }
+  function pintarLeads(){
+    const q = $("#buscar").value.trim().toLowerCase(), fc = $("#f-closer").value;
+    const base = leads.filter((l) => !fc || l.closer === fc);
+    $("#chips").innerHTML = FILTROS.map(([k, t, fn]) => { const n = base.filter(fn).length, on = k === filtro;
+      return `<button data-f="${k}" class="shrink-0 text-sm font-semibold rounded-full px-3 py-1.5 border ${on ? "bg-brand-navy text-white border-brand-navy" : "bg-white border-brand-border"} ${k==="hoy"&&n?"!border-red-400":""}">${t} <span class="${on?"text-slate-300":"text-brand-muted"}">${n}</span></button>`; }).join("");
+    const fn = FILTROS.find((f) => f[0] === filtro)[2];
+    const lista = base.filter(fn).filter((l) => !q || [l.negocio,l.sector,l.ciudad,l.telefono].join(" ").toLowerCase().includes(q))
+      .sort((a, b) => (vencido(b) - vencido(a)) || (a.fechaProxima || "9").localeCompare(b.fechaProxima || "9") || (b.actualizado || "").localeCompare(a.actualizado || ""));
+    $("#lista").innerHTML = lista.length ? lista.map((l) => `
+      <button data-id="${esc(l.id)}" class="text-left bg-white rounded-2xl border ${vencido(l) ? "border-red-300" : "border-brand-border"} p-3 flex flex-col gap-1.5 hover:border-brand-orange transition">
+        <div class="flex items-start justify-between gap-2">
+          <span class="font-bold leading-tight">${esc(l.negocio)}</span>
+          <span class="shrink-0 text-[11px] font-bold rounded-full px-2 py-0.5 ${colorEstado(l)}">${perdido(l) ? "Perdido" : esc(ESTADOS[l.estado].slice(4))}</span>
+        </div>
+        <span class="text-sm text-brand-muted">${esc([l.sector, l.ciudad, l.resenas ? l.resenas + " reseñas" : ""].filter(Boolean).join(" · ") || "Sin datos")}${esAdmin() ? " · " + esc(nombre(l.closer)) : ""}</span>
+        ${l.proximaAccion || l.fechaProxima ? `<span class="text-sm ${vencido(l) ? "text-red-600 font-semibold" : ""}"><span class="ms text-[16px]">event</span> ${esc(fmtF(l.fechaProxima))} ${esc(l.proximaAccion)}</span>` : ""}
+      </button>`).join("") : `<div class="bg-white rounded-2xl border border-dashed border-brand-border p-6 text-center text-brand-muted text-sm">No hay leads en esta lista.${esAdmin() ? " Usa <b>Importar</b> para añadir los de la automatización." : " Cuando el fundador te asigne leads aparecerán aquí."}</div>`;
+  }
+  $("#chips").addEventListener("click", (e) => { const b = e.target.closest("[data-f]"); if (b) { filtro = b.dataset.f; pintarLeads(); } });
+  $("#buscar").addEventListener("input", pintarLeads); $("#f-closer").addEventListener("change", pintarLeads);
+  $("#lista").addEventListener("click", (e) => { const b = e.target.closest("[data-id]"); if (b) abrirLead(leads.find((l) => l.id === b.dataset.id)); });
+  $("#b-nuevo").addEventListener("click", () => abrirLead(null));
+
+  const CAMPOS = { negocio:"l-negocio", telefono:"l-telefono", sector:"l-sector", ciudad:"l-ciudad", resenas:"l-resenas", web:"l-web", proximaAccion:"l-proxima", fechaProxima:"l-fproxima", ultimoContacto:"l-ultimo", motivo:"l-motivo", servicio:"l-servicio", fechaVenta:"l-fventa", closer:"l-closer", presenta:"l-presenta", notas:"l-notas" };
+  function abrirLead(l){
+    editando = l; $("#l-err").hidden = true;
+    $("#m-titulo").textContent = l ? l.negocio : "Nuevo lead";
+    for (const [k, id] of Object.entries(CAMPOS)) $("#" + id).value = l ? (l[k] ?? "") : "";
+    if (!l) $("#l-closer").value = esAdmin() && closers()[0] ? closers()[0].id : yo.id;
+    $("#l-closer").disabled = !esAdmin();
+    $("#l-estado").value = l ? l.estado : 1;
+    $("#l-intentos-v").textContent = l ? (l.intentos || 0) : 0;
+    const tel = (l && l.telefono || "").replace(/[^\d+]/g, ""), wa = tel.replace(/^\+/, "").replace(/^(?=[67]\d{8}$)/, "34");
+    $("#m-contacto").innerHTML = tel ? `<a href="tel:${esc(tel)}" class="flex-1 text-center bg-brand-navy text-white rounded-xl py-2.5 font-bold"><span class="ms text-[18px]">call</span> Llamar</a><a href="https://wa.me/${esc(wa)}" target="_blank" rel="noopener" class="flex-1 text-center bg-[#25D366] text-white rounded-xl py-2.5 font-bold"><span class="ms text-[18px]">chat</span> WhatsApp</a>` : "";
+    actualizarVenta(); $("#m-lead").hidden = false;
+  }
+  function actualizarVenta(){ $("#l-venta").classList.toggle("opacity-50", +$("#l-estado").value < 7); }
+  $("#l-estado").addEventListener("change", () => { if (+$("#l-estado").value >= 7 && !$("#l-fventa").value) $("#l-fventa").value = hoyISO(); actualizarVenta(); });
+  $("#l-mas1").addEventListener("click", () => { const v = +$("#l-intentos-v").textContent + 1; $("#l-intentos-v").textContent = v; $("#l-ultimo").value = hoyISO(); if (+$("#l-estado").value === 1) $("#l-estado").value = 2; });
+  $("#f-lead").addEventListener("submit", async (e) => {
+    e.preventDefault(); const err = $("#l-err"); err.hidden = true;
+    const body = { estado: +$("#l-estado").value, intentos: +$("#l-intentos-v").textContent };
+    for (const [k, id] of Object.entries(CAMPOS)) body[k] = $("#" + id).value;
+    if (body.estado >= 7 && !body.servicio) { err.textContent = "Para marcar una venta, elige el servicio vendido."; err.hidden = false; return; }
+    if (editando) body.id = editando.id;
+    try { const { lead } = await api("leads", { method: "POST", body }); const i = leads.findIndex((x) => x.id === lead.id); if (i >= 0) leads[i] = lead; else leads.unshift(lead);
+      $("#m-lead").hidden = true; pintarLeads(); toast(lead.estado === 7 && (!editando || editando.estado < 7) ? "🎉 ¡Venta registrada! Avisa en el grupo." : "Guardado"); }
+    catch (x) { err.textContent = x.message; err.hidden = false; }
+  });
+  $("#l-borrar").addEventListener("click", async () => {
+    if (!editando) return; const b = $("#l-borrar");
+    if (b.dataset.confirm !== "1") { b.dataset.confirm = "1"; b.textContent = "¿Seguro?"; setTimeout(() => { b.dataset.confirm = ""; b.textContent = "Borrar"; }, 3000); return; }
+    try { await api("leads/" + editando.id, { method: "DELETE" }); leads = leads.filter((l) => l.id !== editando.id); $("#m-lead").hidden = true; pintarLeads(); toast("Lead borrado"); } catch (x) { toast(x.message); }
+  });
+  $$("[data-cerrar]").forEach((b) => b.addEventListener("click", () => { $("#m-lead").hidden = true; $("#m-import").hidden = true; }));
+
+  // ---------- IMPORTAR ----------
+  $("#b-importar").addEventListener("click", () => { $("#imp-info").textContent = ""; $("#m-import").hidden = false; });
+  function parseFilas(t){ return t.split(/\r?\n/).map((s) => s.trim()).filter(Boolean).map((s) => { const sep = s.includes("\t") ? "\t" : s.includes(";") ? ";" : ","; const [negocio, telefono, sector, ciudad, resenas] = s.split(sep).map((x) => x.trim()); return { negocio, telefono, sector, ciudad, resenas }; }).filter((f) => f.negocio && !/^negocio$/i.test(f.negocio)); }
+  $("#imp-txt").addEventListener("input", () => { $("#imp-info").textContent = parseFilas($("#imp-txt").value).length + " negocios detectados"; });
+  $("#f-import").addEventListener("submit", async (e) => {
+    e.preventDefault(); const filas = parseFilas($("#imp-txt").value).map((f) => ({ ...f, closer: $("#imp-closer").value }));
+    if (!filas.length) { $("#imp-info").textContent = "No hay filas válidas."; return; }
+    try { const d = await api("leads/importar", { method: "POST", body: { leads: filas } }); $("#m-import").hidden = true; $("#imp-txt").value = ""; toast(d.creados + " leads importados"); cargarLeads(); } catch (x) { $("#imp-info").textContent = x.message; }
+  });
+
+  // ---------- GRUPO ----------
+  async function cargarChat(){
+    try {
+      const desde = mensajes.length ? mensajes[mensajes.length-1].id : "";
+      const nuevos = (await api("chat" + (desde ? "?desde=" + encodeURIComponent(desde) : ""))).mensajes;
+      if (!nuevos.length && mensajes.length) return;
+      mensajes = desde ? mensajes.concat(nuevos) : nuevos;
+      const visto = store.get("obw_visto") || "";
+      if (tabActual === "grupo") { store.set("obw_visto", mensajes.length ? mensajes[mensajes.length-1].id : ""); pintarChat(true); }
+      else $("#dot").hidden = !mensajes.some((m) => m.id > visto && m.autor !== yo.id);
+    } catch {}
+  }
+  function pintarChat(abajo){
+    const box = $("#chat");
+    box.innerHTML = mensajes.length ? mensajes.map((m) => { const mio = m.autor === yo.id; const f = new Date(m.fecha);
+      return `<div class="max-w-[85%] ${mio ? "self-end bg-brand-orange text-white" : "self-start bg-slate-100"} rounded-2xl px-3 py-2">
+        ${mio ? "" : `<div class="text-xs font-bold text-brand-orange">${esc(m.nombre)}</div>`}
+        <div class="whitespace-pre-wrap break-words text-[15px]">${esc(m.texto)}</div>
+        <div class="text-[10px] ${mio ? "text-orange-100" : "text-brand-muted"} text-right">${f.toLocaleDateString("es-ES",{day:"2-digit",month:"2-digit"})} ${f.toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"})}</div></div>`; }).join("")
+      : `<p class="m-auto text-center text-sm text-brand-muted">Todavía no hay mensajes. Escribe el primero: dudas de llamadas, citas agendadas, ventas…</p>`;
+    if (abajo) box.scrollTop = box.scrollHeight;
+  }
+  $("#f-chat").addEventListener("submit", async (e) => {
+    e.preventDefault(); const inp = $("#chat-txt"), t = inp.value.trim(); if (!t) return; inp.value = "";
+    try { await api("chat", { method: "POST", body: { texto: t } }); await cargarChat(); } catch (x) { inp.value = t; toast(x.message); }
+  });
+
+  // ---------- INFORME ----------
+  async function cargarInformes(){ try { informes = (await api("informes")).informes; pintarInformes(); } catch {} }
+  function rellenarInforme(){ const i = informes.find((x) => x.fecha === $("#i-fecha").value && x.closer === yo.id) || {};
+    $("#i-llamadas").value = i.llamadas ?? ""; $("#i-conv").value = i.conversaciones ?? ""; $("#i-mag").value = i.muestrasAgendadas ?? ""; $("#i-mpr").value = i.muestrasPresentadas ?? ""; $("#i-ventas").value = i.ventas ?? ""; $("#i-bloqueo").value = i.bloqueo ?? ""; }
+  $("#i-fecha").addEventListener("change", rellenarInforme);
+  function pintarInformes(){
+    rellenarInforme();
+    const lista = [...informes].sort((a, b) => b.fecha.localeCompare(a.fecha) || a.closer.localeCompare(b.closer)).slice(0, 20);
+    $("#informes").innerHTML = lista.length ? lista.map((i) => `<div class="bg-white rounded-xl border border-brand-border p-3 text-sm">
+      <div class="flex justify-between font-bold"><span>${esc(fmtF(i.fecha))}${esAdmin() ? " · " + esc(nombre(i.closer)) : ""}</span><span class="text-brand-orange">${i.ventas} venta${i.ventas === 1 ? "" : "s"}</span></div>
+      <div class="text-brand-muted">${i.llamadas} llamadas · ${i.conversaciones} conversaciones · ${i.muestrasAgendadas} muestras agendadas · ${i.muestrasPresentadas} presentadas</div>
+      ${i.bloqueo ? `<div class="mt-1">“${esc(i.bloqueo)}”</div>` : ""}</div>`).join("") : `<p class="text-sm text-brand-muted">Aún no hay informes.</p>`;
+  }
+  $("#f-informe").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const body = { fecha: $("#i-fecha").value, llamadas: $("#i-llamadas").value, conversaciones: $("#i-conv").value, muestrasAgendadas: $("#i-mag").value, muestrasPresentadas: $("#i-mpr").value, ventas: $("#i-ventas").value, bloqueo: $("#i-bloqueo").value };
+    try { const { informe } = await api("informes", { method: "POST", body }); informes = informes.filter((i) => !(i.fecha === informe.fecha && i.closer === informe.closer)).concat(informe); pintarInformes(); toast("Informe guardado"); } catch (x) { toast(x.message); }
+  });
+
+  // ---------- PANEL ----------
+  function rango(p){
+    const h = new Date(); h.setHours(0,0,0,0); const iso = (d) => { const x = new Date(d); x.setMinutes(x.getMinutes() - x.getTimezoneOffset()); return x.toISOString().slice(0,10); };
+    const lunes = new Date(h); lunes.setDate(h.getDate() - ((h.getDay() + 6) % 7));
+    if (p === "semana") { const f = new Date(lunes); f.setDate(f.getDate() + 6); return [iso(lunes), iso(f), 1]; }
+    if (p === "semana-1") { const a = new Date(lunes); a.setDate(a.getDate() - 7); const f = new Date(lunes); f.setDate(f.getDate() - 1); return [iso(a), iso(f), 1]; }
+    if (p === "mes") { const a = new Date(h.getFullYear(), h.getMonth(), 1), f = new Date(h.getFullYear(), h.getMonth() + 1, 0); return [iso(a), iso(f), Math.round(f.getDate() / 7)]; }
+    if (p === "mes-1") { const a = new Date(h.getFullYear(), h.getMonth() - 1, 1), f = new Date(h.getFullYear(), h.getMonth(), 0); return [iso(a), iso(f), Math.round(f.getDate() / 7)]; }
+    const primero = leads.map((l) => l.fechaAsignacion).filter(Boolean).sort()[0] || iso(h);
+    return ["2000-01-01", "2100-01-01", Math.max(1, Math.ceil((h - new Date(primero)) / 6048e5))];
+  }
+  function stats(id, a, b){
+    const mios = leads.filter((l) => !id || l.closer === id);
+    const enP = (l) => l.fechaVenta && l.fechaVenta >= a && l.fechaVenta <= b;
+    const ventas = mios.filter((l) => l.estado >= 7 && enP(l));
+    const fact = ventas.reduce((s, l) => s + (PRECIO[l.servicio] || 0), 0);
+    const cobrado = ventas.reduce((s, l) => s + (PRECIO[l.servicio] || 0) * (l.estado >= 8 ? 1 : 0.5), 0);
+    const comision = leads.filter((l) => l.estado >= 8 && enP(l)).reduce((s, l) => { const p = (PRECIO[l.servicio] || 0) * COMISION; const split = l.presenta && l.presenta !== l.closer;
+      if (!id) return s + p; return s + (l.closer === id ? (split ? p/2 : p) : 0) + (split && l.presenta === id ? p/2 : 0); }, 0);
+    const inf = informes.filter((i) => (!id || i.closer === id) && i.fecha >= a && i.fecha <= b);
+    const sum = (k) => inf.reduce((s, i) => s + (i[k] || 0), 0);
+    const embudo = [1,2,3,4,5,6,7,8].map((k) => mios.filter((l) => l.estado >= k).length);
+    const hoy = hoyISO(), hace5 = new Date(Date.now() - 5*864e5).toISOString().slice(0,10);
+    return { ventas: ventas.length, fact, cobrado, comision, llamadas: sum("llamadas"), conv: sum("conversaciones"), mag: sum("muestrasAgendadas"), mpr: sum("muestrasPresentadas"),
+      embudo, perdidos: mios.filter((l) => l.motivo).length,
+      vencidos: mios.filter((l) => l.fechaProxima && l.fechaProxima < hoy && !l.motivo && l.estado < 8).length,
+      sinTocar: mios.filter((l) => l.estado === 1 && !l.motivo && (l.fechaAsignacion || hoy) < hace5).length,
+      motivos: MOTIVOS.map((m) => [m, mios.filter((l) => l.motivo === m).length]) };
+  }
+  function pintarPanel(){
+    const p = $("#periodo").value, [a, b, semanas] = rango(p);
+    $("#periodo-txt").textContent = p === "todo" ? "Desde el principio" : `Del ${fmtF(a)} al ${fmtF(b)}`;
+    const quien = esAdmin() ? closers() : [yo];
+    const T = stats(esAdmin() ? null : yo.id, a, b), objetivo = OBJ_SEMANA * semanas;
+    const card = (t, v, ic) => `<div class="bg-white rounded-2xl border border-brand-border p-3"><div class="text-xs font-bold text-brand-muted uppercase tracking-wide flex items-center gap-1"><span class="ms text-[16px] text-brand-orange">${ic}</span>${t}</div><div class="text-2xl font-extrabold mt-1">${v}</div></div>`;
+    const semaforo = (v, o) => v >= o ? ["✅ Cumplido","bg-emerald-500","text-emerald-700"] : v >= o/2 ? ["🟡 A mitad","bg-amber-400","text-amber-700"] : ["🔴 Por debajo","bg-red-500","text-red-600"];
+    const bloque = (titulo, ic, html) => `<div class="bg-white rounded-2xl border border-brand-border p-4"><h3 class="font-extrabold flex items-center gap-2 mb-3"><span class="ms text-brand-orange">${ic}</span>${titulo}</h3>${html}</div>`;
+    const S = Object.fromEntries(quien.map((u) => [u.id, stats(u.id, a, b)]));
+    const cols = quien.map((u) => u.nombre), filas = (f, fmt = (x) => x) => quien.map((u) => `<td class="text-center py-1.5">${fmt(f(S[u.id]))}</td>`).join("") + (esAdmin() ? `<td class="text-center py-1.5 font-bold">${fmt(f(T))}</td>` : "");
+    const thead = `<tr class="text-brand-muted text-xs"><th></th>${cols.map((c) => `<th class="font-semibold">${esc(c)}</th>`).join("")}${esAdmin() ? `<th class="font-semibold">Equipo</th>` : ""}</tr>`;
+    const tabla = (rows) => `<div class="overflow-x-auto"><table class="w-full text-sm"><thead>${thead}</thead><tbody>${rows}</tbody></table></div>`;
+    const ETAPAS = ["Leads asignados","Contactados","Hablé con el negocio","Interesados","Muestras agendadas","Muestras presentadas","Ventas","Cobradas 100 %"];
+    const maxM = Math.max(1, ...T.motivos.map((m) => m[1]));
+    $("#panel").innerHTML = `<div class="flex flex-col gap-4">
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">${card("Ventas", T.ventas, "handshake")}${card("Facturación", eur(T.fact), "euro")}${card(esAdmin() ? "Comisiones" : "Tu comisión", eur(T.comision), "payments")}${card("Muestras agendadas", T.mag, "event_available")}</div>
+      ${bloque("¿Vamos bien?", "flag", `<p class="text-sm text-brand-muted mb-3">Objetivo: ${OBJ_SEMANA} ventas por closer y semana → <b>${objetivo}</b> en este periodo.</p><div class="flex flex-col gap-3">` +
+        quien.map((u) => { const v = S[u.id].ventas, [t, bg, tx] = semaforo(v, objetivo); return `<div><div class="flex justify-between text-sm font-semibold"><span>${esc(u.nombre)}</span><span class="${tx}">${v} de ${objetivo} · ${t}</span></div><div class="bar mt-1"><i class="${bg}" style="width:${Math.min(100, 100 * v / Math.max(1, objetivo))}%"></i></div></div>`; }).join("") + `</div>`)}
+      ${bloque("Actividad (de los informes diarios)", "call", tabla(
+        [["Llamadas", (s) => s.llamadas], ["Conversaciones", (s) => s.conv], ["Muestras agendadas", (s) => s.mag], ["Muestras presentadas", (s) => s.mpr]].map(([t, f]) => `<tr class="border-t border-slate-100"><td class="py-1.5">${t}</td>${filas(f)}</tr>`).join("")))}
+      ${bloque("Embudo (todos los leads)", "filter_alt", `<div class="flex flex-col gap-2">` + ETAPAS.map((t, i) => { const n = T.embudo[i], prev = i ? T.embudo[i-1] : n, pct = i && prev ? Math.round(100 * n / prev) : null;
+        return `<div><div class="flex justify-between text-sm"><span>${t}</span><span class="font-semibold">${n}${pct !== null ? ` <span class="text-brand-muted font-normal">(${pct}%)</span>` : ""}</span></div><div class="bar mt-1"><i class="bg-brand-orange" style="width:${T.embudo[0] ? 100 * n / T.embudo[0] : 0}%"></i></div></div>`; }).join("") + `<p class="text-sm text-brand-muted">Perdidos: ${T.perdidos}</p></div>`)}
+      ${bloque("Dinero del periodo (sin IVA)", "euro", tabla(
+        [["Vendido", (s) => s.fact], ["Cobrado", (s) => s.cobrado], ["Pendiente de cobrar", (s) => s.fact - s.cobrado], ["Comisión", (s) => s.comision]].map(([t, f]) => `<tr class="border-t border-slate-100"><td class="py-1.5">${t}</td>${filas(f, eur)}</tr>`).join("")) + `<p class="text-xs text-brand-muted mt-2">La comisión se paga cuando el cliente ha pagado el 100 %.</p>`)}
+      ${bloque("Alertas de hoy", "warning", `<div class="grid grid-cols-2 gap-3">
+        <div class="rounded-xl p-3 ${T.vencidos ? "bg-red-50 text-red-700" : "bg-emerald-50 text-emerald-700"}"><div class="text-2xl font-extrabold">${T.vencidos}</div><div class="text-sm">seguimientos vencidos</div></div>
+        <div class="rounded-xl p-3 ${T.sinTocar ? "bg-red-50 text-red-700" : "bg-emerald-50 text-emerald-700"}"><div class="text-2xl font-extrabold">${T.sinTocar}</div><div class="text-sm">leads sin tocar hace +5 días</div></div></div>`)}
+      ${bloque("Por qué perdemos ventas", "thumb_down", `<div class="flex flex-col gap-2">` + T.motivos.filter((m) => m[1]).sort((x, y) => y[1] - x[1]).map(([m, n]) => `<div><div class="flex justify-between text-sm"><span>${esc(m)}</span><b>${n}</b></div><div class="bar mt-1"><i class="bg-red-400" style="width:${100 * n / maxM}%"></i></div></div>`).join("") + (T.perdidos ? "" : `<p class="text-sm text-brand-muted">Todavía no hay leads perdidos.</p>`) + `</div>`)}
+    </div>`;
+  }
+  $("#periodo").addEventListener("change", pintarPanel);
+
+  // ---------- inicio ----------
+  if (token) api("yo").then(arrancar).catch(() => salir());
+})();
+</script>
+</body>
+</html>
