@@ -78,6 +78,7 @@
         <input id="buscar" type="search" placeholder="Buscar negocio, sector, ciudad…" class="flex-1 min-w-0 border border-brand-border rounded-xl px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-brand-orange">
         <select id="f-closer" hidden class="border border-brand-border rounded-xl px-2 py-2 bg-white"></select>
       </div>
+      <div id="hoy"></div>
       <div id="chips" class="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1"></div>
       <div id="lista" class="flex flex-col gap-2"></div>
     </section>
@@ -284,7 +285,38 @@
     if (l.estado >= 3) return "bg-sky-100 text-sky-800";
     return "bg-slate-100 text-slate-600";
   }
+  // Bloque "Hoy": citas de muestra y seguimientos que no se pueden escapar
+  function pintarHoy(){
+    const h = hoyISO(), man = new Date(Date.now() + 864e5).toISOString().slice(0,10);
+    const activos = leads.filter((l) => !perdido(l) && l.estado < 7);
+    const item = (l, extra) => `<button data-id="${esc(l.id)}" class="w-full text-left flex items-center justify-between gap-2 py-1.5 border-t border-white/60 first:border-0"><span class="min-w-0 truncate font-semibold">${esc(l.negocio)}</span><span class="shrink-0 text-xs">${extra}</span></button>`;
+    let html = "";
+    if (esAdmin()) {
+      const prep = activos.filter((l) => l.estado === 5 && l.fechaProxima && l.fechaProxima >= h && l.fechaProxima <= man).sort((a, b) => a.fechaProxima.localeCompare(b.fechaProxima));
+      const venc = activos.filter((l) => l.fechaProxima && l.fechaProxima < h).length;
+      html = `<div class="rounded-2xl p-3 ${prep.length ? "bg-amber-50 border border-amber-200" : "bg-white border border-brand-border"}">
+        <div class="font-extrabold flex items-center gap-2"><span class="ms text-brand-orange">design_services</span>Muestras que preparar (hoy y mañana): ${prep.length}</div>
+        ${prep.length ? `<div class="mt-2 text-sm">${prep.map((l) => item(l, (l.fechaProxima === h ? "HOY" : "Mañana") + " · " + esc(nombre(l.closer)))).join("")}</div>` : `<p class="text-sm text-brand-muted mt-1">No hay muestras agendadas para hoy ni mañana.</p>`}
+        ${venc ? `<p class="text-sm text-red-600 font-semibold mt-2">⚠️ El equipo tiene ${venc} seguimiento${venc === 1 ? "" : "s"} vencido${venc === 1 ? "" : "s"}.</p>` : ""}</div>`;
+    } else {
+      const mias = activos.filter((l) => l.closer === yo.id || l.presenta === yo.id);
+      const muestras = mias.filter((l) => l.estado === 5 && l.fechaProxima === h);
+      const tareas = mias.filter((l) => l.estado !== 5 && l.fechaProxima === h);
+      const venc = mias.filter((l) => l.fechaProxima && l.fechaProxima < h);
+      const total = muestras.length + tareas.length + venc.length;
+      html = `<div class="rounded-2xl p-3 ${venc.length ? "bg-red-50 border border-red-200" : total ? "bg-amber-50 border border-amber-200" : "bg-emerald-50 border border-emerald-200"}">
+        <div class="font-extrabold flex items-center gap-2"><span class="ms text-brand-orange">today</span>Tu día de hoy</div>
+        ${total ? `<div class="mt-2 text-sm">
+          ${muestras.map((l) => item(l, "📅 Muestra · " + esc(l.proximaAccion || ""))).join("")}
+          ${tareas.map((l) => item(l, esc(l.proximaAccion || "Seguimiento"))).join("")}
+          ${venc.map((l) => item(l, `<span class="text-red-600 font-bold">Vencido ${esc(fmtF(l.fechaProxima))}</span>`)).join("")}</div>`
+        : `<p class="text-sm mt-1 text-emerald-700">Nada pendiente para hoy. Toca llamar a leads nuevos 💪</p>`}</div>`;
+    }
+    $("#hoy").innerHTML = html;
+  }
+  $("#hoy").addEventListener("click", (e) => { const b = e.target.closest("[data-id]"); if (b) abrirLead(leads.find((l) => l.id === b.dataset.id)); });
   function pintarLeads(){
+    pintarHoy();
     const q = $("#buscar").value.trim().toLowerCase(), fc = $("#f-closer").value;
     const base = leads.filter((l) => !fc || l.closer === fc);
     $("#chips").innerHTML = FILTROS.map(([k, t, fn]) => { const n = base.filter(fn).length, on = k === filtro;
@@ -330,7 +362,8 @@
     if (body.estado >= 7 && !body.servicio) { err.textContent = "Para marcar una venta, elige el servicio vendido."; err.hidden = false; return; }
     if (editando) body.id = editando.id;
     try { const { lead } = await api("leads", { method: "POST", body }); const i = leads.findIndex((x) => x.id === lead.id); if (i >= 0) leads[i] = lead; else leads.unshift(lead);
-      $("#m-lead").hidden = true; pintarLeads(); toast(lead.estado === 7 && (!editando || editando.estado < 7) ? "🎉 ¡Venta registrada! Avisa en el grupo." : "Guardado"); }
+      const venta = lead.estado >= 7 && (!editando || editando.estado < 7);
+      $("#m-lead").hidden = true; pintarLeads(); toast(venta ? "🎉 ¡Venta registrada! La ficha se ha enviado al grupo." : "Guardado"); if (venta) cargarChat(); }
     catch (x) { err.textContent = x.message; err.hidden = false; }
   });
   $("#l-borrar").addEventListener("click", async () => {
@@ -371,6 +404,7 @@
   function pintarChat(abajo){
     const box = $("#chat");
     box.innerHTML = mensajes.length ? mensajes.map((m) => { const mio = m.autor === yo.id; const f = new Date(m.fecha);
+      if (m.auto) return `<div class="self-stretch bg-emerald-50 border border-emerald-200 rounded-2xl px-3 py-2"><div class="whitespace-pre-wrap break-words text-[14px] text-emerald-900">${esc(m.texto)}</div><div class="text-[10px] text-emerald-700 text-right">${f.toLocaleDateString("es-ES",{day:"2-digit",month:"2-digit"})} ${f.toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"})}</div></div>`;
       return `<div class="max-w-[85%] ${mio ? "self-end bg-brand-orange text-white" : "self-start bg-slate-100"} rounded-2xl px-3 py-2">
         ${mio ? "" : `<div class="text-xs font-bold text-brand-orange">${esc(m.nombre)}</div>`}
         <div class="whitespace-pre-wrap break-words text-[15px]">${esc(m.texto)}</div>

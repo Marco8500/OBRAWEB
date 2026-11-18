@@ -149,6 +149,18 @@ export async function manejar(req, { store, env = process.env }) {
       lead.actualizado = new Date().toISOString();
       lead.actualizadoPor = user.id;
       await store.setJSON("leads/" + lead.id, lead);
+      // Venta nueva: se publica sola en el grupo la ficha de traspaso a producción
+      if (lead.estado >= 7 && (!previo || previo.estado < 7)) {
+        const nom = (id) => (todos.find((u) => u.id === id) || {}).nombre || id;
+        const cierra = lead.presenta && lead.presenta !== lead.closer ? lead.presenta : lead.closer;
+        const lineas = ["🎉 VENTA CERRADA", "Negocio: " + lead.negocio,
+          "Contacto: " + (lead.telefono || "—"), "Servicio: " + (lead.servicio || "—") + " (+ IVA)",
+          "Anticipo del 50 %: cobrado", "Cerrado por: " + nom(cierra) + " · Agendado por: " + nom(lead.closer)];
+        if (lead.notas) lineas.push("Notas: " + lead.notas.slice(0, 600));
+        lineas.push("👉 Fundador: llamar al cliente en 48 h para arrancar producción.");
+        const mid = new Date().toISOString().replace(/[:.]/g, "-") + "_" + randomBytes(3).toString("hex");
+        await store.setJSON("chat/" + mid, { id: mid, autor: user.id, nombre: user.nombre, texto: lineas.join("\n"), fecha: new Date().toISOString(), auto: true });
+      }
       return json({ lead });
     }
     if (metodo === "POST" && ruta[1] && ruta[2] === "pagar") {
