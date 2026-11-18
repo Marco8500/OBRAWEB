@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="robots" content="noindex, nofollow">
   <title>Equipo · OBRAWEB</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="theme-color" content="#0B192C">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=swap" rel="stylesheet">
@@ -126,7 +130,7 @@
   <nav class="fixed bottom-0 inset-x-0 z-30 bg-white border-t border-brand-border safe-b">
     <div class="max-w-3xl mx-auto grid grid-cols-4">
       <button data-tab="leads" class="tab py-2 flex flex-col items-center text-xs font-semibold"><span class="ms">list_alt</span>Leads</button>
-      <button data-tab="grupo" class="tab py-2 flex flex-col items-center text-xs font-semibold relative"><span class="ms">forum</span>Grupo<i id="dot" hidden class="absolute top-1.5 right-[35%] w-2 h-2 rounded-full bg-brand-orange"></i></button>
+      <button data-tab="grupo" class="tab py-2 flex flex-col items-center text-xs font-semibold relative"><span class="ms">forum</span>Grupo<span id="dot" hidden class="absolute top-0.5 right-[28%] min-w-[18px] h-[18px] px-1 rounded-full bg-red-600 text-white text-[11px] font-bold leading-[18px] text-center ring-2 ring-white"></span></button>
       <button data-tab="informe" class="tab py-2 flex flex-col items-center text-xs font-semibold"><span class="ms">edit_note</span>Informe</button>
       <button data-tab="panel" class="tab py-2 flex flex-col items-center text-xs font-semibold"><span class="ms">monitoring</span>Panel</button>
     </div>
@@ -200,14 +204,14 @@
   "use strict";
   const API = "/api/equipo/";
   const ESTADOS = ["", "1 · Sin contactar","2 · Llamado, no contesta","3 · Hablé con el negocio","4 · Interesado","5 · Muestra agendada","6 · Muestra presentada","7 · VENTA (anticipo cobrado)","8 · COBRADO 100 %"];
-  const MOTIVOS = ["Ya tiene web","No le ve utilidad","Precio","No es buen momento","Desconfianza / no nos conoce","No quiere pagar por adelantado","Lo hace un conocido / sobrino","Kit Digital / se la dieron gratis","No contesta tras 3 llamadas","Otro (explicar en notas)"];
+  const MOTIVOS = ["Ya tiene web","No le ve utilidad","Precio","No es buen momento","Desconfianza / no nos conoce","No quiere pagar por adelantado","Lo hace un conocido / sobrino","Kit Digital / se la dieron gratis","No contesta tras 3 llamadas","Pide que no le llamemos más","Otro (explicar en notas)"];
   const PRECIO = { "Web 450 €": 450, "Web + Chatbot 550 €": 550 };
   const OBJ_SEMANA = 2, COMISION = 0.10;
   const $ = (s) => document.querySelector(s), $$ = (s) => [...document.querySelectorAll(s)];
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
   const hoyISO = () => { const d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0,10); };
   const fmtF = (iso) => iso ? iso.slice(8,10) + "/" + iso.slice(5,7) : "";
-  const eur = (n) => Math.round(n).toLocaleString("es-ES") + " €";
+  const eur = (n) => (Math.round(n * 100) / 100).toLocaleString("es-ES", { maximumFractionDigits: 2 }) + " €";
   const store = { get(k){ try { return localStorage.getItem(k); } catch { return null; } }, set(k,v){ try { localStorage.setItem(k,v); } catch {} }, del(k){ try { localStorage.removeItem(k); } catch {} } };
 
   let token = store.get("obw_token"), yo = null, equipo = [], leads = [], informes = [], mensajes = [];
@@ -256,7 +260,7 @@
     tabActual = tab; store.set("obw_tab", tab);
     ["leads","grupo","informe","panel"].forEach((t) => $("#t-" + t).hidden = t !== tab);
     $$(".tab").forEach((b) => { const on = b.dataset.tab === tab; b.classList.toggle("text-brand-orange", on); b.classList.toggle("text-brand-muted", !on); });
-    if (tab === "grupo") { $("#dot").hidden = true; store.set("obw_visto", mensajes.length ? mensajes[mensajes.length-1].id : ""); pintarChat(true); }
+    if (tab === "grupo") { store.set("obw_visto", mensajes.length ? mensajes[mensajes.length-1].id : ""); avisoChat(); pintarChat(true); }
     if (tab === "panel") pintarPanel();
   }
   $$(".tab").forEach((b) => b.addEventListener("click", () => ir(b.dataset.tab)));
@@ -353,11 +357,17 @@
       const nuevos = (await api("chat" + (desde ? "?desde=" + encodeURIComponent(desde) : ""))).mensajes;
       if (!nuevos.length && mensajes.length) return;
       mensajes = desde ? mensajes.concat(nuevos) : nuevos;
-      const visto = store.get("obw_visto") || "";
-      if (tabActual === "grupo") { store.set("obw_visto", mensajes.length ? mensajes[mensajes.length-1].id : ""); pintarChat(true); }
-      else $("#dot").hidden = !mensajes.some((m) => m.id > visto && m.autor !== yo.id);
+      if (tabActual === "grupo" && !document.hidden) { store.set("obw_visto", mensajes.length ? mensajes[mensajes.length-1].id : ""); pintarChat(true); }
+      avisoChat();
     } catch {}
   }
+  function avisoChat(){
+    const visto = store.get("obw_visto") || "";
+    const n = mensajes.filter((m) => m.id > visto && m.autor !== yo.id).length;
+    const dot = $("#dot"); dot.textContent = n > 9 ? "9+" : n; dot.hidden = n === 0;
+    document.title = (n ? "(" + n + ") " : "") + "Equipo · OBRAWEB";
+  }
+  document.addEventListener("visibilitychange", () => { if (!document.hidden && tabActual === "grupo") { store.set("obw_visto", mensajes.length ? mensajes[mensajes.length-1].id : ""); avisoChat(); } });
   function pintarChat(abajo){
     const box = $("#chat");
     box.innerHTML = mensajes.length ? mensajes.map((m) => { const mio = m.autor === yo.id; const f = new Date(m.fecha);
@@ -403,14 +413,17 @@
     const primero = leads.map((l) => l.fechaAsignacion).filter(Boolean).sort()[0] || iso(h);
     return ["2000-01-01", "2100-01-01", Math.max(1, Math.ceil((h - new Date(primero)) / 6048e5))];
   }
+  // Parte de la comisión de un lead que corresponde a un closer (50/50 si presentó otro)
+  function parte(l, id){ const p = (PRECIO[l.servicio] || 0) * COMISION, split = l.presenta && l.presenta !== l.closer;
+    return (l.closer === id ? (split ? p/2 : p) : 0) + (split && l.presenta === id ? p/2 : 0); }
   function stats(id, a, b){
     const mios = leads.filter((l) => !id || l.closer === id);
     const enP = (l) => l.fechaVenta && l.fechaVenta >= a && l.fechaVenta <= b;
     const ventas = mios.filter((l) => l.estado >= 7 && enP(l));
     const fact = ventas.reduce((s, l) => s + (PRECIO[l.servicio] || 0), 0);
     const cobrado = ventas.reduce((s, l) => s + (PRECIO[l.servicio] || 0) * (l.estado >= 8 ? 1 : 0.5), 0);
-    const comision = leads.filter((l) => l.estado >= 8 && enP(l)).reduce((s, l) => { const p = (PRECIO[l.servicio] || 0) * COMISION; const split = l.presenta && l.presenta !== l.closer;
-      if (!id) return s + p; return s + (l.closer === id ? (split ? p/2 : p) : 0) + (split && l.presenta === id ? p/2 : 0); }, 0);
+    const enC = (l) => { const f = l.fechaCobro || l.fechaVenta; return f && f >= a && f <= b; };
+    const comision = leads.filter((l) => l.estado >= 8 && enC(l)).reduce((s, l) => s + (id ? parte(l, id) : (PRECIO[l.servicio] || 0) * COMISION), 0);
     const inf = informes.filter((i) => (!id || i.closer === id) && i.fecha >= a && i.fecha <= b);
     const sum = (k) => inf.reduce((s, i) => s + (i[k] || 0), 0);
     const embudo = [1,2,3,4,5,6,7,8].map((k) => mios.filter((l) => l.estado >= k).length);
@@ -436,14 +449,15 @@
     const ETAPAS = ["Leads asignados","Contactados","Hablé con el negocio","Interesados","Muestras agendadas","Muestras presentadas","Ventas","Cobradas 100 %"];
     const maxM = Math.max(1, ...T.motivos.map((m) => m[1]));
     $("#panel").innerHTML = `<div class="flex flex-col gap-4">
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">${card("Ventas", T.ventas, "handshake")}${card("Facturación", eur(T.fact), "euro")}${card(esAdmin() ? "Comisiones" : "Tu comisión", eur(T.comision), "payments")}${card("Muestras agendadas", T.mag, "event_available")}</div>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">${card(esAdmin() ? "Ventas" : "Tus ventas", T.ventas, "handshake")}${card(esAdmin() ? "Facturación" : "Tu facturación", eur(T.fact), "euro")}${card(esAdmin() ? "Comisiones" : "Tu comisión", eur(T.comision), "payments")}${card("Muestras agendadas", T.mag, "event_available")}</div>
       ${bloque("¿Vamos bien?", "flag", `<p class="text-sm text-brand-muted mb-3">Objetivo: ${OBJ_SEMANA} ventas por closer y semana → <b>${objetivo}</b> en este periodo.</p><div class="flex flex-col gap-3">` +
         quien.map((u) => { const v = S[u.id].ventas, [t, bg, tx] = semaforo(v, objetivo); return `<div><div class="flex justify-between text-sm font-semibold"><span>${esc(u.nombre)}</span><span class="${tx}">${v} de ${objetivo} · ${t}</span></div><div class="bar mt-1"><i class="${bg}" style="width:${Math.min(100, 100 * v / Math.max(1, objetivo))}%"></i></div></div>`; }).join("") + `</div>`)}
       ${bloque("Actividad (de los informes diarios)", "call", tabla(
         [["Llamadas", (s) => s.llamadas], ["Conversaciones", (s) => s.conv], ["Muestras agendadas", (s) => s.mag], ["Muestras presentadas", (s) => s.mpr]].map(([t, f]) => `<tr class="border-t border-slate-100"><td class="py-1.5">${t}</td>${filas(f)}</tr>`).join("")))}
       ${bloque("Embudo (todos los leads)", "filter_alt", `<div class="flex flex-col gap-2">` + ETAPAS.map((t, i) => { const n = T.embudo[i], prev = i ? T.embudo[i-1] : n, pct = i && prev ? Math.round(100 * n / prev) : null;
         return `<div><div class="flex justify-between text-sm"><span>${t}</span><span class="font-semibold">${n}${pct !== null ? ` <span class="text-brand-muted font-normal">(${pct}%)</span>` : ""}</span></div><div class="bar mt-1"><i class="bg-brand-orange" style="width:${T.embudo[0] ? 100 * n / T.embudo[0] : 0}%"></i></div></div>`; }).join("") + `<p class="text-sm text-brand-muted">Perdidos: ${T.perdidos}</p></div>`)}
-      ${bloque("Dinero del periodo (sin IVA)", "euro", tabla(
+      ${esAdmin() ? bloque("Comisiones a pagar", "payments", bloqueComisiones(a, b)) : ""}
+      ${bloque(esAdmin() ? "Dinero del periodo (sin IVA)" : "Tu dinero del periodo (sin IVA)", "euro", tabla(
         [["Vendido", (s) => s.fact], ["Cobrado", (s) => s.cobrado], ["Pendiente de cobrar", (s) => s.fact - s.cobrado], ["Comisión", (s) => s.comision]].map(([t, f]) => `<tr class="border-t border-slate-100"><td class="py-1.5">${t}</td>${filas(f, eur)}</tr>`).join("")) + `<p class="text-xs text-brand-muted mt-2">La comisión se paga cuando el cliente ha pagado el 100 %.</p>`)}
       ${bloque("Alertas de hoy", "warning", `<div class="grid grid-cols-2 gap-3">
         <div class="rounded-xl p-3 ${T.vencidos ? "bg-red-50 text-red-700" : "bg-emerald-50 text-emerald-700"}"><div class="text-2xl font-extrabold">${T.vencidos}</div><div class="text-sm">seguimientos vencidos</div></div>
@@ -452,6 +466,30 @@
     </div>`;
   }
   $("#periodo").addEventListener("change", pintarPanel);
+
+  // Solo fundador: comisiones generadas y pendientes de pagar a cada closer
+  function bloqueComisiones(a, b){
+    const cobradas = leads.filter((l) => l.estado >= 8 && PRECIO[l.servicio]);
+    const enC = (l) => { const f = l.fechaCobro || l.fechaVenta; return f && f >= a && f <= b; };
+    const filas = closers().map((u) => {
+      const suyas = cobradas.filter((l) => parte(l, u.id) > 0);
+      const generada = suyas.filter(enC).reduce((s, l) => s + parte(l, u.id), 0);
+      const pend = suyas.filter((l) => !(l.comisionPagada || {})[u.id]);
+      const totalPend = pend.reduce((s, l) => s + parte(l, u.id), 0);
+      return `<div class="border border-brand-border rounded-xl p-3 flex flex-col gap-2">
+        <div class="flex justify-between items-baseline"><b>${esc(u.nombre)}</b><span class="text-sm text-brand-muted">Generada en el periodo: <b class="text-brand-navy">${eur(generada)}</b></span></div>
+        <div class="rounded-lg px-3 py-2 ${totalPend ? "bg-amber-50 text-amber-800" : "bg-emerald-50 text-emerald-700"} font-semibold">${totalPend ? "Pendiente de pagar: " + eur(totalPend) : "✅ Todo pagado"}</div>
+        ${pend.map((l) => `<div class="flex items-center justify-between gap-2 text-sm"><span class="min-w-0 truncate">${esc(l.negocio)} · ${esc(l.servicio)}${l.presenta && l.presenta !== l.closer ? " · 50 %" : ""} · <span class="text-brand-muted">cobrado ${esc(fmtF(l.fechaCobro || l.fechaVenta))}</span></span><span class="shrink-0 flex items-center gap-2"><b>${eur(parte(l, u.id))}</b><button data-pagar="${esc(l.id)}" data-closer="${esc(u.id)}" class="text-xs font-bold bg-brand-navy text-white rounded-lg px-2 py-1">Pagada</button></span></div>`).join("")}
+      </div>`; }).join("");
+    return `<div class="flex flex-col gap-3">${filas}</div><p class="text-xs text-brand-muted mt-2">Una venta genera comisión cuando el cliente ha pagado el 100 %. Pulsa "Pagada" cuando le hayas hecho el pago al closer.</p>`;
+  }
+  $("#panel").addEventListener("click", async (e) => {
+    const b = e.target.closest("[data-pagar]"); if (!b) return;
+    b.disabled = true;
+    try { const { lead } = await api("leads/" + b.dataset.pagar + "/pagar", { method: "POST", body: { closer: b.dataset.closer } });
+      leads = leads.map((l) => l.id === lead.id ? lead : l); pintarPanel(); toast("Comisión marcada como pagada"); }
+    catch (x) { b.disabled = false; toast(x.message); }
+  });
 
   // ---------- inicio ----------
   if (token) api("yo").then(arrancar).catch(() => salir());

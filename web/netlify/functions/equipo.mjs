@@ -125,7 +125,7 @@ export async function manejar(req, { store, env = process.env }) {
       }
       return json({ creados: creados.length });
     }
-    if (metodo === "POST") {
+    if (metodo === "POST" && !ruta[1]) {
       const id = texto(cuerpo.id, 60);
       let previo = null;
       if (id) {
@@ -140,9 +140,26 @@ export async function manejar(req, { store, env = process.env }) {
       const lead = limpiarLead(entrada, previo, user, todos);
       if (previo && !esAdmin && previo.closer !== user.id) lead.closer = previo.closer;
       lead.id = id || nuevoId();
+      // Fechas automáticas: venta y cobro completo (la comisión se calcula por la fecha de cobro)
+      if (lead.estado >= 7 && !lead.fechaVenta) lead.fechaVenta = hoy();
+      if (lead.estado >= 8) lead.fechaCobro = previo?.fechaCobro || hoy();
+      else delete lead.fechaCobro;
+      lead.comisionPagada = previo?.comisionPagada || {};   // solo se cambia con /pagar (fundador)
       lead.creado = previo?.creado || new Date().toISOString();
       lead.actualizado = new Date().toISOString();
       lead.actualizadoPor = user.id;
+      await store.setJSON("leads/" + lead.id, lead);
+      return json({ lead });
+    }
+    if (metodo === "POST" && ruta[1] && ruta[2] === "pagar") {
+      if (!esAdmin) return json({ error: "Solo el fundador puede marcar comisiones." }, 403);
+      if (!/^[a-z0-9-]+$/.test(ruta[1])) return json({ error: "Lead no válido." }, 400);
+      const lead = await store.get("leads/" + ruta[1], { type: "json", consistency: "strong" });
+      if (!lead) return json({ error: "Ese lead ya no existe." }, 404);
+      const quien = texto(cuerpo.closer, 60);
+      if (!todos.some((u) => u.id === quien)) return json({ error: "Closer no válido." }, 400);
+      lead.comisionPagada = { ...(lead.comisionPagada || {}) };
+      if (cuerpo.pagada === false) delete lead.comisionPagada[quien]; else lead.comisionPagada[quien] = hoy();
       await store.setJSON("leads/" + lead.id, lead);
       return json({ lead });
     }
