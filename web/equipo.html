@@ -18,8 +18,48 @@
       colors: { brand: { orange:"#F97316", orangeHover:"#EA580C", navy:"#0B192C", slate:"#1E293B", muted:"#64748B", light:"#F8FAFC", border:"#E2E8F0" } },
       fontFamily: { sans: ['"Plus Jakarta Sans"','system-ui','sans-serif'] } } } };
   </script>
+  <script>
+    // Tema: el que elija el usuario (guardado en este móvil) o, si no ha elegido, el del sistema
+    (function(){ var t=null; try{ t=localStorage.getItem("obw_tema"); }catch(e){}
+      var oscuro = t ? t==="oscuro" : window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches;
+      if (oscuro) document.documentElement.classList.add("dark"); })();
+  </script>
   <style>
-    body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;-webkit-tap-highlight-color:transparent;background:#F1F5F9}
+    /* ---- Modo oscuro: azul marino de la marca, no negro puro ---- */
+    html.dark{color-scheme:dark}
+    html.dark body{background:#0A1422;color:#E6EDF7}
+    html.dark .bg-white{background-color:#132238!important}
+    html.dark .bg-slate-50{background-color:#1A2C46!important}
+    html.dark .bg-slate-100,html.dark .hover\:bg-slate-100:hover{background-color:#1F3352!important}
+    html.dark .border-brand-border,html.dark .border-slate-100{border-color:#24395A!important}
+    html.dark .border-white\/60{border-color:rgba(255,255,255,.08)!important}
+    html.dark .text-brand-navy{color:#E6EDF7!important}
+    html.dark .text-brand-muted{color:#94A3B8!important}
+    html.dark .bg-brand-navy{background-color:#2B4266!important}
+    html.dark header.bg-brand-navy{background-color:#06101C!important}
+    html.dark #chips .bg-brand-navy{background-color:#F97316!important;border-color:#F97316!important}
+    html.dark .border-brand-orange{border-color:#F97316!important}
+    html.dark select.text-brand-orange{color:#FB923C!important;font-weight:700}
+    html.dark .ring-white{--tw-ring-color:#132238!important}
+    html.dark input,html.dark select,html.dark textarea{background-color:#0F1C30;color:#E6EDF7;border-color:#2B4266}
+    html.dark input::placeholder,html.dark textarea::placeholder{color:#64748B}
+    html.dark .bar{background:#24395A}
+    html.dark #toast{background:#F97316}
+    html.dark #v-login{background:#06101C}
+    /* estados */
+    html.dark .bg-red-50,html.dark .bg-red-100{background-color:rgba(239,68,68,.14)!important}
+    html.dark .text-red-600,html.dark .text-red-700{color:#FCA5A5!important}
+    html.dark .border-red-200,html.dark .border-red-300,html.dark .\!border-red-400{border-color:rgba(248,113,113,.45)!important}
+    html.dark .bg-amber-50,html.dark .bg-amber-100{background-color:rgba(245,158,11,.14)!important}
+    html.dark .text-amber-700,html.dark .text-amber-800{color:#FCD34D!important}
+    html.dark .border-amber-200{border-color:rgba(252,211,77,.35)!important}
+    html.dark .bg-emerald-50,html.dark .bg-emerald-100{background-color:rgba(16,185,129,.14)!important}
+    html.dark .text-emerald-700,html.dark .text-emerald-900{color:#6EE7B7!important}
+    html.dark .border-emerald-200{border-color:rgba(110,231,183,.35)!important}
+    html.dark .bg-sky-100{background-color:rgba(56,189,248,.15)!important}
+    html.dark .text-sky-800{color:#7DD3FC!important}
+    html.dark .text-slate-600{color:#CBD5E1!important}
+    body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;-webkit-tap-highlight-color:transparent;background:#F1F5F9;transition:background-color .2s}
     .ms{font-family:'Material Symbols Outlined';font-weight:normal;font-style:normal;line-height:1;display:inline-block;vertical-align:middle;-webkit-font-feature-settings:'liga';font-feature-settings:'liga'}
     .safe-b{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 4px)}
     input,select,textarea{font-size:16px}
@@ -59,6 +99,7 @@
       </div>
       <div class="flex items-center gap-3 text-sm">
         <span id="yo-nombre" class="text-slate-300"></span>
+        <button id="b-tema" class="w-9 h-9 rounded-full hover:bg-white/10 flex items-center justify-center" aria-label="Cambiar entre modo claro y oscuro" title="Modo claro / oscuro"><span class="ms text-[20px]">dark_mode</span></button>
         <button id="b-salir" class="text-slate-300 hover:text-white flex items-center gap-1"><span class="ms text-[18px]">logout</span>Salir</button>
       </div>
     </div>
@@ -238,6 +279,17 @@
   });
   function salir(){ token = null; store.del("obw_token"); clearInterval(chatTimer); $("#v-app").hidden = true; $("#v-login").hidden = false; }
   $("#b-salir").addEventListener("click", salir);
+
+  // ---------- tema claro / oscuro ----------
+  const mq = window.matchMedia ? matchMedia("(prefers-color-scheme: dark)") : null;
+  function aplicarTema(oscuro){
+    document.documentElement.classList.toggle("dark", oscuro);
+    $("#b-tema .ms").textContent = oscuro ? "light_mode" : "dark_mode";
+    document.querySelector('meta[name="theme-color"]').setAttribute("content", oscuro ? "#06101C" : "#0B192C");
+  }
+  aplicarTema(document.documentElement.classList.contains("dark"));
+  $("#b-tema").addEventListener("click", () => { const osc = !document.documentElement.classList.contains("dark"); store.set("obw_tema", osc ? "oscuro" : "claro"); aplicarTema(osc); });
+  if (mq && mq.addEventListener) mq.addEventListener("change", (e) => { if (!store.get("obw_tema")) aplicarTema(e.matches); });
 
   async function arrancar(d){
     yo = d.usuario; equipo = d.equipo;
