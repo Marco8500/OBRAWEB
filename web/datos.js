@@ -5,11 +5,11 @@
 //  Deja vacío lo que no tengas: se oculta en la web.
 // ============================================================
 window.DATOS = {
-  titular:   "",  // Nombre y apellidos (autónomo) o razón social (empresa)
+  titular:   "Sergio Moreno",  // Nombre y apellidos (autónomo) o razón social (empresa)
   nif:       "",  // NIF / CIF
-  domicilio: "",  // Calle, nº, CP, ciudad, provincia
-  email:     "",  // Email de contacto (también para ejercer derechos RGPD)
-  telefono:  "",  // Ej: "612 345 678"
+  domicilio: "Carrer Alt Palància, 46940 Manises (Valencia)",  // Calle, nº, CP, ciudad, provincia
+  email:     "infoobraweb@gmail.com",  // Email de contacto (también para ejercer derechos RGPD)
+  telefono:  "641 409 181",  // Ej: "612 345 678"
   whatsapp:  "34641409181",  // Con prefijo y sin +: "34612345678"
   dominio:   "",  // Ej: "obraweb.es"
   chatbot:   "https://hook.eu1.make.com/q2jyemzfefyl8rh8bmk6ivt72bwd1ard"  // Webhook de Make del asistente virtual (vacío = sin chatbot)
