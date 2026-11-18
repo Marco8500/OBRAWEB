@@ -7,6 +7,28 @@ import { createHmac, timingSafeEqual, randomBytes } from "node:crypto";
 export const config = { path: "/api/equipo/*" };
 
 const SESION_DIAS = 30;
+const LATIDO_MS = 2 * 60 * 1000;          // como mucho, una anotación de actividad cada 2 min por persona
+const vistos = new Map();                  // caché en memoria para no escribir en cada petición
+const diaMadrid = (d = new Date()) => new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Madrid" }).format(d);
+function dispositivo(ua = "") {
+  if (/iPhone|iPad/i.test(ua)) return "iPhone/iPad";
+  if (/Android/i.test(ua)) return "Android";
+  if (/Windows/i.test(ua)) return "Windows";
+  if (/Macintosh|Mac OS/i.test(ua)) return "Mac";
+  return "Otro";
+}
+async function registrarActividad(store, user, req) {
+  const ahora = Date.now();
+  if ((vistos.get(user.id) || 0) > ahora - LATIDO_MS) return;
+  vistos.set(user.id, ahora);
+  const iso = new Date(ahora).toISOString(), dia = diaMadrid();
+  const clave = `dias/${user.id}/${dia}`;
+  const previo = await store.get(clave, { type: "json" });
+  await Promise.all([
+    store.setJSON("actividad/" + user.id, { ultima: iso, dispositivo: dispositivo(req.headers.get("user-agent") || "") }),
+    store.setJSON(clave, { dia, primera: previo?.primera || iso, ultima: iso }),
+  ]);
+}
 const ESTADOS = 8;
 const CAMPOS_LEAD = ["negocio", "sector", "telefono", "ciudad", "resenas", "web", "estado", "intentos", "ultimoContacto",
   "proximaAccion", "fechaProxima", "motivo", "servicio", "fechaVenta", "presenta", "notas", "closer", "fechaAsignacion"];
@@ -94,6 +116,9 @@ export async function manejar(req, { store, env = process.env }) {
       return json({ error: "Código incorrecto." }, 401);
     }
     const token = firmar({ u: u.id, exp: Date.now() + SESION_DIAS * 864e5 }, secret);
+    const iso = new Date().toISOString();
+    await store.setJSON(`accesos/${u.id}/${iso}`, { fecha: iso, dispositivo: dispositivo(req.headers.get("user-agent") || "") });
+    vistos.delete(u.id); await registrarActividad(store, u, req);
     return json({ token, usuario: publico(u), equipo: todos.map(publico) });
   }
 
@@ -103,6 +128,30 @@ export async function manejar(req, { store, env = process.env }) {
   const user = sesion && todos.find((x) => x.id === sesion.u);
   if (!user) return json({ error: "Sesión caducada. Vuelve a entrar con tu código." }, 401);
   const esAdmin = user.rol === "admin";
+  try { await registrarActividad(store, user, req); } catch (e) { console.error("actividad", e); }
+
+  // --- CONEXIONES DEL EQUIPO (solo fundador) ---
+  if (ruta[0] === "actividad" && metodo === "GET") {
+    if (!esAdmin) return json({ error: "Solo el fundador puede ver las conexiones." }, 403);
+    const desde = diaMadrid(new Date(Date.now() - 13 * 864e5));
+    const out = [];
+    for (const u of todos.filter((x) => x.rol !== "admin")) {
+      const [act, dias, acc] = await Promise.all([
+        store.get("actividad/" + u.id, { type: "json" }),
+        store.list({ prefix: `dias/${u.id}/` }),
+        store.list({ prefix: `accesos/${u.id}/` }),
+      ]);
+      const diasKeys = dias.blobs.map((b) => b.key).filter((k) => k.slice(-10) >= desde).sort();
+      const accKeys = acc.blobs.map((b) => b.key).sort().slice(-10).reverse();
+      const [diasData, accData] = await Promise.all([
+        Promise.all(diasKeys.map((k) => store.get(k, { type: "json" }))),
+        Promise.all(accKeys.map((k) => store.get(k, { type: "json" }))),
+      ]);
+      out.push({ id: u.id, nombre: u.nombre, ultima: act?.ultima || null, dispositivo: act?.dispositivo || null,
+        dias: diasData.filter(Boolean), accesos: accData.filter(Boolean) });
+    }
+    return json({ ahora: new Date().toISOString(), equipo: out });
+  }
 
   if (ruta[0] === "yo") return json({ usuario: publico(user), equipo: todos.map(publico) });
 

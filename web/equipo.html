@@ -437,6 +437,7 @@
 
   // ---------- GRUPO ----------
   async function cargarChat(){
+    if (document.hidden && mensajes.length) return;   // con la app en segundo plano no se consulta
     try {
       const desde = mensajes.length ? mensajes[mensajes.length-1].id : "";
       const nuevos = (await api("chat" + (desde ? "?desde=" + encodeURIComponent(desde) : ""))).mensajes;
@@ -452,6 +453,7 @@
     const dot = $("#dot"); dot.textContent = n > 9 ? "9+" : n; dot.hidden = n === 0;
     document.title = (n ? "(" + n + ") " : "") + "Equipo · OBRAWEB";
   }
+  document.addEventListener("visibilitychange", () => { if (!document.hidden && yo) cargarChat(); });
   document.addEventListener("visibilitychange", () => { if (!document.hidden && tabActual === "grupo") { store.set("obw_visto", mensajes.length ? mensajes[mensajes.length-1].id : ""); avisoChat(); } });
   function pintarChat(abajo){
     const box = $("#chat");
@@ -521,6 +523,7 @@
       motivos: MOTIVOS.map((m) => [m, mios.filter((l) => l.motivo === m).length]) };
   }
   function pintarPanel(){
+    setTimeout(pintarConexiones, 0);
     const p = $("#periodo").value, [a, b, semanas] = rango(p);
     $("#periodo-txt").textContent = p === "todo" ? "Desde el principio" : `Del ${fmtF(a)} al ${fmtF(b)}`;
     const quien = esAdmin() ? closers() : [yo];
@@ -535,6 +538,7 @@
     const ETAPAS = ["Leads asignados","Contactados","Hablé con el negocio","Interesados","Muestras agendadas","Muestras presentadas","Ventas","Cobradas 100 %"];
     const maxM = Math.max(1, ...T.motivos.map((m) => m[1]));
     $("#panel").innerHTML = `<div class="flex flex-col gap-4">
+      ${esAdmin() ? `<div id="conexiones">${bloque("Conexiones del equipo", "wifi", `<p class="text-sm text-brand-muted">Cargando…</p>`)}</div>` : ""}
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">${card(esAdmin() ? "Ventas" : "Tus ventas", T.ventas, "handshake")}${card(esAdmin() ? "Facturación" : "Tu facturación", eur(T.fact), "euro")}${card(esAdmin() ? "Comisiones" : "Tu comisión", eur(T.comision), "payments")}${card("Muestras agendadas", T.mag, "event_available")}</div>
       ${bloque("¿Vamos bien?", "flag", `<p class="text-sm text-brand-muted mb-3">Objetivo: ${OBJ_SEMANA} ventas por closer y semana → <b>${objetivo}</b> en este periodo.</p><div class="flex flex-col gap-3">` +
         quien.map((u) => { const v = S[u.id].ventas, [t, bg, tx] = semaforo(v, objetivo); return `<div><div class="flex justify-between text-sm font-semibold"><span>${esc(u.nombre)}</span><span class="${tx}">${v} de ${objetivo} · ${t}</span></div><div class="bar mt-1"><i class="${bg}" style="width:${Math.min(100, 100 * v / Math.max(1, objetivo))}%"></i></div></div>`; }).join("") + `</div>`)}
@@ -552,6 +556,38 @@
     </div>`;
   }
   $("#periodo").addEventListener("change", pintarPanel);
+
+  // ---------- Conexiones (solo fundador) ----------
+  function haceCuanto(iso){
+    if (!iso) return "Nunca";
+    const m = Math.round((Date.now() - new Date(iso)) / 60000);
+    if (m < 3) return "En línea ahora";
+    if (m < 60) return "Hace " + m + " min";
+    const h = Math.round(m / 60); if (h < 24) return "Hace " + h + " h";
+    const d = Math.round(h / 24); return "Hace " + d + " día" + (d === 1 ? "" : "s");
+  }
+  const hora = (iso) => new Date(iso).toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" });
+  async function pintarConexiones(){
+    const box = $("#conexiones"); if (!box) return;
+    let data; try { data = await api("actividad"); } catch (x) { box.innerHTML = ""; return; }
+    const dias = [...Array(7)].map((_, i) => { const d = new Date(Date.now() - (6 - i) * 864e5); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0,10); });
+    const letra = (iso) => ["D","L","M","X","J","V","S"][new Date(iso + "T12:00").getDay()];
+    const html = data.equipo.map((u) => {
+      const online = u.ultima && Date.now() - new Date(u.ultima) < 3 * 60000;
+      const porDia = Object.fromEntries(u.dias.map((d) => [d.dia, d]));
+      const hoyD = porDia[hoyISO()];
+      const activos7 = dias.filter((d) => porDia[d]).length;
+      return `<div class="border border-brand-border rounded-xl p-3 flex flex-col gap-2">
+        <div class="flex items-center justify-between gap-2">
+          <span class="font-bold flex items-center gap-2"><i class="w-2.5 h-2.5 rounded-full ${online ? "bg-emerald-500" : "bg-slate-300"}"></i>${esc(u.nombre)}</span>
+          <span class="text-sm ${online ? "text-emerald-700 font-semibold" : "text-brand-muted"}">${haceCuanto(u.ultima)}</span>
+        </div>
+        <div class="text-sm">${hoyD ? `Hoy: de <b>${hora(hoyD.primera)}</b> a <b>${hora(hoyD.ultima)}</b>` : `<span class="text-red-600 font-semibold">Hoy no ha entrado</span>`}${u.dispositivo ? ` · <span class="text-brand-muted">${esc(u.dispositivo)}</span>` : ""}</div>
+        <div class="flex gap-1">${dias.map((d) => { const x = porDia[d]; return `<div class="flex-1 text-center" title="${x ? "De " + hora(x.primera) + " a " + hora(x.ultima) : "Sin conexión"}"><div class="h-6 rounded ${x ? "bg-emerald-500" : "bg-slate-100"}"></div><div class="text-[10px] text-brand-muted mt-0.5">${letra(d)}</div></div>`; }).join("")}</div>
+        <div class="text-xs text-brand-muted">${activos7} de 7 días con conexión${u.accesos[0] ? " · Último inicio de sesión: " + new Date(u.accesos[0].fecha).toLocaleDateString("es-ES", { day: "2-digit", month: "2-digit" }) + " " + hora(u.accesos[0].fecha) : ""}</div>
+      </div>`; }).join("");
+    box.innerHTML = `<div class="bg-white rounded-2xl border border-brand-border p-4"><h3 class="font-extrabold flex items-center gap-2 mb-3"><span class="ms text-brand-orange">wifi</span>Conexiones del equipo</h3><div class="flex flex-col gap-3">${html}</div><p class="text-xs text-brand-muted mt-2">"En línea" = ha usado el área en los últimos 3 minutos. Solo lo ves tú.</p></div>`;
+  }
 
   // Solo fundador: comisiones generadas y pendientes de pagar a cada closer
   function bloqueComisiones(a, b){
