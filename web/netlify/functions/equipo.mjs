@@ -188,6 +188,14 @@ export async function manejar(req, { store, env = process.env }) {
       if (previo && !esAdmin) entrada.closer = previo.closer; // no puede reasignarse un lead
       const lead = limpiarLead(entrada, previo, user, todos);
       if (previo && !esAdmin && previo.closer !== user.id) lead.closer = previo.closer;
+      // Reglas de dinero: solo el fundador marca "8 · COBRADO" y cambia una venta ya registrada
+      if (!esAdmin) {
+        if (previo && previo.estado >= 7) {
+          for (const k of ["estado", "servicio", "fechaVenta", "presenta", "motivo"]) lead[k] = previo[k] ?? "";
+        } else if (lead.estado > 7) {
+          lead.estado = 7;
+        }
+      }
       lead.id = id || nuevoId();
       // Fechas automáticas: venta y cobro completo (la comisión se calcula por la fecha de cobro)
       if (lead.estado >= 7 && !lead.fechaVenta) lead.fechaVenta = hoy();

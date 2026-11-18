@@ -187,6 +187,7 @@
       <button type="button" data-cerrar class="w-9 h-9 rounded-full hover:bg-slate-100" aria-label="Cerrar"><span class="ms">close</span></button>
     </div>
     <div id="m-contacto" class="flex gap-2"></div>
+    <p id="l-bloqueo" hidden class="text-sm bg-emerald-50 text-emerald-700 rounded-xl px-3 py-2"><span class="ms text-[18px]">lock</span> Venta registrada. Solo el fundador puede cambiar el estado, el servicio o marcarla como cobrada. Puedes seguir añadiendo notas y próximas acciones.</p>
     <label class="flex flex-col gap-1 text-sm font-semibold" for="l-estado">Estado (hasta dónde ha llegado)
       <select id="l-estado" class="border-2 border-brand-orange rounded-xl px-3 py-2.5 font-semibold"></select>
     </label>
@@ -300,7 +301,7 @@
     $("#f-closer").innerHTML = opts(closers(), "Todos");
     $("#l-closer").innerHTML = opts(equipo); $("#l-presenta").innerHTML = opts(equipo, "El mismo closer");
     $("#imp-closer").innerHTML = opts(closers());
-    $("#l-estado").innerHTML = ESTADOS.slice(1).map((t, i) => `<option value="${i+1}">${t}</option>`).join("");
+    $("#l-estado").innerHTML = ESTADOS.slice(1).map((t, i) => `<option value="${i+1}">${t}${i+1 === 8 && !esAdmin() ? " (lo marca el fundador)" : ""}</option>`).join("");
     $("#l-motivo").innerHTML = `<option value="">— No se ha perdido —</option>` + MOTIVOS.map((m) => `<option>${m}</option>`).join("");
     $("#i-fecha").value = hoyISO();
     await Promise.all([cargarLeads(), cargarInformes(), cargarChat()]);
@@ -398,6 +399,11 @@
     for (const [k, id] of Object.entries(CAMPOS)) $("#" + id).value = l ? (l[k] ?? "") : "";
     if (!l) $("#l-closer").value = esAdmin() && closers()[0] ? closers()[0].id : yo.id;
     $("#l-closer").disabled = !esAdmin();
+    // Reglas de dinero (el servidor también las aplica): solo el fundador marca COBRADO o cambia una venta
+    const ventaCerrada = !esAdmin() && l && l.estado >= 7;
+    $("#l-estado").querySelector('option[value="8"]').disabled = !esAdmin() && !(l && l.estado === 8);
+    ["l-estado","l-servicio","l-fventa","l-presenta","l-motivo"].forEach((id) => $("#" + id).disabled = ventaCerrada);
+    $("#l-bloqueo").hidden = !ventaCerrada;
     $("#l-estado").value = l ? l.estado : 1;
     $("#l-intentos-v").textContent = l ? (l.intentos || 0) : 0;
     const tel = (l && l.telefono || "").replace(/[^\d+]/g, ""), wa = tel.replace(/^\+/, "").replace(/^(?=[67]\d{8}$)/, "34");
