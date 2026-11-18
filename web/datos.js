@@ -12,5 +12,14 @@ window.DATOS = {
   telefono:  "641 409 181",  // Ej: "612 345 678"
   whatsapp:  "34641409181",  // Con prefijo y sin +: "34612345678"
   dominio:   "",  // Ej: "obraweb.es"
-  chatbot:   "https://hook.eu1.make.com/q2jyemzfefyl8rh8bmk6ivt72bwd1ard"  // Webhook de Make del asistente virtual (vacío = sin chatbot)
+  chatbot:   "https://hook.eu1.make.com/q2jyemzfefyl8rh8bmk6ivt72bwd1ard",  // Webhook de Make del asistente virtual (vacío = sin chatbot)
+  // Enlaces a las webs del portfolio (vacío = no se muestra el botón "Ver la web")
+  portfolio: {
+    "Flor & Atelier": "",
+    "Distintivo": "",
+    "Empresa de reformas": "",
+    "Aura Burgos Nails Studio": ""
+  },
+  // Opiniones REALES de clientes. Ej: { nombre: "Laura", negocio: "Flor & Atelier", texto: "..." }
+  opiniones: []
 };
