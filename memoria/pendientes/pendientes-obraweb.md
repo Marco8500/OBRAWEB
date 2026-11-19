@@ -15,3 +15,4 @@ origen: varias sesiones
 - [ ] Unificar el naranja: `#FF7A1A` en Instagram y `#F97316` en la web.
 
 Relacionado: [[web-obraweb]], [[paleta-de-marca]], [[material-instagram]], [[tarjeta-de-visita]]
+- [ ] La web de OBRAWEB aún habla de "Pide tu presupuesto" (botones, formulario, FAQ "¿Cuánto cuesta?"); desde el 19/11 los precios son fijos (450 € y 550 € + IVA). Decidir si se cambia.
