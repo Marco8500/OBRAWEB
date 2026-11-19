@@ -14,7 +14,7 @@ Documento de trabajo del fundador y los dos closers. Se revisa cada lunes con lo
 5. Closer 1 consigue citas. Closer 2 presenta las muestras y cierra. Los dos siguen prospectando.
 6. Si el closer 1 agenda y el closer 2 cierra, la comisión del 10 % se reparte 50/50. El coste para OBRAWEB no cambia.
 7. Se arregla lo que resta credibilidad: dominio propio, web en plural, precio visible y nada de "IVA solo si quieres factura".
-8. Se crea un plan de mantenimiento de 25 €/mes: obligatorio con chatbot, opcional sin él.
+8. La web no tiene cuota. El chatbot incluye el primer mes y después cuesta 15 € + IVA/mes (cubre su coste de funcionamiento).
 9. Todo se registra en la hoja de control. Sin registro no hay leads.
 10. Objetivo de los 30 días: **primeras 3–5 ventas y un sistema que se repite cada semana.**
 
@@ -32,7 +32,7 @@ Documento de trabajo del fundador y los dos closers. Se revisa cada lunes con lo
 | 6 | Credibilidad: web en `netlify.app`, texto en singular que contradice que llame un closer, precio oculto | Alta | Arreglarlo en la semana 1 |
 | 7 | "IVA solo si pides factura": riesgo fiscal y mala imagen | Alta | Todos los precios + IVA y con factura, siempre. Consultar con el gestor |
 | 8 | Los closers no tienen contrato | Media | Acuerdo de colaboración por escrito (semana 1) |
-| 9 | Sin ingresos recurrentes y con el chatbot generando coste mensual sin cobrar | Media | Plan de mantenimiento de 25 €/mes |
+| 9 | Sin ingresos recurrentes y con el chatbot generando coste mensual sin cobrar | Media | Cuota del chatbot: 15 € + IVA/mes desde el 2.º mes |
 | 10 | Comisión baja (45–55 €) en una venta en frío muy difícil | Media | No se toca durante 30 días. Se revisa con datos reales |
 
 **Lo que NO es el problema:** la capacidad de producción (2–3 h por web y 20 min por muestra; producir 20 webs al mes es viable) ni el precio en sí (450–550 € es un precio de mercado bajo-medio).
@@ -84,7 +84,7 @@ Un negocio con web obsoleta puntúa más que uno sin web: ya ha demostrado que c
 
 ### B.3 Fuentes de leads adicionales (coste cero, por orden)
 
-1. **Los 4 clientes del portfolio.** Pedirles una opinión y a quién conocen. Recompensa: 50 € o un mes de mantenimiento gratis por cada referido que compre.
+1. **Los 4 clientes del portfolio.** Pedirles una opinión y a quién conocen. Recompensa: 50 € por cada referido que compre.
 2. **Socios que ya tienen clientes autónomos:** gestorías, asesorías, imprentas, fotógrafos, proveedores de TPV. Comisión del 10 % por cliente que compre. El fundador hace 2 contactos a la semana.
 3. **Negocios recién abiertos:** fichas de Google Maps con menos de 10 reseñas y fotos recientes. Están montando su imagen ahora.
 4. **Clientes cerrados:** después de cada entrega, pedir reseña en Google y dos nombres de conocidos.
@@ -123,7 +123,7 @@ Enlace de la muestra que vio:
 Lo que más le gustó de la muestra:
 Lo que quiere cambiar o añadir:
 Qué le preocupaba (objeciones):
-Mantenimiento: sí / no / pendiente
+Chatbot: sí / no (si sí: primer mes incluido, luego 15 € + IVA/mes)
 Cerrado por:          Agendado por:
 ```
 
@@ -212,8 +212,8 @@ Si no tienes la muestra con chatbot, usa el de la web de OBRAWEB: "Entra en nues
 > Se paga la mitad al empezar y la otra mitad cuando la tienes terminada y te gusta. En unas dos semanas la tienes funcionando.
 > *(Silencio. Deja que hable él primero.)*
 
-**Mantenimiento** (solo después del sí, o si pregunta "¿y luego qué?"):
-> Si quieres olvidarte de todo, tenemos un plan de 25 € al mes: alojamiento, renovaciones, cambios pequeños y que el asistente siga funcionando. Sin permanencia. Con el asistente es necesario, porque tiene un coste mensual de funcionamiento.
+**Cuota del asistente** (solo si elige web + chatbot; dilo antes de cerrar, nunca después):
+> El asistente lleva el primer mes incluido. A partir del segundo mes son 15 € + IVA al mes, que es lo que cuesta tenerlo funcionando. Sin permanencia: si un día no lo quieres, se quita y la web sigue igual. La web sola no tiene ninguna cuota.
 
 ### D.9 Objeciones
 
@@ -367,7 +367,7 @@ Bloqueo: muchos me dicen "ya tengo Instagram"
 | El closer 1 agenda y el closer 2 presenta y cierra | 5 % (22,50–27,50 €) | 5 % (22,50–27,50 €) | 10 % |
 
 - La comisión se paga cuando el cliente ha pagado el **100 %**. Hay que confirmarlo y ponerlo en el acuerdo escrito.
-- El plan de mantenimiento no lleva comisión durante los primeros 30 días.
+- La cuota mensual del chatbot no lleva comisión.
 - **Revisión en el día 30:** si con datos reales la comisión por hora trabajada no llega a unos 10 €/h, se estudia un ajuste con números delante, como acordamos.
 
 ### F.6 Reconocimiento (barato y concreto)
@@ -448,7 +448,7 @@ Herramienta: `OBRAWEB_control_comercial.xlsx`. Se importa en Google Sheets (Arch
 | El closer 1 escucha 2 presentaciones | Closer 1 | Aprender a cerrar | Toda la semana | 2 escuchadas |
 | Primer contacto con 2 posibles socios (gestorías o asesorías) | Fundador | Una fuente de referidos | Viernes 29 | 2 conversaciones |
 | Enviar 3 resúmenes de llamadas a Claude para revisión | Fundador | Mejorar los guiones con casos reales | Viernes 29 | 3 revisadas |
-| Definir y comunicar el plan de mantenimiento de 25 € | Fundador | Ingresos recurrentes | Viernes 29 | Texto en la web y en el guion |
+| Cuota del chatbot (15 €/mes desde el 2.º mes) en web, chatbot y guion | Fundador | Ingresos recurrentes | Hecho (19/11) | Publicado en la web |
 
 ### Semana 3 (2–8 de diciembre): repetir y corregir
 
@@ -487,7 +487,7 @@ Herramienta: `OBRAWEB_control_comercial.xlsx`. Se importa en Google Sheets (Arch
 
 ### Hipótesis
 - Ticket medio de **490 € sin IVA** (60 % web a 450 € y 40 % web + chatbot a 550 €).
-- **Plan de mantenimiento de 25 €/mes:** lo contrata el 90 % de los clientes con chatbot (es obligatorio); de los clientes con web sola, lo contrata el 15 % (conservador), el 25 % (realista) o el 35 % (optimista). Baja de clientes del 2 % al mes.
+- **Cuota del chatbot: 15 €/mes** desde el segundo mes (actualizado el 19/11; antes se suponían 25 €/mes también para web sola). La paga el 90 % de los clientes con chatbot; la web sola no tiene cuota. Baja de clientes del 2 % al mes.
 - Comisión del 10 % sobre la venta inicial.
 - Costes directos: 30 €/mes fijos (Make, dominio propio y herramientas) + unos 5 €/mes por cada cliente con chatbot (API y Make).
 - Estacionalidad: bajada en julio, agosto y diciembre; picos en septiembre, octubre y noviembre.
@@ -509,13 +509,13 @@ El objetivo inicial de 4 ventas por semana (~17 al mes) corresponde al escenario
 | | Conservador | Realista | Optimista |
 |---|---|---|---|
 | Ventas totales en 13 meses | 51 | 129 | 182 |
-| **Facturación de noviembre de 2027** | **3.356 €** | **9.009 €** | **12.162 €** |
-| de la cual, mantenimiento | 416 € | 1.169 € | 1.872 € |
-| Facturación acumulada en 13 meses | 27.592 € | 70.368 € | 100.770 € |
+| **Facturación de noviembre de 2027** | **3.140 €** | **8.335 €** | **10.999 €** |
+| de la cual, cuota del chatbot | 200 € | 495 € | 709 € |
+| Facturación acumulada en 13 meses | 26.239 € | 66.242 € | 93.572 € |
 | Comisiones acumuladas | 2.499 € | 6.321 € | 8.918 € |
 | Costes directos acumulados | 806 € | 1.401 € | 1.854 € |
-| **Beneficio antes de impuestos y cuota de autónomo** | **24.287 €** | **62.647 €** | **89.998 €** |
-| Clientes con mantenimiento en diciembre de 2027 | ~19 | ~54 | ~85 |
+| **Beneficio antes de impuestos y cuota de autónomo** | **22.934 €** | **58.520 €** | **82.800 €** |
+| Clientes con chatbot pagando cuota en diciembre de 2027 | ~15 | ~38 | ~54 |
 | Horas de producción al mes en el pico (~5 h por venta) | ~30 h | ~80 h | ~105 h |
 
 ### Dinero disponible (no es lo mismo que facturación)
@@ -525,12 +525,12 @@ El objetivo inicial de 4 ventas por semana (~17 al mes) corresponde al escenario
 - Con eso, en el escenario realista, la caja de un mes típico es entre un 10 % y un 15 % inferior a su facturación de ese mes, antes de IVA e impuestos.
 
 ### Conclusión sincera sobre los 10.000 €/mes en enero de 2028
-- **Escenario realista: ~8.000–9.000 €/mes.** Se queda cerca, pero no llega.
+- **Escenario realista: ~8.000–8.500 €/mes.** Se queda cerca, pero no llega.
 - **Para llegar hay que hacer una de estas tres cosas:**
   1. Llegar al escenario optimista: ~4–5 ventas por semana de forma constante desde la primavera.
   2. **Subir el ticket en los sectores prioritarios** cuando haya 10 o más ventas y opiniones de clientes. Por ejemplo, una web de reformas o una clínica con chatbot de captación a 650–750 €. **No se decide ahora:** primero hay que demostrar que se vende a 450–550 €.
-  3. Que más clientes contraten el mantenimiento: cada 40 clientes adicionales con el plan son +1.000 €/mes.
-- **Corrección a mi estimación anterior de ingresos recurrentes:** di ~1.950 €/mes en el escenario realista suponiendo que todos los clientes pagaban desde el principio. Con la adopción real supuesta (casi todos los clientes con chatbot y pocos de web sola) salen **~1.200–1.350 €/mes**.
+  3. Vender más paquetes con chatbot: cada 40 clientes con chatbot son +600 €/mes recurrentes (unos 400 € de margen tras su coste).
+- **Ingresos recurrentes:** con la cuota del chatbot de 15 €/mes (solo clientes con chatbot), en el escenario realista salen **~500–570 €/mes** a final de 2027. Ayudan, pero el grueso tiene que venir de webs nuevas.
 
 ---
 
