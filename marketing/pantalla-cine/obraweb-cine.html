@@ -10,7 +10,8 @@ canvas{position:fixed;inset:0;width:100vw;height:100vh;object-fit:contain;backgr
 </style></head>
 <body>
 <canvas id="c" width="1920" height="1080"></canvas>
-<div id="hint">Pulsa F11 para pantalla completa · espacio para pausar</div>
+<div id="hint">Haz clic para empezar con sonido · F11 pantalla completa · espacio para pausar</div>
+<audio id="snd" src="obraweb_sonido.m4a" preload="auto" loop></audio>
 <script>
 // Animación de OBRAWEB. render(t) dibuja el fotograma del segundo t (determinista).
 const C=document.getElementById("c"), X=C.getContext("2d"), W=1920, H=1080, DUR=16.4;
@@ -77,10 +78,13 @@ function render(t){t=((t%DUR)+DUR)%DUR;X.setTransform(1,0,0,1,0,0);X.globalAlpha
 }
 window.render=render;
 // Reproducción en bucle (si no se está exportando a vídeo)
-if(!location.search.includes("export")){let t0=performance.now(),paused=false,tp=0;
-  document.fonts.ready.then(()=>{function loop(now){if(!paused)render((now-t0)/1000);requestAnimationFrame(loop);}requestAnimationFrame(loop);});
-  addEventListener("keydown",e=>{if(e.code==="Space"){paused=!paused;if(paused)tp=performance.now();else t0+=performance.now()-tp;}});
-  setTimeout(()=>{const h=document.getElementById("hint");if(h)h.style.opacity=0;},4000);
+if(!location.search.includes("export")){let t0=performance.now(),paused=false,tp=0;const A=document.getElementById("snd");let conSonido=false;
+  // Con sonido, la imagen sigue al audio para que los golpes caigan en su sitio
+  function ahora(now){return conSonido&&!A.paused?A.currentTime:(now-t0)/1000;}
+  document.fonts.ready.then(()=>{function loop(now){if(!paused)render(ahora(now));requestAnimationFrame(loop);}requestAnimationFrame(loop);});
+  function empezar(){if(conSonido)return;A.currentTime=0;A.play().then(()=>{conSonido=true;const h=document.getElementById("hint");if(h)h.style.opacity=0;}).catch(()=>{});}
+  addEventListener("click",empezar);
+  addEventListener("keydown",e=>{if(e.code==="Space"){e.preventDefault();if(!conSonido){empezar();return;}paused=!paused;if(paused){A.pause();}else{A.play();}}else empezar();});
 }else{document.getElementById("hint").remove();}
 </script>
 </body></html>
