@@ -1,0 +1,125 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap">
+<style>
+*{box-sizing:border-box;margin:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#05070b;font-family:"Plus Jakarta Sans",system-ui,sans-serif}
+#bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 45% at 50% 46%,#1c2433 0%,#0a0d14 55%,#030407 100%)}
+#floor{position:absolute;left:0;right:0;top:1130px;bottom:0;background:linear-gradient(#0b0e15,#020305);}
+#glow{position:absolute;left:50%;top:1000px;width:1100px;height:520px;margin-left:-550px;border-radius:50%;filter:blur(90px);opacity:.45;background:#F97316;transition:none}
+/* cabecera tipo reel */
+#top{position:absolute;top:150px;left:90px;right:90px;display:flex;align-items:center;gap:22px;transform:rotate(-3deg);transform-origin:left center}
+#top .mk{width:86px;height:86px;flex:none}
+#top .t{color:#fff;font-weight:800;font-size:54px;line-height:1.05;letter-spacing:-.01em}
+#top .t span{color:#F97316}
+/* portátil */
+#cam{position:absolute;left:0;right:0;top:400px;height:900px;perspective:2200px;perspective-origin:50% 30%}
+#laptop{position:absolute;left:50%;top:40px;width:900px;margin-left:-450px;transform-style:preserve-3d;
+  -webkit-box-reflect:below 6px linear-gradient(transparent 52%,rgba(255,255,255,.28))}
+#lid{width:900px;height:585px;border-radius:26px 26px 10px 10px;background:linear-gradient(#262a31,#14171c);padding:20px 20px 26px;box-shadow:0 0 0 2px #2d323b inset}
+#screen{position:relative;width:860px;height:538px;border-radius:8px;overflow:hidden;background:#000}
+#base{width:1010px;height:30px;margin-left:-55px;border-radius:2px 2px 26px 26px;background:linear-gradient(#c9ced6,#7d838d 55%,#3a3e45);position:relative}
+#base:before{content:"";position:absolute;left:50%;top:0;width:150px;height:9px;margin-left:-75px;border-radius:0 0 10px 10px;background:#8b919a}
+/* escenas dentro de la pantalla (lienzo lógico 1440x900 escalado) */
+.sc{position:absolute;inset:0;opacity:0;overflow:hidden}
+.web{position:absolute;left:0;top:0;width:1440px;transform-origin:0 0}
+.full{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.navy{background:#0B192C;color:#fff}.orange{background:#F97316;color:#0B192C}
+.logo{display:flex;align-items:center;gap:18px}
+.logo b{font-size:78px;font-weight:800;letter-spacing:-.02em;color:#fff}.logo b i{font-style:normal;color:#F97316}
+.sub{font-size:24px;font-weight:600;color:#9fb0c8;margin-top:14px;letter-spacing:.06em;text-transform:uppercase}
+.big{font-size:230px;font-weight:800;letter-spacing:-.05em;line-height:.9}
+.mid{font-size:40px;font-weight:700}
+.grid{background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);background-size:48px 48px}
+.btn{display:inline-block;margin-top:28px;background:#0B192C;color:#fff;font-weight:800;font-size:34px;padding:18px 34px;border-radius:18px}
+/* rótulos inferiores */
+#cap{position:absolute;left:0;right:0;top:1440px;text-align:center;color:#fff;font-weight:800;font-size:64px;letter-spacing:-.01em;opacity:0}
+#cap small{display:block;font-size:34px;font-weight:600;color:#F97316;margin-top:10px}
+#cta{position:absolute;left:0;right:0;top:1460px;text-align:center;opacity:0}
+#cta .p{display:inline-block;background:#F97316;color:#fff;font-weight:800;font-size:52px;padding:26px 46px;border-radius:26px}
+#cta .u{color:#cbd5e1;font-size:36px;font-weight:600;margin-top:22px}
+#flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+</style></head>
+<body>
+<div id="bg"></div><div id="floor"></div><div id="glow"></div>
+
+<div id="top">
+  <svg class="mk" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#F97316"/><g transform="translate(12 12) scale(1.6667)" fill="#fff"><path d="M13.783 15.172l2.121-2.121 5.996 5.996-2.121 2.121zM17.5 10c1.93 0 3.5-1.57 3.5-3.5 0-.58-.16-1.12-.41-1.6l-2.7 2.7-1.49-1.49 2.7-2.7c-.48-.25-1.02-.41-1.6-.41C13.57 3 12 4.57 12 6.5c0 .41.08.8.21 1.16l-1.85 1.85-1.78-1.78.71-.71-1.41-1.41L10 3.49c-1.17-1.17-3.07-1.17-4.24 0L2.22 7.03l1.41 1.41H.81l-.71.71 3.54 3.54.71-.71V9.15l1.41 1.41.71-.71 1.78 1.78-7.41 7.41 2.12 2.12L16.34 9.79c.36.13.75.21 1.16.21z"/></g></svg>
+  <div class="t">Tu negocio,<br>con una web <span>que vende.</span></div>
+</div>
+
+<div id="cam"><div id="laptop">
+  <div id="lid"><div id="screen">
+    <!-- S1 punto -->
+    <div class="sc" id="s1" style="background:#05070b"><div id="dot" style="position:absolute;left:50%;top:50%;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;background:#F97316;box-shadow:0 0 40px #F97316"></div></div>
+    <!-- S2 logo -->
+    <div class="sc full navy grid" id="s2"><div id="s2in" style="transform:scale(.572);transform-origin:center"><div class="logo"><svg width="96" height="96" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#F97316"/><g transform="translate(12 12) scale(1.6667)" fill="#fff"><path d="M13.783 15.172l2.121-2.121 5.996 5.996-2.121 2.121zM17.5 10c1.93 0 3.5-1.57 3.5-3.5 0-.58-.16-1.12-.41-1.6l-2.7 2.7-1.49-1.49 2.7-2.7c-.48-.25-1.02-.41-1.6-.41C13.57 3 12 4.57 12 6.5c0 .41.08.8.21 1.16l-1.85 1.85-1.78-1.78.71-.71-1.41-1.41L10 3.49c-1.17-1.17-3.07-1.17-4.24 0L2.22 7.03l1.41 1.41H.81l-.71.71 3.54 3.54.71-.71V9.15l1.41 1.41.71-.71 1.78 1.78-7.41 7.41 2.12 2.12L16.34 9.79c.36.13.75.21 1.16.21z"/></g></svg><b>OBRA<i>WEB</i></b></div><div class="sub">Páginas web · Asistentes virtuales</div></div></div>
+    <!-- S3 scroll web -->
+    <div class="sc" id="s3"><img class="web" id="s3img" src="img/full.jpg"></div>
+    <!-- S4 servicios zoom -->
+    <div class="sc" id="s4"><img class="web" id="s4img" src="img/servicios.jpg"></div>
+    <!-- S5 precio -->
+    <div class="sc full orange" id="s5"><div id="s5in" style="transform-origin:center"><div class="big" style="font-size:128px">450 €</div><div class="mid" style="font-size:24px;margin-top:8px">+ IVA · PRECIO CERRADO</div></div></div>
+    <!-- S6 chat -->
+    <div class="sc" id="s6"><img class="web" id="s6img" src="img/chat.jpg"></div>
+    <!-- S7 portfolio -->
+    <div class="sc" id="s7" style="background:#fff"><img id="p0" src="img/port0.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top"><img id="p1" src="img/port1.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top"><img id="p2" src="img/port2.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top"><img id="p3" src="img/port3.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top"></div>
+    <!-- S8 muestra gratis -->
+    <div class="sc full navy grid" id="s8"><div id="line" style="position:absolute;left:0;top:50%;height:3px;background:#F97316;box-shadow:0 0 18px #F97316"></div><div id="s8in" style="font-size:44px;font-weight:800;line-height:1.15;padding:0 60px">Te enseñamos tu web<br><span style="color:#F97316">GRATIS</span> antes de pagar</div></div>
+    <!-- S9 final -->
+    <div class="sc full orange" id="s9"><div id="s9in" style="transform-origin:center"><div class="big" style="font-size:118px">OBRAWEB.</div><div class="mid" style="font-size:26px;margin-top:6px;font-style:italic">webs para negocios locales</div></div></div>
+    <div id="flash"></div>
+  </div></div>
+  <div id="base"></div>
+</div></div>
+
+<div id="cap"><span id="capt"></span><small id="caps"></small></div>
+<div id="cta"><div class="p">Pide tu muestra gratis</div><div class="u">obratuweb.netlify.app</div></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const lin=(t,a,b)=>cl((t-a)/(b-a));
+const eo=x=>1-Math.pow(1-x,3), eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2, back=x=>{const c=1.7;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
+const K=860/1440; // escala del lienzo 1440 a la pantalla
+const S=[["s1",0,1.0],["s2",1.0,2.0],["s3",2.0,4.6],["s4",4.6,5.6],["s5",5.6,6.8],["s6",6.8,8.6],["s7",8.6,10.2],["s8",10.2,11.6],["s9",11.6,13.6]];
+const CAP=[[2.2,4.5,"Rápida y lista para móvil",""],[4.7,6.7,"Precio cerrado","450 € + IVA · sin sorpresas"],[6.9,8.5,"Asistente 24/7","contesta a tus clientes por ti"],[8.7,10.1,"Webs reales","de negocios como el tuyo"],[10.3,11.5,"Muestra gratis","antes de pagar nada"]];
+window.render=function(t){
+  // cámara
+  const rot=-20+14*eio(lin(t,0,13.6)), sc=.96+.07*eio(lin(t,0,13.6));
+  $("laptop").style.transform=`rotateX(6deg) rotateY(${rot}deg) scale(${sc})`;
+  // escenas
+  let cur=null;
+  for(const [id,a,b] of S){const on=t>=a&&t<b;$(id).style.opacity=on?1:0;if(on)cur=[id,a,b];}
+  // flash corto en cada corte
+  const cuts=S.map(s=>s[1]).slice(1); let fl=0; for(const c of cuts){const d=t-c; if(d>=0&&d<.12) fl=Math.max(fl,.55*(1-d/.12));} $("flash").style.opacity=fl;
+  // S1: punto que crece
+  {const p=lin(t,0,1);$("dot").style.transform=`scale(${.4+1.2*Math.sin(p*Math.PI*2)**2 + 3*eo(lin(t,.75,1))})`;$("dot").style.opacity=1-lin(t,.9,1);}
+  // S2: logo entra
+  {const p=eo(lin(t,1,1.4));$("s2in").style.transform=`scale(${.572*(.8+.2*p)})`;$("s2in").style.opacity=p;}
+  // S3: scroll
+  {const p=eio(lin(t,2.1,4.5));$("s3img").style.transform=`scale(${K}) translateY(${-p*2700}px)`;}
+  // S4: zoom a precios
+  {const p=eio(lin(t,4.6,5.6));const z=1+.75*p;$("s4img").style.transform=`scale(${K*z}) translate(${-p*120}px,${-p*150}px)`;}
+  // S5: precio golpea
+  {const p=back(lin(t,5.6,5.9));$("s5in").style.transform=`scale(${.3+.7*p}) rotate(${-6+6*p}deg)`;}
+  // S6: zoom al chat
+  {const p=eio(lin(t,6.9,8.4));const z=1+1.05*p;$("s6img").style.transform=`scale(${K*z}) translate(${-p*738}px,${-p*250}px)`;}
+  // S7: cortes de portfolio cada 0.4 s
+  {const i=Math.min(3,Math.floor((t-8.6)/.4));["p0","p1","p2","p3"].forEach((id,k)=>{$(id).style.opacity=k===i?1:0;$(id).style.transform=`scale(${1+.06*lin(t,8.6+.4*k,9+.4*k)})`;});}
+  // S8: línea + texto
+  {const p=eo(lin(t,10.2,10.7));$("line").style.width=(p*100)+"%";const q=eo(lin(t,10.5,10.9));$("s8in").style.opacity=q;$("s8in").style.transform=`translateY(${(1-q)*30}px)`;}
+  // S9: final
+  {const p=back(lin(t,11.6,11.95));$("s9in").style.transform=`scale(${.4+.6*p})`;}
+  // brillo naranja de fondo según escena
+  const orange=(cur&&["s5","s9"].includes(cur[0]))?.75:(cur&&cur[0]==="s1"?.15:.35);$("glow").style.opacity=orange;
+  // rótulos
+  let c=null;for(const x of CAP){if(t>=x[0]&&t<x[1])c=x;}
+  if(c){const a=eo(lin(t,c[0],c[0]+.25)),z=1-lin(t,c[1]-.15,c[1]);$("capt").textContent=c[2];$("caps").textContent=c[3];$("cap").style.opacity=a*z;$("cap").style.transform=`translateY(${(1-a)*24}px)`;}else $("cap").style.opacity=0;
+  const ca=eo(lin(t,12.0,12.4));$("cta").style.opacity=ca;$("cta").style.transform=`translateY(${(1-ca)*30}px)`;
+  // cabecera
+  const h=eo(lin(t,0,.5));$("top").style.opacity=h;
+};
+render(0);
+</script>
+</body></html>
