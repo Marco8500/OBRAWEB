@@ -165,14 +165,20 @@ export async function manejar(req, { store, env = process.env }) {
       if (!esAdmin) return json({ error: "Solo el fundador puede importar leads." }, 403);
       const filas = Array.isArray(cuerpo.leads) ? cuerpo.leads.slice(0, 500) : [];
       const creados = [];
+      // No duplicar: se descarta cualquier teléfono que ya exista en la app (o repetido en el mismo pegado)
+      const norm = (t) => String(t || "").replace(/\D/g, "").replace(/^34(?=\d{9}$)/, "");
+      const existentes = new Set((await leerTodo(store, "leads/")).map((l) => norm(l.telefono)).filter(Boolean));
+      let repetidos = 0;
       for (const f of filas) {
         if (!texto(f.negocio)) continue;
+        const tel = norm(f.telefono);
+        if (tel) { if (existentes.has(tel)) { repetidos++; continue; } existentes.add(tel); }
         const lead = limpiarLead({ ...f, estado: 1 }, null, user, todos);
         lead.id = nuevoId(); lead.creado = new Date().toISOString(); lead.actualizado = lead.creado;
         await store.setJSON("leads/" + lead.id, lead);
         creados.push(lead);
       }
-      return json({ creados: creados.length });
+      return json({ creados: creados.length, repetidos });
     }
     if (metodo === "POST" && !ruta[1]) {
       const id = texto(cuerpo.id, 60);

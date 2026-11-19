@@ -438,7 +438,7 @@
   $("#f-import").addEventListener("submit", async (e) => {
     e.preventDefault(); const filas = parseFilas($("#imp-txt").value).map((f) => ({ ...f, closer: $("#imp-closer").value }));
     if (!filas.length) { $("#imp-info").textContent = "No hay filas válidas."; return; }
-    try { const d = await api("leads/importar", { method: "POST", body: { leads: filas } }); $("#m-import").hidden = true; $("#imp-txt").value = ""; toast(d.creados + " leads importados"); cargarLeads(); } catch (x) { $("#imp-info").textContent = x.message; }
+    try { const d = await api("leads/importar", { method: "POST", body: { leads: filas } }); $("#m-import").hidden = true; $("#imp-txt").value = ""; toast(d.creados + " leads importados" + (d.repetidos ? " · " + d.repetidos + " repetidos descartados" : "")); cargarLeads(); } catch (x) { $("#imp-info").textContent = x.message; }
   });
 
   // ---------- GRUPO ----------
