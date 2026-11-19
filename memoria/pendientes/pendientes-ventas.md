@@ -11,3 +11,4 @@ origen: sesión principal de OBRAWEB
 - [ ] Meter los precios cerrados en [[modelo-web-con-mantenimiento]] y en el dossier.
 
 Relacionado: [[productor-de-ventas]], [[creditos-make]]
+- [ ] El dossier `ventas/dossier-ventas.html` aún tiene precios en blanco y habla de "mantenimiento con cuota mensual": actualizarlo con la oferta cerrada de [[modelo-web-con-mantenimiento]].

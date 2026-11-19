@@ -18,7 +18,8 @@ Lo que más les interesa suele ser una pieza concreta (un chatbot que conteste s
 
 En la práctica:
 - Webs de una página en HTML + CSS + JS sin compilación, adaptadas al móvil, publicadas en **Netlify** (Drop o un único `index.html`). Formularios con Netlify Forms.
-- Todo lleva a **pedir presupuesto o escribir por WhatsApp**. En la web de OBRAWEB no hay precios.
+- Solo dos paquetes con precio fijo: web 450 € + IVA, y web + asistente 550 € + IVA (+15 € + IVA/mes desde el 2.º mes). Ver `memoria/decisiones/modelo-web-con-mantenimiento.md`.
+- En los textos de OBRAWEB se habla siempre en plural ("nosotros", "el equipo de OBRAWEB").
 - Chatbot por palabras clave en las demos (gratis); con IA (Make o Claude detrás de un Worker) solo si el cliente lo paga.
 - Automatizaciones en **Make** (plan gratis: 1.000 créditos al mes y 2 escenarios activos).
 - Se entrega un `.zip` con capturas de móvil (390 px) y escritorio, y un README con lo que falta.
