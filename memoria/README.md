@@ -20,7 +20,7 @@ Se puede abrir esta carpeta como bóveda de **Obsidian** para ver el gráfico, o
 - [[precio-pago-unico-sin-cuota]] — Contexto: último intento de venderle la web a [[invicto-barber-shop]].
 - [[prospectos-en-toda-espana]] — Las búsquedas de negocios sin web se hacen en toda España, no solo en València.
 - [[publicar-en-netlify]] — Las webs son HTML + CSS + JS sin compilación y se publican arrastrando a Netlify Drop (Deploys → Drag and d…
-- [[sin-precios-en-la-web]] — Contexto: la web de OBRAWEB tenía planes de 490 €, 890 € y 1.490 € y "pago 50/50".
+- [[sin-precios-en-la-web]] — La web no lleva precios; el chatbot sí da dos desde el 19/11: web 450 € + IVA y web + chatbot 550 € + IVA.
 
 ## Errores y lecciones (no repetirlos)
 - [[chatbot-no-se-veia-por-cache]] — Síntoma: tras subir la web a Netlify no aparecía el chatbot.
