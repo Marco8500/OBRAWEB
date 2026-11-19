@@ -11,4 +11,6 @@ Marco quiere que las próximas búsquedas de negocios sin web cubran **toda Espa
 **Para el panel del equipo (17/11)**: obratuweb.netlify.app/equipo importa leads pegando filas `Negocio;Teléfono;Sector;Ciudad;Reseñas`, una por negocio. Marco quiere solo móviles (6 o 7), no fijos con 9: el filtro de Make es `replace(phone; " "; "")` empieza por `+346` o `+347`. Los escenarios activos ahora son los chatbots de OBRAWEB y SERMAK; para buscar se pausa un minuto el de OBRAWEB.
 **Ojo**: cada búsqueda gasta 1 de las 100 de SerpApi al mes; con varias ciudades por sector se agotan rápido.
 
+**Actualizado 19/11**: los sectores y el filtro buenos están en [[captacion-sectores-que-pagan]].
+
 Relacionado: [[prospectos-noviembre]], [[creditos-make]]
