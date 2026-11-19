@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OBRAWEB · animación</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,600;0,800;1,700&display=swap">
+<style>
+html,body{margin:0;height:100%;background:#000;overflow:hidden;cursor:none}
+canvas{position:fixed;inset:0;width:100vw;height:100vh;object-fit:contain;background:#000}
+#hint{position:fixed;left:16px;bottom:12px;color:#555;font:13px system-ui;transition:opacity 1s}
+</style></head>
+<body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<div id="hint">Pulsa F11 para pantalla completa · espacio para pausar</div>
+<script>
+// Animación de OBRAWEB. render(t) dibuja el fotograma del segundo t (determinista).
+const C=document.getElementById("c"), X=C.getContext("2d"), W=1920, H=1080, DUR=16.4;
+const NAVY="#0B192C", OR="#F97316", INK="#05070b", F="'Plus Jakarta Sans',system-ui,sans-serif";
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)), lin=(t,a,b)=>cl((t-a)/(b-a));
+const eo=x=>1-Math.pow(1-x,3), eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2, back=x=>{const c=1.6;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
+function rng(s){return function(){s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const R=rng(7), PARTS=[...Array(900)].map(()=>({a:R()*Math.PI*2,d:R(),s:.4+R()*1.6,o:R()<.18}));
+const R2=rng(3), DOTS=[...Array(28)].map(()=>({a:R2()*Math.PI*2,r:R2(),s:6+R2()*16}));
+function txt(s,x,y,size,color,{w=800,align="center",ls=0,it=false,alpha=1}={}){X.save();X.globalAlpha*=alpha;X.font=`${it?"italic ":""}${w} ${size}px ${F}`;X.fillStyle=color;X.textAlign=align;X.textBaseline="middle";X.letterSpacing=ls+"px";X.fillText(s,x,y);X.restore();}
+function bg(c){X.fillStyle=c;X.fillRect(0,0,W,H);}
+function rr(x,y,w,h,r){X.beginPath();X.moveTo(x+r,y);X.arcTo(x+w,y,x+w,y+h,r);X.arcTo(x+w,y+h,x,y+h,r);X.arcTo(x,y+h,x,y,r);X.arcTo(x,y,x+w,y,r);X.closePath();}
+function logo(cx,cy,s,a=1){X.save();X.globalAlpha*=a;X.translate(cx-s/2,cy-s/2);rr(0,0,s,s,s*.22);X.fillStyle=OR;X.fill();X.translate(s*.19,s*.19);X.scale(s/38.4,s/38.4);X.fillStyle="#fff";X.fill(new Path2D("M13.783 15.172l2.121-2.121 5.996 5.996-2.121 2.121zM17.5 10c1.93 0 3.5-1.57 3.5-3.5 0-.58-.16-1.12-.41-1.6l-2.7 2.7-1.49-1.49 2.7-2.7c-.48-.25-1.02-.41-1.6-.41C13.57 3 12 4.57 12 6.5c0 .41.08.8.21 1.16l-1.85 1.85-1.78-1.78.71-.71-1.41-1.41L10 3.49c-1.17-1.17-3.07-1.17-4.24 0L2.22 7.03l1.41 1.41H.81l-.71.71 3.54 3.54.71-.71V9.15l1.41 1.41.71-.71 1.78 1.78-7.41 7.41 2.12 2.12L16.34 9.79c.36.13.75.21 1.16.21z"));X.restore();}
+function grid(color,step=60){X.strokeStyle=color;X.lineWidth=1;X.beginPath();for(let x=0;x<=W;x+=step){X.moveTo(x,0);X.lineTo(x,H)}for(let y=0;y<=H;y+=step){X.moveTo(0,y);X.lineTo(W,y)}X.stroke();}
+function sweep(p,color="rgba(255,255,255,.55)"){if(p<=0||p>=1)return;const x=-600+p*(W+1200);const g=X.createLinearGradient(x-260,0,x+260,0);g.addColorStop(0,"rgba(255,255,255,0)");g.addColorStop(.5,color);g.addColorStop(1,"rgba(255,255,255,0)");X.save();X.globalCompositeOperation="lighter";X.fillStyle=g;X.transform(1,0,-.35,1,180,0);X.fillRect(x-260,0,520,H);X.restore();}
+function chart(t,a,up){ // gráfica de barras + línea, sin cifras
+  const n=10,x0=420,x1=1500,base=830,top=330,bw=(x1-x0)/n*.56;
+  const vals=[...Array(n)].map((_,i)=>{const k=i/(n-1);return up?(.18+.78*Math.pow(k,1.4))+.05*Math.sin(i*1.7):(.92-.75*Math.pow(k,1.2))+.05*Math.sin(i*1.9);});
+  X.strokeStyle=up?"#e9edf3":"#e9edf3";X.lineWidth=2;for(let k=0;k<=4;k++){const y=base-(base-top)*k/4;X.beginPath();X.moveTo(x0-30,y);X.lineTo(x1+10,y);X.stroke();}
+  vals.forEach((v,i)=>{const p=eo(lin(t,a+.05*i,a+.05*i+.45));const h=(base-top)*v*p;const x=x0+(x1-x0)*i/n+(x1-x0)/n*.22;X.fillStyle=up?(i===n-1?OR:"#0B192C"):(i===0?"#0B192C":"#c7cfdb");rr(x,base-h,bw,Math.max(h,1),6);X.fill();});
+  const lp=eio(lin(t,a+.35,a+1.15));X.save();X.beginPath();vals.forEach((v,i)=>{const x=x0+(x1-x0)*(i+.5)/n,y=base-(base-top)*v-40;i?X.lineTo(x,y):X.moveTo(x,y);});
+  X.lineWidth=7;X.lineJoin="round";X.lineCap="round";X.strokeStyle=up?OR:"#E5484D";X.setLineDash([3000]);X.lineDashOffset=3000*(1-lp);X.stroke();X.restore();
+  if(lp>.95){const i=n-1,x=x0+(x1-x0)*(i+.5)/n,y=base-(base-top)*vals[i]-40;X.fillStyle=up?OR:"#E5484D";X.beginPath();X.arc(x,y,14,0,7);X.fill();
+    X.save();X.translate(x+40,y);X.rotate(up?-Math.PI/4:Math.PI/4);X.fillStyle=up?OR:"#E5484D";X.beginPath();X.moveTo(30,0);X.lineTo(-10,-22);X.lineTo(-10,22);X.closePath();X.fill();X.restore();}
+}
+const SC=[ // [inicio, fin, función]
+ [0,1.2,(t)=>{bg(INK);const p=eo(lin(t,.85,1.2));const r=14+6*Math.sin(t*12)+p*2300;X.fillStyle=OR;X.shadowColor=OR;X.shadowBlur=60*(1-p);X.beginPath();X.arc(W/2,H/2,r,0,7);X.fill();X.shadowBlur=0;}],
+ [1.2,2.6,(t)=>{bg(OR);const L="OBRAWEB".split("");X.font=`800 260px ${F}`;X.letterSpacing="-8px";const tw=X.measureText("OBRAWEB").width;let x=W/2-tw/2;
+   L.forEach((ch,i)=>{const p=back(lin(t,1.25+i*.05,1.6+i*.05));X.save();X.globalAlpha=cl(p);X.font=`800 260px ${F}`;X.letterSpacing="-8px";X.fillStyle=NAVY;X.textBaseline="middle";X.fillText(ch,x,H/2-30+(1-p)*120);X.restore();x+=X.measureText(ch).width-8;});
+   txt("páginas web para negocios locales",W/2,H/2+140,46,NAVY,{w:700,it:true,alpha:eo(lin(t,1.75,2.05))});sweep(lin(t,2.05,2.55));}],
+ [2.6,4.0,(t)=>{bg(INK);const k=lin(t,2.6,4.0),sp=.2+3*eio(k);X.lineCap="round";
+   PARTS.forEach(q=>{const d=(q.d+k*q.s*sp*.6)%1,r=40+Math.pow(d,2)*1300,len=8+Math.pow(d,2)*220*sp;const ca=Math.cos(q.a),sa=Math.sin(q.a);X.strokeStyle=q.o?OR:"rgba(255,255,255,"+(.25+.75*d)+")";X.lineWidth=1+2.5*d;X.beginPath();X.moveTo(W/2+ca*r,H/2+sa*r*.62);X.lineTo(W/2+ca*(r+len),H/2+sa*(r+len)*.62);X.stroke();});
+   const a=eo(lin(t,3.1,3.5));txt("Que te encuentren.",W/2,H/2,150,"#fff",{alpha:a,ls:-4});}],
+ [4.0,5.7,(t)=>{bg("#ffffff");txt("SIN WEB",120,170,96,NAVY,{align:"left",ls:-3,alpha:eo(lin(t,4,4.25))});txt("los clientes te buscan… y llaman a otro",120,250,40,"#64748B",{align:"left",w:600,alpha:eo(lin(t,4.15,4.45))});chart(t,4.15,false);}],
+ [5.7,7.3,(t)=>{bg("#ffffff");txt("CON OBRAWEB",120,170,96,OR,{align:"left",ls:-3,alpha:eo(lin(t,5.7,5.95))});txt("te encuentran, te escriben, te llaman",120,250,40,"#64748B",{align:"left",w:600,alpha:eo(lin(t,5.85,6.15))});chart(t,5.85,true);
+   const p=eo(lin(t,6.3,7.1));X.lineWidth=18;X.strokeStyle="#eef1f5";X.beginPath();X.arc(1690,270,90,0,7);X.stroke();X.strokeStyle=OR;X.lineCap="round";X.beginPath();X.arc(1690,270,90,-Math.PI/2,-Math.PI/2+p*Math.PI*1.85);X.stroke();
+   if(p>.9){X.strokeStyle=NAVY;X.lineWidth=14;X.beginPath();X.moveTo(1650,272);X.lineTo(1680,302);X.lineTo(1735,240);X.stroke();}}],
+ [7.3,8.8,(t)=>{bg(INK);const k=t-7.3;for(let ring=0;ring<6;ring++){const r=230+ring*42,n=60+ring*12,rot=k*(ring%2?.6:-.45)*(1+ring*.15);for(let i=0;i<n;i++){const a=rot+i/n*Math.PI*2;const vis=eo(lin(t,7.3+ring*.05,7.7+ring*.05));X.fillStyle=ring===2?OR:"rgba(255,255,255,"+(.25+.12*ring)+")";X.globalAlpha=vis;X.beginPath();X.arc(W/2+Math.cos(a)*r,H/2+Math.sin(a)*r,ring===2?4.5:3,0,7);X.fill();}}X.globalAlpha=1;
+   const p=back(lin(t,7.5,7.85));txt("24/7",W/2,H/2-10,190*cl(p,0,2),"#fff",{ls:-6,alpha:cl(p)});txt("tu asistente contesta por ti",W/2,H/2+520-420,40,OR,{w:700,alpha:eo(lin(t,7.8,8.1))});}],
+ [8.8,10.3,(t)=>{const g=X.createLinearGradient(0,0,W,H);g.addColorStop(0,"#0a1f5c");g.addColorStop(1,"#1d4ed8");X.fillStyle=g;X.fillRect(0,0,W,H);
+   const p=back(lin(t,8.8,9.15)),cw=760,ch=470,cx=W/2-cw/2,cy=H/2-ch/2+(1-cl(p))*80;X.save();X.globalAlpha=cl(p);X.shadowColor="rgba(0,0,0,.35)";X.shadowBlur=60;X.shadowOffsetY=20;rr(cx,cy,cw,ch,28);X.fillStyle="#fff";X.fill();X.restore();X.save();X.globalAlpha=cl(p);
+   logo(cx+70,cy+70,60);txt("Tu web profesional",cx+120,cy+70,40,NAVY,{align:"left"});
+   const rows=[["Diseño adaptado a tu negocio","✓"],["Lista en 10–15 días","✓"],["Precio cerrado","450 € + IVA"]];rows.forEach((r,i)=>{const y=cy+165+i*70,a=eo(lin(t,9.1+i*.12,9.35+i*.12));txt(r[0],cx+50,y,32,"#334155",{align:"left",w:600,alpha:a});txt(r[1],cx+cw-50,y,32,i===2?OR:"#0F9D6B",{align:"right",alpha:a});X.fillStyle="#e2e8f0";X.globalAlpha=a;X.fillRect(cx+50,y+32,cw-100,2);X.globalAlpha=cl(p);});
+   const on=eo(lin(t,9.7,9.95)),ty=cy+ch-70;txt("Muestra gratis antes de pagar",cx+50,ty,34,NAVY,{align:"left"});rr(cx+cw-170,ty-30,120,60,30);X.fillStyle=on>.5?OR:"#cbd5e1";X.fill();X.fillStyle="#fff";X.beginPath();X.arc(cx+cw-140+on*60,ty,24,0,7);X.fill();X.restore();
+}],
+ [10.3,11.6,(t)=>{bg(OR);const k=t-10.3;X.save();X.translate(W/2,H/2);X.beginPath();for(let i=0;i<=120;i++){const a=i/120*Math.PI*2,r=260+28*Math.sin(a*5+k*4)+18*Math.sin(a*3-k*3)+eo(lin(t,10.3,10.6))*0;i?X.lineTo(Math.cos(a)*r,Math.sin(a)*r):X.moveTo(Math.cos(a)*r,Math.sin(a)*r);}X.closePath();X.lineWidth=3;X.strokeStyle=NAVY;X.stroke();
+   DOTS.forEach((d,i)=>{const a=d.a+k*.4*(i%2?1:-1),r=d.r*200;X.fillStyle=NAVY;X.beginPath();X.arc(Math.cos(a)*r,Math.sin(a)*r,d.s*eo(lin(t,10.3+i*.01,10.6+i*.01)),0,7);X.fill();});X.restore();
+   const a=eo(lin(t,10.75,11.0));X.fillStyle="rgba(249,115,22,"+(.85*a)+")";X.fillRect(0,H/2-160,W,320);txt("Te enseñamos tu web",W/2,H/2-55,92,NAVY,{alpha:a,ls:-3});txt("GRATIS",W/2,H/2+60,120,"#fff",{alpha:a,ls:-2});}],
+ [11.6,12.8,(t)=>{bg(NAVY);grid("rgba(255,255,255,.07)");const p=eo(lin(t,11.6,12.05));X.fillStyle=OR;X.shadowColor=OR;X.shadowBlur=30;X.fillRect(W/2-W/2*p,H/2-3,W*p,6);X.shadowBlur=0;
+   txt("antes de pagar nada",W/2,H/2-80,54,"#fff",{w:700,alpha:eo(lin(t,11.8,12.05))*(1-lin(t,12.3,12.45))});
+   const s=lin(t,12.25,12.8);if(s>0){const g=X.createRadialGradient(W/2,H/2,0,W/2,H/2,900);g.addColorStop(0,"rgba(255,255,255,"+(.95*s)+")");g.addColorStop(.25,"rgba(255,170,90,"+(.9*s)+")");g.addColorStop(1,"rgba(249,115,22,0)");X.save();X.translate(W/2,H/2);X.scale(1+3*s,.12+.5*s*s);X.translate(-W/2,-H/2);X.fillStyle=g;X.fillRect(-W,-H,3*W,3*H);X.restore();}}],
+ [12.8,14.6,(t)=>{bg(OR);const p=back(lin(t,12.8,13.15));X.save();X.translate(W/2,H/2-60);X.scale(.5+.5*p,.5+.5*p);txt("OBRAWEB.",0,0,300,NAVY,{ls:-12});X.restore();txt("webs para negocios locales",W/2,H/2+110,50,NAVY,{w:700,it:true,alpha:eo(lin(t,13.1,13.4))});
+   const b=eo(lin(t,13.4,13.7));X.save();X.globalAlpha=b;rr(W/2-300,H/2+190+(1-b)*30,600,96,48);X.fillStyle=NAVY;X.fill();txt("Pide tu muestra gratis  →",W/2,H/2+238+(1-b)*30,38,"#fff");X.restore();txt("obratuweb.netlify.app",W/2,H-90,34,NAVY,{w:600,alpha:b});sweep(lin(t,13.9,14.4));}],
+ [14.6,16.4,(t)=>{bg(INK);const k=t-14.6,cols=46,rows=26,fade=1-lin(t,15.9,16.4),cam=eo(lin(t,14.6,15.2));
+   const P=(i,j)=>{const x=(i-cols/2)*46,z=(j-rows/2)*46,d=Math.hypot(x,z);const y=70*Math.sin(d/90-k*3.2)*Math.exp(-d/1100)-60*Math.exp(-(d*d)/30000)*Math.sin(k*2);
+     const ax=.95-.25*cam,cs=Math.cos(ax),sn=Math.sin(ax),ry=k*.25,cr=Math.cos(ry),sr=Math.sin(ry);const X1=x*cr-z*sr,Z1=x*sr+z*cr;const Y2=y*cs-Z1*sn,Z2=y*sn+Z1*cs+1500;const f=1100/Z2;return[W/2+X1*f,H/2+80+Y2*f,y];};
+   for(let j=0;j<rows-1;j++)for(let i=0;i<cols-1;i++){const a=P(i,j),b=P(i+1,j),c=P(i+1,j+1),d=P(i,j+1);const h=cl((a[2]+80)/160);X.fillStyle=`hsla(${(225+160*h)%360},${75+15*h}%,${30+28*h}%,${fade})`;X.beginPath();X.moveTo(a[0],a[1]);X.lineTo(b[0],b[1]);X.lineTo(c[0],c[1]);X.lineTo(d[0],d[1]);X.closePath();X.fill();X.strokeStyle=`rgba(0,0,0,${.35*fade})`;X.lineWidth=1;X.stroke();}
+   const bob=Math.sin(k*3)*14;logo(W/2,H/2-150+bob,150,eo(lin(t,14.8,15.2))*fade);}],
+];
+function render(t){t=((t%DUR)+DUR)%DUR;X.setTransform(1,0,0,1,0,0);X.globalAlpha=1;X.shadowBlur=0;X.setLineDash([]);
+  for(const [a,b,f] of SC){if(t>=a&&t<b){X.save();f(t);X.restore();break;}}
+  // destello blanco breve en cada corte (el "fua")
+  for(const [a] of SC){const d=t-a;if(a>0&&d>=0&&d<.1){X.fillStyle=`rgba(255,255,255,${.5*(1-d/.1)})`;X.fillRect(0,0,W,H);}}
+}
+window.render=render;
+// Reproducción en bucle (si no se está exportando a vídeo)
+if(!location.search.includes("export")){let t0=performance.now(),paused=false,tp=0;
+  document.fonts.ready.then(()=>{function loop(now){if(!paused)render((now-t0)/1000);requestAnimationFrame(loop);}requestAnimationFrame(loop);});
+  addEventListener("keydown",e=>{if(e.code==="Space"){paused=!paused;if(paused)tp=performance.now();else t0+=performance.now()-tp;}});
+  setTimeout(()=>{const h=document.getElementById("hint");if(h)h.style.opacity=0;},4000);
+}else{document.getElementById("hint").remove();}
+</script>
+</body></html>
