@@ -180,6 +180,16 @@
       </div>
       <p class="text-sm text-brand-muted -mt-2">Vídeos (YouTube, en oculto), guías o enlaces. Si no marcas plan, lo ven todos.</p>
       <div id="rec-lista" class="flex flex-col gap-2"></div>
+      <div class="bg-white border border-brand-border rounded-xl p-3 flex flex-col gap-2 mt-3">
+        <h3 class="font-extrabold flex items-center gap-1"><span class="ms text-brand-orange">contactless</span>Placa NFC de reseñas (se ofrece en el área de clientes)</h3>
+        <label class="flex items-center gap-2 text-sm font-semibold" for="nfc-activo"><input id="nfc-activo" type="checkbox"> Mostrarla a los clientes</label>
+        <div class="grid sm:grid-cols-2 gap-2">
+          <label class="flex flex-col gap-1 text-sm font-semibold" for="nfc-precio-in">Precio (tal cual se muestra)<input id="nfc-precio-in" maxlength="40" class="border border-brand-border rounded-xl px-3 py-2 font-normal" placeholder="25 € + IVA"></label>
+          <label class="flex flex-col gap-1 text-sm font-semibold" for="nfc-video-in">Vídeo de cómo se usa (YouTube)<input id="nfc-video-in" type="url" class="border border-brand-border rounded-xl px-3 py-2 font-normal" placeholder="https://youtu.be/..."></label>
+        </div>
+        <button id="b-nfc-guardar" class="self-start bg-brand-navy text-white font-bold rounded-xl px-3 py-2 text-sm">Guardar placa NFC</button>
+        <p class="text-xs text-brand-muted">Cuando un cliente pulsa «La quiero», te escribe por WhatsApp con su negocio y el precio.</p>
+      </div>
     </section>
 
     <!-- PANEL -->
@@ -855,7 +865,8 @@
   const PLAN_TXT = { web: "Web", chatbot: "Web + asistente" };
   const URL_CLI = location.origin + "/clientes.html";
   async function cargarClientes(){
-    try { const [a, b] = await Promise.all([api("clientes"), api("recursos")]); clientes = a.clientes; recursos = b.recursos; recBase = b.base; pintarClientes(); }
+    try { const [a, b, t] = await Promise.all([api("clientes"), api("recursos"), api("recursos/tienda")]); clientes = a.clientes; recursos = b.recursos; recBase = b.base; pintarClientes();
+      $("#nfc-activo").checked = t.tienda.nfc.activo; $("#nfc-precio-in").value = t.tienda.nfc.precio; $("#nfc-video-in").value = t.tienda.nfc.video || ""; }
     catch (x) { toast(x.message); }
   }
   function pintarClientes(){
@@ -890,6 +901,11 @@
     $("#mk-borrar").textContent = "Borrar cliente"; $("#mk-borrar").dataset.ok = "";
     $("#m-cli").hidden = false;
   }
+  $("#b-nfc-guardar").addEventListener("click", async () => {
+    const video = $("#nfc-video-in").value.trim();
+    if (video && !/^https:\/\//i.test(video)) return toast("El vídeo tiene que empezar por https://");
+    try { await api("recursos/tienda", { method: "POST", body: { nfc: { activo: $("#nfc-activo").checked, precio: $("#nfc-precio-in").value, video } } }); toast("Placa NFC guardada"); } catch (x) { toast(x.message); }
+  });
   $("#b-cli-nuevo").addEventListener("click", () => abrirCli(null));
   $("[data-cerrar-k]").addEventListener("click", () => $("#m-cli").hidden = true);
   $("#f-cli").addEventListener("submit", async (e) => {

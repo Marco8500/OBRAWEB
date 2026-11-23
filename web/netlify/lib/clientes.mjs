@@ -38,6 +38,12 @@ async function listar(store, prefix) {
   const { blobs } = await store.list({ prefix });
   return (await Promise.all(blobs.map((b) => store.get(b.key, { type: "json" })))).filter(Boolean);
 }
+// Tienda del área de clientes (de momento, la placa NFC de reseñas). Se edita desde la pestaña Clientes.
+const TIENDA_DEF = { nfc: { activo: true, precio: "25 € + IVA", video: "" } };
+async function leerTienda(store) {
+  const t = await store.get("ajustes/tienda", { type: "json" }).catch(() => null);
+  return { nfc: { ...TIENDA_DEF.nfc, ...(t && t.nfc) } };
+}
 const recursosDe = (todos, plan) => todos.filter((r) => !r.planes?.length || r.planes.includes(plan));
 
 // Busca el cliente por código (para el login)
@@ -53,6 +59,14 @@ export async function adminClientes(req, ruta, { store, env }) {
   const m = req.method, secret = env.EQUIPO_SECRET;
   const cuerpo = m === "POST" ? await req.json().catch(() => ({})) : {};
   if (ruta[0] === "recursos") {
+    if (ruta[1] === "tienda") {
+      if (m === "GET") return json({ tienda: await leerTienda(store) });
+      if (m === "POST") {
+        const n = cuerpo.nfc || {};
+        const t = { nfc: { activo: n.activo !== false, precio: txt(n.precio, 40) || TIENDA_DEF.nfc.precio, video: /^https:\/\//i.test(n.video || "") ? txt(n.video, 500) : "" } };
+        await store.setJSON("ajustes/tienda", t); return json({ tienda: t });
+      }
+    }
     if (!ruta[1] && m === "GET") return json({ recursos: await listar(store, "recursos/"), base: RECURSOS_BASE });
     const datos = () => ({ tipo: ["video", "guia", "enlace"].includes(cuerpo.tipo) ? cuerpo.tipo : "enlace", titulo: txt(cuerpo.titulo, 150),
       url: /^https:\/\//i.test(cuerpo.url || "") ? txt(cuerpo.url, 500) : "", texto: txt(cuerpo.texto, 5000),
@@ -112,5 +126,6 @@ export async function vistaCliente(store, clienteId) {
   const recursos = [...recursosDe(propios, c.plan).sort((a, b) => (b.creado || "").localeCompare(a.creado || "")), ...recursosDe(RECURSOS_BASE, c.plan)];
   const hoy = new Date().toISOString().slice(0, 10);
   if ((c.ultimoAcceso || "").slice(0, 10) !== hoy) { c.ultimoAcceso = new Date().toISOString(); await store.setJSON("clientes/" + c.id, c); }
-  return json({ cliente: { negocio: c.negocio, plan: c.plan, planNombre: PLANES[c.plan], web: c.web, resenas: c.resenas }, recursos });
+  const tienda = await leerTienda(store);
+  return json({ cliente: { negocio: c.negocio, plan: c.plan, planNombre: PLANES[c.plan], web: c.web, resenas: c.resenas }, recursos, tienda });
 }

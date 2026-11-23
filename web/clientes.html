@@ -126,6 +126,34 @@
       <p id="resenas-no" hidden class="text-sm bg-white/5 rounded-xl p-3 text-white/80">Aún no tenemos tu enlace de reseñas. <a data-wa-resenas target="_blank" rel="noopener" class="font-semibold text-orange-300 underline">Pídenoslo por WhatsApp</a> y te lo dejamos aquí, con tu QR.</p>
     </section>
 
+    <!-- placa NFC -->
+    <section id="s-nfc" hidden class="sube d2 card rounded-3xl p-5 sm:p-6 relative overflow-hidden">
+      <div class="absolute -top-16 -right-16 w-48 h-48 rounded-full bg-brand-orange/20 blur-3xl pointer-events-none"></div>
+      <div class="relative grid sm:grid-cols-[150px_1fr] gap-5 items-center">
+        <div class="mx-auto w-32 h-32 sm:w-36 sm:h-36 rounded-3xl bg-gradient-to-br from-zinc-800 to-black border border-white/10 shadow-[0_0_50px_-12px_rgba(249,115,22,.7)] flex flex-col items-center justify-center gap-1.5">
+          <span class="ms text-[44px] text-brand-orange">contactless</span>
+          <span class="flex gap-0.5 text-orange-300"><span class="ms text-[14px]" style="font-variation-settings:'FILL' 1">star</span><span class="ms text-[14px]" style="font-variation-settings:'FILL' 1">star</span><span class="ms text-[14px]" style="font-variation-settings:'FILL' 1">star</span><span class="ms text-[14px]" style="font-variation-settings:'FILL' 1">star</span><span class="ms text-[14px]" style="font-variation-settings:'FILL' 1">star</span></span>
+          <span class="text-[10px] font-bold tracking-[.2em] uppercase text-white/60">Toca aquí</span>
+        </div>
+        <div class="flex flex-col gap-3">
+          <span class="self-start text-[10px] font-bold tracking-[.2em] uppercase rounded-full bg-brand-orange/15 text-orange-300 px-2.5 py-1">Exclusivo clientes</span>
+          <h2 class="text-xl font-extrabold leading-tight">Placa NFC de reseñas de Google</h2>
+          <p class="text-sm text-white/70">Tu cliente acerca el móvil a la placa y se le abre directamente tu página de reseñas. Sin apps y sin buscar nada: más reseñas con menos esfuerzo. Te la entregamos ya configurada con tu enlace.</p>
+          <ul class="text-sm text-white/70 flex flex-col gap-1">
+            <li class="flex items-center gap-2"><span class="ms text-[18px] text-emerald-400">check_circle</span>Funciona con cualquier móvil moderno</li>
+            <li class="flex items-center gap-2"><span class="ms text-[18px] text-emerald-400">check_circle</span>Para el mostrador, la recepción o la caja</li>
+            <li class="flex items-center gap-2"><span class="ms text-[18px] text-emerald-400">check_circle</span>Configurada con tu enlace de reseñas</li>
+          </ul>
+          <div class="flex flex-wrap items-center gap-3 pt-1">
+            <span id="nfc-precio" class="text-2xl font-extrabold"></span>
+            <a id="b-nfc" target="_blank" rel="noopener" class="btn text-white font-bold rounded-xl px-5 py-2.5 text-sm flex items-center gap-1"><span class="ms text-[18px]">shopping_bag</span>La quiero</a>
+            <a id="b-nfc-video" hidden href="#nfc-video" class="text-sm font-semibold text-orange-300 hover:text-orange-200 flex items-center gap-1"><span class="ms text-[18px]">play_circle</span>Ver cómo se usa</a>
+          </div>
+        </div>
+      </div>
+      <div id="nfc-video" class="relative mt-5" hidden></div>
+    </section>
+
     <!-- recursos -->
     <section class="sube d3 flex flex-col gap-3">
       <h2 class="text-lg font-extrabold flex items-center gap-2"><span class="ms text-brand-orange">school</span>Recursos para sacarle partido</h2>
@@ -207,6 +235,17 @@
       else $("#qr").innerHTML = `<p class="text-xs text-slate-500 p-2">No se ha podido cargar el QR. Recarga la página.</p>`;
       const guardado = store.get("obw_msg_resena");
       $("#msg-resena").value = guardado || `¡Hola! Gracias por confiar en ${c.negocio}. Si te ha gustado el trabajo, nos ayudaría mucho que nos dejaras una reseña en Google, solo es un minuto: ${c.resenas}`;
+    }
+    // placa NFC
+    const nfc = d.tienda && d.tienda.nfc;
+    $("#s-nfc").hidden = !(nfc && nfc.activo);
+    if (nfc && nfc.activo) {
+      $("#nfc-precio").textContent = nfc.precio;
+      $("#b-nfc").href = wa(`Hola, soy de ${c.negocio}. Quiero la placa NFC de reseñas de Google (${nfc.precio}).`, WA);
+      const yt = nfc.video ? idYoutube(nfc.video) : null, box = $("#nfc-video");
+      $("#b-nfc-video").hidden = !nfc.video; box.hidden = !nfc.video;
+      if (yt && /^[\w-]{6,20}$/.test(yt)) box.innerHTML = `<div class="relative w-full rounded-2xl overflow-hidden border border-white/10" style="padding-top:56.25%"><iframe class="absolute inset-0 w-full h-full" src="https://www.youtube-nocookie.com/embed/${yt}?rel=0" title="Cómo se usa la placa NFC" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
+      else if (nfc.video) { box.hidden = true; $("#b-nfc-video").href = nfc.video; $("#b-nfc-video").target = "_blank"; }
     }
     $("#recursos").innerHTML = d.recursos.length ? d.recursos.map(tarjeta).join("") : `<p class="text-sm text-white/50">Pronto tendrás aquí vídeos y guías.</p>`;
     $("#v-login").hidden = true; $("#v-app").hidden = false;
