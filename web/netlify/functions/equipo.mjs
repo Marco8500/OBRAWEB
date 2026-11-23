@@ -4,6 +4,7 @@
 import { getStore } from "@netlify/blobs";
 import { createHmac, timingSafeEqual, randomBytes } from "node:crypto";
 import { admision } from "../lib/admision.mjs";
+import { adminClientes, clientePorCodigo, vistaCliente } from "../lib/clientes.mjs";
 
 export const config = { path: "/api/equipo/*" };
 
@@ -107,13 +108,19 @@ export async function manejar(req, { store, env = process.env }) {
   const ruta = url.pathname.replace(/^\/api\/equipo\/?/, "").split("/").filter(Boolean);
   const metodo = req.method;
   // Admisión lee su propio cuerpo (JSON o trozos de audio en binario)
-  const cuerpo = (metodo === "POST" || metodo === "PUT") && ruta[0] !== "admision" ? await req.json().catch(() => ({})) : {};
+  const cuerpo = (metodo === "POST" || metodo === "PUT") && !["admision", "clientes", "recursos"].includes(ruta[0]) ? await req.json().catch(() => ({})) : {};
 
   // --- entrar con código ---
   if (ruta[0] === "login" && metodo === "POST") {
     const codigo = texto(cuerpo.codigo, 200);
     const u = todos.find((x) => igualSeguro(x.codigo, codigo));
     if (!u) {
+      // ¿Es un cliente? (área de clientes)
+      const cli = codigo ? await clientePorCodigo(store, codigo, secret) : null;
+      if (cli) {
+        const token = firmar({ u: "cli:" + cli.id, exp: Date.now() + SESION_DIAS * 864e5 }, secret);
+        return json({ token, usuario: { id: "cli:" + cli.id, nombre: cli.negocio, rol: "cliente" }, equipo: [] });
+      }
       await new Promise((r) => setTimeout(r, 800)); // frena los intentos a ciegas
       return json({ error: "Código incorrecto." }, 401);
     }
@@ -127,10 +134,22 @@ export async function manejar(req, { store, env = process.env }) {
   // --- resto: sesión obligatoria ---
   const auth = (req.headers.get("authorization") || "").replace(/^Bearer\s+/i, "");
   const sesion = verificar(auth, secret);
+  // Clientes: solo pueden ver su área
+  if (sesion && String(sesion.u).startsWith("cli:")) {
+    if (ruta[0] === "cliente" && metodo === "GET") return vistaCliente(store, String(sesion.u).slice(4));
+    if (ruta[0] === "yo") return json({ usuario: { id: sesion.u, rol: "cliente" }, equipo: [] });
+    return json({ error: "No tienes acceso a esta parte." }, 403);
+  }
   const user = sesion && todos.find((x) => x.id === sesion.u);
   if (!user) return json({ error: "Sesión caducada. Vuelve a entrar con tu código." }, 401);
   const esAdmin = user.rol === "admin";
   try { await registrarActividad(store, user, req); } catch (e) { console.error("actividad", e); }
+
+  // --- CLIENTES Y RECURSOS (solo fundador) ---
+  if (ruta[0] === "clientes" || ruta[0] === "recursos") {
+    if (!esAdmin) return json({ error: "Solo el fundador puede gestionar clientes." }, 403);
+    return adminClientes(req, ruta, { store, env });
+  }
 
   // --- ADMISIÓN DE CANDIDATOS (solo fundador) ---
   if (ruta[0] === "admision") {

@@ -166,6 +166,22 @@
       <div id="cand-lista" class="flex flex-col gap-2"></div>
     </section>
 
+    <!-- CLIENTES (solo fundador) -->
+    <section id="t-clientes" hidden class="flex flex-col gap-3">
+      <div class="flex items-center justify-between gap-2">
+        <h2 class="text-xl font-extrabold">Clientes</h2>
+        <button id="b-cli-nuevo" class="text-sm font-bold bg-brand-orange text-white rounded-xl px-3 py-2 flex items-center gap-1"><span class="ms text-[18px]">add_business</span>Nuevo cliente</button>
+      </div>
+      <p class="text-sm text-brand-muted -mt-1">Cada cliente entra en <b>/clientes.html</b> con su código y ve su web, su enlace y QR de reseñas, el botón de WhatsApp para cambios y los recursos de su plan.</p>
+      <div id="cli-lista" class="flex flex-col gap-2"></div>
+      <div class="flex items-center justify-between gap-2 mt-3">
+        <h3 class="text-lg font-extrabold">Recursos</h3>
+        <button id="b-rec-nuevo" class="text-sm font-bold bg-brand-navy text-white rounded-xl px-3 py-2 flex items-center gap-1"><span class="ms text-[18px]">video_library</span>Añadir recurso</button>
+      </div>
+      <p class="text-sm text-brand-muted -mt-2">Vídeos (YouTube, en oculto), guías o enlaces. Si no marcas plan, lo ven todos.</p>
+      <div id="rec-lista" class="flex flex-col gap-2"></div>
+    </section>
+
     <!-- PANEL -->
     <section id="t-panel" hidden class="flex flex-col gap-4">
       <div class="flex items-center justify-between gap-2">
@@ -188,6 +204,7 @@
       <button data-tab="informe" class="tab py-2 flex flex-col items-center text-xs font-semibold"><span class="ms">edit_note</span>Informe</button>
       <button data-tab="panel" class="tab py-2 flex flex-col items-center text-xs font-semibold"><span class="ms">monitoring</span>Panel</button>
       <button data-tab="admision" hidden class="tab py-2 flex flex-col items-center text-xs font-semibold"><span class="ms">badge</span>Admisión</button>
+      <button data-tab="clientes" hidden class="tab py-2 flex flex-col items-center text-xs font-semibold"><span class="ms">storefront</span>Clientes</button>
     </div>
   </nav>
 </div>
@@ -297,6 +314,50 @@
   </div>
 </div>
 
+<!-- ============ FICHA DE CLIENTE ============ -->
+<div id="m-cli" hidden class="fixed inset-0 z-40 bg-black/50 flex items-end sm:items-center justify-center">
+  <form id="f-cli" class="bg-white w-full sm:max-w-lg max-h-[92vh] overflow-y-auto rounded-t-2xl sm:rounded-2xl p-4 flex flex-col gap-3 safe-b">
+    <div class="flex items-center justify-between">
+      <h3 id="mk-titulo" class="text-lg font-extrabold">Cliente</h3>
+      <button type="button" data-cerrar-k class="w-9 h-9 rounded-full hover:bg-slate-100" aria-label="Cerrar"><span class="ms">close</span></button>
+    </div>
+    <div id="mk-codigo" hidden class="bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-sm flex flex-col gap-2"></div>
+    <label class="flex flex-col gap-1 text-sm font-semibold" for="mk-negocio">Negocio *<input id="mk-negocio" required maxlength="120" class="border border-brand-border rounded-xl px-3 py-2 font-normal"></label>
+    <label class="flex flex-col gap-1 text-sm font-semibold" for="mk-contacto">Contacto (nombre y teléfono)<input id="mk-contacto" maxlength="200" class="border border-brand-border rounded-xl px-3 py-2 font-normal" placeholder="Juan · 600 000 000"></label>
+    <label class="flex flex-col gap-1 text-sm font-semibold" for="mk-plan">Plan<select id="mk-plan" class="border border-brand-border rounded-xl px-3 py-2 font-normal"><option value="web">Web profesional</option><option value="chatbot">Web + asistente virtual</option></select></label>
+    <label class="flex flex-col gap-1 text-sm font-semibold" for="mk-web">Su web<input id="mk-web" type="url" class="border border-brand-border rounded-xl px-3 py-2 font-normal" placeholder="https://..."></label>
+    <label class="flex flex-col gap-1 text-sm font-semibold" for="mk-resenas">Enlace de reseñas de Google o Place ID<input id="mk-resenas" class="border border-brand-border rounded-xl px-3 py-2 font-normal" placeholder="https://g.page/r/... o ChIJ..."><span class="font-normal text-xs text-brand-muted">En su ficha de Google: «Pedir reseñas» → copiar enlace. O pega el Place ID.</span></label>
+    <label class="flex flex-col gap-1 text-sm font-semibold" for="mk-notas">Notas internas (no las ve el cliente)<textarea id="mk-notas" rows="2" class="border border-brand-border rounded-xl px-3 py-2 font-normal"></textarea></label>
+    <label id="mk-activo-w" class="flex items-center gap-2 text-sm font-semibold" for="mk-activo"><input id="mk-activo" type="checkbox"> Acceso activo</label>
+    <p id="mk-acceso" class="text-xs text-brand-muted"></p>
+    <button class="bg-brand-orange hover:bg-brand-orangeHover text-white font-bold rounded-xl py-3">Guardar</button>
+    <div id="mk-extra" class="flex flex-wrap gap-2">
+      <button type="button" id="mk-regen" class="border border-brand-border rounded-xl px-3 py-2 text-sm font-semibold flex items-center gap-1"><span class="ms text-[18px]">key</span>Nuevo código</button>
+      <button type="button" id="mk-borrar" class="text-sm text-red-600 font-semibold px-2">Borrar cliente</button>
+    </div>
+  </form>
+</div>
+
+<!-- ============ RECURSO ============ -->
+<div id="m-rec" hidden class="fixed inset-0 z-40 bg-black/50 flex items-end sm:items-center justify-center">
+  <form id="f-rec" class="bg-white w-full sm:max-w-lg max-h-[92vh] overflow-y-auto rounded-t-2xl sm:rounded-2xl p-4 flex flex-col gap-3 safe-b">
+    <div class="flex items-center justify-between">
+      <h3 id="mr-titulo-h" class="text-lg font-extrabold">Recurso</h3>
+      <button type="button" data-cerrar-r class="w-9 h-9 rounded-full hover:bg-slate-100" aria-label="Cerrar"><span class="ms">close</span></button>
+    </div>
+    <label class="flex flex-col gap-1 text-sm font-semibold" for="mr-tipo">Tipo<select id="mr-tipo" class="border border-brand-border rounded-xl px-3 py-2 font-normal"><option value="video">Vídeo</option><option value="guia">Guía (texto)</option><option value="enlace">Enlace</option></select></label>
+    <label class="flex flex-col gap-1 text-sm font-semibold" for="mr-titulo">Título *<input id="mr-titulo" required maxlength="150" class="border border-brand-border rounded-xl px-3 py-2 font-normal"></label>
+    <label id="mr-url-w" class="flex flex-col gap-1 text-sm font-semibold" for="mr-url">Enlace (https://)<input id="mr-url" type="url" class="border border-brand-border rounded-xl px-3 py-2 font-normal" placeholder="https://youtu.be/..."></label>
+    <label class="flex flex-col gap-1 text-sm font-semibold" for="mr-texto">Texto o descripción<textarea id="mr-texto" rows="5" maxlength="5000" class="border border-brand-border rounded-xl px-3 py-2 font-normal"></textarea></label>
+    <fieldset class="text-sm"><legend class="font-semibold mb-1">Lo ven (si no marcas ninguno, todos)</legend>
+      <label class="flex items-center gap-2"><input type="checkbox" class="mr-plan" value="web"> Web profesional</label>
+      <label class="flex items-center gap-2"><input type="checkbox" class="mr-plan" value="chatbot"> Web + asistente virtual</label>
+    </fieldset>
+    <button class="bg-brand-orange hover:bg-brand-orangeHover text-white font-bold rounded-xl py-3">Guardar</button>
+    <button type="button" id="mr-borrar" class="self-start text-sm text-red-600 font-semibold">Borrar recurso</button>
+  </form>
+</div>
+
 <div id="toast" hidden class="fixed left-1/2 -translate-x-1/2 bottom-24 z-50 bg-brand-navy text-white text-sm font-semibold px-4 py-2 rounded-xl shadow-lg"></div>
 
 <script>
@@ -350,11 +411,12 @@
   if (mq && mq.addEventListener) mq.addEventListener("change", (e) => { if (!store.get("obw_tema")) aplicarTema(e.matches); });
 
   async function arrancar(d){
+    if (d.usuario && d.usuario.rol === "cliente") { store.set("obw_cli", token); store.del("obw_token"); location.replace("/clientes.html"); return; }
     yo = d.usuario; equipo = d.equipo;
     $("#v-login").hidden = true; $("#v-app").hidden = false;
     $("#yo-nombre").textContent = yo.nombre;
     $("#b-importar").hidden = !esAdmin(); $("#f-closer").hidden = !esAdmin(); $("#l-borrar").hidden = !esAdmin();
-    $('[data-tab="admision"]').hidden = !esAdmin(); $("#nav-grid").classList.toggle("grid-cols-5", esAdmin()); $("#nav-grid").classList.toggle("grid-cols-4", !esAdmin());
+    $('[data-tab="admision"]').hidden = !esAdmin(); $('[data-tab="clientes"]').hidden = !esAdmin(); $("#nav-grid").classList.toggle("grid-cols-6", esAdmin()); $("#nav-grid").classList.toggle("grid-cols-4", !esAdmin());
     const opts = (lista, vacio) => (vacio !== undefined ? `<option value="">${vacio}</option>` : "") + lista.map((u) => `<option value="${esc(u.id)}">${esc(u.nombre)}</option>`).join("");
     $("#f-closer").innerHTML = opts(closers(), "Todos");
     $("#l-closer").innerHTML = opts(equipo); $("#l-presenta").innerHTML = opts(equipo, "El mismo closer");
@@ -370,12 +432,13 @@
   // ---------- pestañas ----------
   function ir(tab){
     tabActual = tab; store.set("obw_tab", tab);
-    if (tab === "admision" && !esAdmin()) tab = "leads";
-    ["leads","grupo","informe","panel","admision"].forEach((t) => $("#t-" + t).hidden = t !== tab);
+    if ((tab === "admision" || tab === "clientes") && !esAdmin()) tab = "leads";
+    ["leads","grupo","informe","panel","admision","clientes"].forEach((t) => $("#t-" + t).hidden = t !== tab);
     $$(".tab").forEach((b) => { const on = b.dataset.tab === tab; b.classList.toggle("text-brand-orange", on); b.classList.toggle("text-brand-muted", !on); });
     if (tab === "grupo") { store.set("obw_visto", mensajes.length ? mensajes[mensajes.length-1].id : ""); avisoChat(); pintarChat(true); }
     if (tab === "panel") pintarPanel();
     if (tab === "admision") cargarCandidatos();
+    if (tab === "clientes") cargarClientes();
   }
   $$(".tab").forEach((b) => b.addEventListener("click", () => ir(b.dataset.tab)));
 
@@ -784,6 +847,92 @@
   $("#mc-borrar").addEventListener("click", async () => {
     const b = $("#mc-borrar"); if (b.dataset.ok !== "1") { b.dataset.ok = "1"; b.textContent = "¿Seguro? Pulsa otra vez"; setTimeout(() => { b.dataset.ok = ""; b.textContent = "Borrar candidato"; }, 3000); return; }
     try { await api("admision/" + candActual.id, { method: "DELETE" }); cands = cands.filter((c) => c.id !== candActual.id); $("#m-cand").hidden = true; limpiarAudio(); pintarCands(); toast("Candidato borrado"); } catch (x) { toast(x.message); }
+  });
+
+  // ---------- clientes y recursos (solo fundador) ----------
+  let clientes = [], recursos = [], recBase = [], cliActual = null, recActual = null;
+  const TIPO_REC = { video: ["smart_display", "Vídeo"], guia: ["menu_book", "Guía"], enlace: ["link", "Enlace"] };
+  const PLAN_TXT = { web: "Web", chatbot: "Web + asistente" };
+  const URL_CLI = location.origin + "/clientes.html";
+  async function cargarClientes(){
+    try { const [a, b] = await Promise.all([api("clientes"), api("recursos")]); clientes = a.clientes; recursos = b.recursos; recBase = b.base; pintarClientes(); }
+    catch (x) { toast(x.message); }
+  }
+  function pintarClientes(){
+    $("#cli-lista").innerHTML = clientes.length ? clientes.map((c) => `<button data-cli="${esc(c.id)}" class="text-left bg-white border border-brand-border rounded-xl p-3 flex items-center justify-between gap-2 hover:bg-slate-100">
+      <span class="min-w-0"><span class="font-bold block truncate">${esc(c.negocio)}</span><span class="text-xs text-brand-muted">${PLAN_TXT[c.plan] || ""} · ${c.ultimoAcceso ? "Último acceso " + fmtF(c.ultimoAcceso.slice(0,10)) : "Aún no ha entrado"}</span></span>
+      <span class="text-xs font-bold rounded-full px-2 py-1 ${c.activo ? "bg-emerald-100 text-emerald-700" : "bg-slate-100 text-brand-muted"}">${c.activo ? "Activo" : "Sin acceso"}</span></button>`).join("")
+      : `<p class="text-sm text-brand-muted bg-white border border-brand-border rounded-xl p-4">Aún no hay clientes. Dalos de alta cuando cobres la web.</p>`;
+    const fila = (r, base) => `<${base ? "div" : "button"} ${base ? "" : `data-rec="${esc(r.id)}"`} class="text-left bg-white border border-brand-border rounded-xl p-3 flex items-center gap-3 ${base ? "opacity-80" : "hover:bg-slate-100"}">
+      <span class="ms text-brand-orange">${TIPO_REC[r.tipo][0]}</span><span class="min-w-0 flex-1"><span class="font-semibold block truncate">${esc(r.titulo)}</span>
+      <span class="text-xs text-brand-muted">${TIPO_REC[r.tipo][1]} · ${r.planes && r.planes.length ? r.planes.map((p) => PLAN_TXT[p]).join(", ") : "Todos"}${base ? " · incluido de serie" : ""}</span></span></${base ? "div" : "button"}>`;
+    $("#rec-lista").innerHTML = recursos.map((r) => fila(r, false)).join("") + recBase.map((r) => fila(r, true)).join("");
+    $$("[data-cli]").forEach((b) => b.addEventListener("click", () => abrirCli(clientes.find((c) => c.id === b.dataset.cli))));
+    $$("[data-rec]").forEach((b) => b.addEventListener("click", () => abrirRec(recursos.find((r) => r.id === b.dataset.rec))));
+  }
+  function mostrarCodigo(c, codigo){
+    const tel = (c.contacto || "").replace(/\D/g, "").slice(-9);
+    const msg = `Hola, soy Sergio de OBRAWEB. Ya tienes tu área de clientes de ${c.negocio}, con tu enlace y QR para pedir reseñas y vídeos para sacarle partido a la web.\n\nEntra aquí: ${URL_CLI}\nTu código: ${codigo}\n\nPara cualquier cambio, escríbeme por WhatsApp.`;
+    const box = $("#mk-codigo"); box.hidden = false;
+    box.innerHTML = `<p class="font-bold text-emerald-900">Código de acceso (cópialo ahora: no se vuelve a mostrar)</p>
+      <p class="font-mono text-lg font-extrabold tracking-wider select-all">${esc(codigo)}</p>
+      <div class="flex flex-wrap gap-2"><button type="button" id="mk-copiar" class="bg-white border border-emerald-200 rounded-xl px-3 py-2 font-semibold">Copiar mensaje</button>
+      <a target="_blank" rel="noopener" href="https://wa.me/${tel.length === 9 ? "34" + tel : ""}?text=${encodeURIComponent(msg)}" class="bg-emerald-600 text-white rounded-xl px-3 py-2 font-semibold">Enviar por WhatsApp</a></div>`;
+    $("#mk-copiar").addEventListener("click", () => { navigator.clipboard?.writeText(msg).then(() => toast("Mensaje copiado"), () => toast("No se ha podido copiar")); });
+  }
+  function abrirCli(c){
+    cliActual = c || null; $("#mk-codigo").hidden = true;
+    $("#mk-titulo").textContent = c ? c.negocio : "Nuevo cliente";
+    $("#mk-negocio").value = c ? c.negocio : ""; $("#mk-contacto").value = c ? c.contacto || "" : ""; $("#mk-plan").value = c ? c.plan : "web";
+    $("#mk-web").value = c ? c.web || "" : ""; $("#mk-resenas").value = c ? c.resenas || "" : ""; $("#mk-notas").value = c ? c.notas || "" : "";
+    $("#mk-activo").checked = c ? c.activo : true; $("#mk-activo-w").hidden = !c; $("#mk-extra").hidden = !c;
+    $("#mk-acceso").textContent = c ? (c.ultimoAcceso ? "Último acceso: " + new Date(c.ultimoAcceso).toLocaleString("es-ES", { dateStyle: "short", timeStyle: "short" }) : "Aún no ha entrado.") : "Al guardar se genera su código de acceso.";
+    $("#mk-borrar").textContent = "Borrar cliente"; $("#mk-borrar").dataset.ok = "";
+    $("#m-cli").hidden = false;
+  }
+  $("#b-cli-nuevo").addEventListener("click", () => abrirCli(null));
+  $("[data-cerrar-k]").addEventListener("click", () => $("#m-cli").hidden = true);
+  $("#f-cli").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const body = { negocio: $("#mk-negocio").value, contacto: $("#mk-contacto").value, plan: $("#mk-plan").value, web: $("#mk-web").value.trim(), resenas: $("#mk-resenas").value.trim(), notas: $("#mk-notas").value };
+    if (body.web && !/^https:\/\//i.test(body.web)) return toast("La web tiene que empezar por https://");
+    try {
+      if (cliActual) { body.activo = $("#mk-activo").checked; const { cliente } = await api("clientes/" + cliActual.id, { method: "POST", body }); Object.assign(cliActual, cliente); $("#m-cli").hidden = true; toast("Guardado"); }
+      else { const { cliente, codigo } = await api("clientes", { method: "POST", body }); clientes.unshift(cliente); abrirCli(cliente); mostrarCodigo(cliente, codigo); toast("Cliente creado"); }
+      if (body.resenas && !(cliActual || {}).resenas) toast("Revisa el enlace de reseñas: no es válido");
+      pintarClientes();
+    } catch (x) { toast(x.message); }
+  });
+  $("#mk-regen").addEventListener("click", async () => {
+    try { const { cliente, codigo } = await api("clientes/" + cliActual.id + "/codigo", { method: "POST" }); Object.assign(cliActual, cliente); mostrarCodigo(cliente, codigo); toast("Código nuevo: el anterior ya no sirve"); } catch (x) { toast(x.message); }
+  });
+  $("#mk-borrar").addEventListener("click", async () => {
+    const b = $("#mk-borrar"); if (b.dataset.ok !== "1") { b.dataset.ok = "1"; b.textContent = "¿Seguro? Pulsa otra vez"; setTimeout(() => { b.dataset.ok = ""; b.textContent = "Borrar cliente"; }, 3000); return; }
+    try { await api("clientes/" + cliActual.id, { method: "DELETE" }); clientes = clientes.filter((c) => c.id !== cliActual.id); $("#m-cli").hidden = true; pintarClientes(); toast("Cliente borrado"); } catch (x) { toast(x.message); }
+  });
+  function abrirRec(r){
+    recActual = r || null; $("#mr-titulo-h").textContent = r ? "Editar recurso" : "Nuevo recurso";
+    $("#mr-tipo").value = r ? r.tipo : "video"; $("#mr-titulo").value = r ? r.titulo : ""; $("#mr-url").value = r ? r.url || "" : ""; $("#mr-texto").value = r ? r.texto || "" : "";
+    $$(".mr-plan").forEach((i) => i.checked = !!(r && r.planes && r.planes.includes(i.value)));
+    $("#mr-borrar").hidden = !r; $("#mr-borrar").textContent = "Borrar recurso"; $("#mr-borrar").dataset.ok = "";
+    $("#mr-url-w").hidden = $("#mr-tipo").value === "guia"; $("#m-rec").hidden = false;
+  }
+  $("#mr-tipo").addEventListener("change", () => $("#mr-url-w").hidden = $("#mr-tipo").value === "guia");
+  $("#b-rec-nuevo").addEventListener("click", () => abrirRec(null));
+  $("[data-cerrar-r]").addEventListener("click", () => $("#m-rec").hidden = true);
+  $("#f-rec").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const body = { tipo: $("#mr-tipo").value, titulo: $("#mr-titulo").value, url: $("#mr-url").value.trim(), texto: $("#mr-texto").value, planes: $$(".mr-plan").filter((i) => i.checked).map((i) => i.value) };
+    if (body.tipo !== "guia" && !/^https:\/\//i.test(body.url)) return toast("Pon un enlace que empiece por https://");
+    try {
+      const { recurso } = await api(recActual ? "recursos/" + recActual.id : "recursos", { method: "POST", body });
+      if (recActual) Object.assign(recActual, recurso); else recursos.unshift(recurso);
+      $("#m-rec").hidden = true; pintarClientes(); toast("Recurso guardado");
+    } catch (x) { toast(x.message); }
+  });
+  $("#mr-borrar").addEventListener("click", async () => {
+    const b = $("#mr-borrar"); if (b.dataset.ok !== "1") { b.dataset.ok = "1"; b.textContent = "¿Seguro? Pulsa otra vez"; setTimeout(() => { b.dataset.ok = ""; b.textContent = "Borrar recurso"; }, 3000); return; }
+    try { await api("recursos/" + recActual.id, { method: "DELETE" }); recursos = recursos.filter((r) => r.id !== recActual.id); $("#m-rec").hidden = true; pintarClientes(); toast("Recurso borrado"); } catch (x) { toast(x.message); }
   });
 
   // ---------- inicio ----------
