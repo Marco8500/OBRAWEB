@@ -146,7 +146,9 @@ Incluye un elemento en "criterios" por cada id de la lista.`;
 }
 
 async function evaluar(c, env) {
-  if (!env.ANTHROPIC_API_KEY) return evaluarGratis(c, env);   // sin clave de Claude → opción gratuita
+  // Groq (gratis) tiene prioridad. Ojo: Netlify puede inyectar ANTHROPIC_API_KEY por su cuenta (AI Gateway),
+  // que gasta créditos de Netlify; solo se usa Claude si no hay clave de Groq.
+  if (env.GROQ_API_KEY || env.IA_API_KEY || env.STT_API_KEY || !env.ANTHROPIC_API_KEY) return evaluarGratis(c, env);
   const r = RUBRICAS[c.rol];
   const client = new Anthropic({ apiKey: env.ANTHROPIC_API_KEY, timeout: 50_000, maxRetries: 0 });
   const system = instrucciones(r);
@@ -173,7 +175,7 @@ export async function admision(req, ruta, { store, env, user }) {
     if (m === "GET") {
       const { blobs } = await store.list({ prefix: "candidatos/" });
       const cs = (await Promise.all(blobs.map((b) => store.get(b.key, { type: "json" })))).filter(Boolean).map(conPuntos);
-      const ia = env.ANTHROPIC_API_KEY ? "claude" : (env.GROQ_API_KEY || env.STT_API_KEY) ? "groq" : null;  // nunca se envía la clave, solo si existe
+      const ia = (env.GROQ_API_KEY || env.IA_API_KEY || env.STT_API_KEY) ? "groq" : env.ANTHROPIC_API_KEY ? "claude" : null;  // nunca se envía la clave, solo si existe
       return json({ candidatos: cs.sort((a, b) => (b.creado || "").localeCompare(a.creado || "")), rubricas: RUBRICAS, umbral: UMBRAL, ia });
     }
     if (m === "POST") {
