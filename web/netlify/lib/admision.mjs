@@ -75,16 +75,19 @@ async function borrarAudio(store, c) {
   await Promise.all(blobs.map((b) => store.delete(b.key)));
 }
 
+// Por defecto, Groq (plan gratuito, API compatible con OpenAI). Basta con GROQ_API_KEY.
+const GROQ = "https://api.groq.com/openai/v1";
 async function transcribir(partes, env) {
-  const key = env.STT_API_KEY; if (!key) throw new Error("Falta configurar STT_API_KEY en Netlify (clave del servicio de transcripción).");
-  const base = (env.STT_BASE_URL || "https://api.openai.com/v1").replace(/\/$/, "");
+  const key = env.GROQ_API_KEY || env.STT_API_KEY; if (!key) throw new Error("Falta configurar GROQ_API_KEY en Netlify (clave gratuita de console.groq.com).");
+  const base = (env.STT_BASE_URL || GROQ).replace(/\/$/, "");
   const fd = new FormData();
   fd.append("file", new Blob(partes, { type: "audio/mpeg" }), "audio.mp3");
-  fd.append("model", env.STT_MODEL || "whisper-1");
+  fd.append("model", env.STT_MODEL || "whisper-large-v3-turbo");
   fd.append("language", "es");
   fd.append("response_format", "text");
   const r = await fetch(base + "/audio/transcriptions", { method: "POST", headers: { authorization: "Bearer " + key }, body: fd });
-  if (!r.ok) throw new Error("El servicio de transcripción ha devuelto un error (" + r.status + "). Revisa la clave STT_API_KEY.");
+  if (r.status === 429) throw new Error("Has llegado al límite gratuito de transcripción por ahora. Prueba más tarde.");
+  if (!r.ok) throw new Error("El servicio de transcripción ha devuelto un error (" + r.status + "). Revisa la clave GROQ_API_KEY.");
   return (await r.text()).trim();
 }
 
@@ -101,18 +104,52 @@ const ESQUEMA = {
   },
 };
 
-async function evaluar(c, env) {
-  if (!env.ANTHROPIC_API_KEY) throw new Error("Falta configurar ANTHROPIC_API_KEY en Netlify.");
-  const r = RUBRICAS[c.rol];
-  const client = new Anthropic({ apiKey: env.ANTHROPIC_API_KEY, timeout: 50_000, maxRetries: 0 });
-  const system = `Eres la persona responsable de selección de OBRAWEB, una empresa que vende páginas web (450 € y 550 € + IVA) a pequeños negocios locales en España.
+function instrucciones(r) {
+  return `Eres la persona responsable de selección de OBRAWEB, una empresa que vende páginas web (450 € y 550 € + IVA) a pequeños negocios locales en España.
 Vas a evaluar a un candidato para el puesto: ${r.nombre}. ${r.descripcion}
 Recibirás la transcripción de una grabación (entrevista, roleplay o llamada). Evalúa SOLO con lo que se oye en la transcripción:
 - "cumple" es true únicamente si hay evidencia clara en la transcripción. Si no hay información suficiente, false y evidencia "Sin evidencia en la grabación".
 - "evidencia": una cita breve (máximo 25 palabras) o una descripción concreta de lo que dijo o hizo.
 - No inventes datos que no aparezcan. No valores el aspecto físico, la edad, el origen ni nada ajeno al puesto.
 - Resumen de 3–5 frases, directo y útil para decidir. Escribe en español.`;
+}
+function mensaje(c, r) {
   const lista = r.criterios.map((k) => `- ${k.id}: ${k.texto}${k.imp ? " (imprescindible)" : ""}`).join("\n");
+  return `Criterios (usa estos id exactos):\n${lista}\n\nNotas del fundador sobre el candidato: ${c.notas || "(ninguna)"}\n\nTranscripción:\n"""\n${(c.transcripcion || "").slice(0, 60000)}\n"""`;
+}
+function limpiar(out, r) {
+  const ids = new Set(r.criterios.map((k) => k.id));
+  out.criterios = (Array.isArray(out.criterios) ? out.criterios : []).filter((k) => k && ids.has(k.id)).map((k) => ({ id: k.id, cumple: k.cumple === true, evidencia: String(k.evidencia || "").slice(0, 300) }));
+  out.resumen = String(out.resumen || ""); out.puntos_fuertes = (out.puntos_fuertes || []).map(String); out.a_mejorar = (out.a_mejorar || []).map(String);
+  if (!["apto", "dudoso", "no_apto"].includes(out.recomendacion)) out.recomendacion = "dudoso";
+  return out;
+}
+
+// Gratis: modelo abierto en Groq (API compatible con OpenAI) con salida JSON
+async function evaluarGratis(c, env) {
+  const key = env.GROQ_API_KEY || env.IA_API_KEY || env.STT_API_KEY;
+  if (!key) throw new Error("Falta configurar GROQ_API_KEY en Netlify (clave gratuita de console.groq.com).");
+  const r = RUBRICAS[c.rol];
+  const formato = `Responde SOLO con un objeto JSON con esta forma exacta:
+{"criterios":[{"id":"<id>","cumple":true|false,"evidencia":"..."}],"resumen":"...","puntos_fuertes":["..."],"a_mejorar":["..."],"recomendacion":"apto"|"dudoso"|"no_apto"}
+Incluye un elemento en "criterios" por cada id de la lista.`;
+  const res = await fetch((env.IA_BASE_URL || env.STT_BASE_URL || GROQ).replace(/\/$/, "") + "/chat/completions", {
+    method: "POST", headers: { authorization: "Bearer " + key, "content-type": "application/json" },
+    body: JSON.stringify({ model: env.IA_MODEL || "llama-3.3-70b-versatile", temperature: 0.2, response_format: { type: "json_object" },
+      messages: [{ role: "system", content: instrucciones(r) + "\n" + formato }, { role: "user", content: mensaje(c, r) }] }),
+  });
+  if (res.status === 429) throw new Error("Has llegado al límite gratuito de la IA por ahora. Prueba más tarde.");
+  if (!res.ok) throw new Error("La IA ha devuelto un error (" + res.status + "). Revisa la clave GROQ_API_KEY o el modelo IA_MODEL.");
+  const d = await res.json();
+  let out; try { out = JSON.parse(d.choices?.[0]?.message?.content || ""); } catch { throw new Error("La evaluación no ha llegado bien. Inténtalo de nuevo."); }
+  return limpiar(out, r);
+}
+
+async function evaluar(c, env) {
+  if (!env.ANTHROPIC_API_KEY) return evaluarGratis(c, env);   // sin clave de Claude → opción gratuita
+  const r = RUBRICAS[c.rol];
+  const client = new Anthropic({ apiKey: env.ANTHROPIC_API_KEY, timeout: 50_000, maxRetries: 0 });
+  const system = instrucciones(r);
   const res = await client.beta.messages.create({
     model: "claude-opus-5-5",
     max_tokens: 8000,
@@ -120,14 +157,12 @@ Recibirás la transcripción de una grabación (entrevista, roleplay o llamada).
     fallbacks: "default",
     output_config: { effort: "low", format: { type: "json_schema", schema: ESQUEMA } },
     system,
-    messages: [{ role: "user", content: `Criterios (usa estos id exactos):\n${lista}\n\nNotas del fundador sobre el candidato: ${c.notas || "(ninguna)"}\n\nTranscripción:\n"""\n${(c.transcripcion || "").slice(0, 60000)}\n"""` }],
+    messages: [{ role: "user", content: mensaje(c, r) }],
   });
   if (res.stop_reason === "refusal") throw new Error("La IA no ha podido evaluar esta grabación. Evalúa a mano.");
   const t = res.content.filter((b) => b.type === "text").map((b) => b.text).join("");
   let out; try { out = JSON.parse(t); } catch { throw new Error("La evaluación no ha llegado completa. Inténtalo de nuevo."); }
-  const ids = new Set(r.criterios.map((k) => k.id));
-  out.criterios = (out.criterios || []).filter((k) => ids.has(k.id));
-  return out;
+  return limpiar(out, r);
 }
 
 // Router: se llama desde equipo.mjs con el usuario ya autenticado como fundador
