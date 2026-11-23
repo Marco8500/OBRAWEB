@@ -184,11 +184,12 @@
         <h3 class="font-extrabold flex items-center gap-1"><span class="ms text-brand-orange">contactless</span>Placa NFC de reseñas (se ofrece en el área de clientes)</h3>
         <label class="flex items-center gap-2 text-sm font-semibold" for="nfc-activo"><input id="nfc-activo" type="checkbox"> Mostrarla a los clientes</label>
         <div class="grid sm:grid-cols-2 gap-2">
-          <label class="flex flex-col gap-1 text-sm font-semibold" for="nfc-precio-in">Precio (tal cual se muestra)<input id="nfc-precio-in" maxlength="40" class="border border-brand-border rounded-xl px-3 py-2 font-normal" placeholder="25 € + IVA"></label>
+          <label class="flex flex-col gap-1 text-sm font-semibold" for="nfc-precio-in">Precio (tal cual se muestra)<input id="nfc-precio-in" maxlength="40" class="border border-brand-border rounded-xl px-3 py-2 font-normal" placeholder="25 €"></label>
           <label class="flex flex-col gap-1 text-sm font-semibold" for="nfc-video-in">Vídeo de cómo se usa (YouTube)<input id="nfc-video-in" type="url" class="border border-brand-border rounded-xl px-3 py-2 font-normal" placeholder="https://youtu.be/..."></label>
+          <label class="flex flex-col gap-1 text-sm font-semibold sm:col-span-2" for="nfc-pago-in">Enlace de pago (Stripe). Vacío = el botón abre WhatsApp<input id="nfc-pago-in" type="url" class="border border-brand-border rounded-xl px-3 py-2 font-normal" placeholder="https://buy.stripe.com/..."></label>
         </div>
         <button id="b-nfc-guardar" class="self-start bg-brand-navy text-white font-bold rounded-xl px-3 py-2 text-sm">Guardar placa NFC</button>
-        <p class="text-xs text-brand-muted">Cuando un cliente pulsa «La quiero», te escribe por WhatsApp con su negocio y el precio.</p>
+        <p class="text-xs text-brand-muted">Con enlace de pago, el cliente paga con tarjeta en Stripe (te deja nombre del negocio, teléfono y dirección) y te llega el aviso de Stripe. Sin enlace, te escribe por WhatsApp.</p>
       </div>
     </section>
 
@@ -866,7 +867,7 @@
   const URL_CLI = location.origin + "/clientes.html";
   async function cargarClientes(){
     try { const [a, b, t] = await Promise.all([api("clientes"), api("recursos"), api("recursos/tienda")]); clientes = a.clientes; recursos = b.recursos; recBase = b.base; pintarClientes();
-      $("#nfc-activo").checked = t.tienda.nfc.activo; $("#nfc-precio-in").value = t.tienda.nfc.precio; $("#nfc-video-in").value = t.tienda.nfc.video || ""; }
+      $("#nfc-activo").checked = t.tienda.nfc.activo; $("#nfc-precio-in").value = t.tienda.nfc.precio; $("#nfc-video-in").value = t.tienda.nfc.video || ""; $("#nfc-pago-in").value = t.tienda.nfc.pago || ""; }
     catch (x) { toast(x.message); }
   }
   function pintarClientes(){
@@ -902,9 +903,9 @@
     $("#m-cli").hidden = false;
   }
   $("#b-nfc-guardar").addEventListener("click", async () => {
-    const video = $("#nfc-video-in").value.trim();
-    if (video && !/^https:\/\//i.test(video)) return toast("El vídeo tiene que empezar por https://");
-    try { await api("recursos/tienda", { method: "POST", body: { nfc: { activo: $("#nfc-activo").checked, precio: $("#nfc-precio-in").value, video } } }); toast("Placa NFC guardada"); } catch (x) { toast(x.message); }
+    const video = $("#nfc-video-in").value.trim(), pago = $("#nfc-pago-in").value.trim();
+    if ((video && !/^https:\/\//i.test(video)) || (pago && !/^https:\/\//i.test(pago))) return toast("Los enlaces tienen que empezar por https://");
+    try { await api("recursos/tienda", { method: "POST", body: { nfc: { activo: $("#nfc-activo").checked, precio: $("#nfc-precio-in").value, video, pago } } }); toast("Placa NFC guardada"); } catch (x) { toast(x.message); }
   });
   $("#b-cli-nuevo").addEventListener("click", () => abrirCli(null));
   $("[data-cerrar-k]").addEventListener("click", () => $("#m-cli").hidden = true);

@@ -146,11 +146,12 @@
           </ul>
           <div class="flex flex-wrap items-center gap-3 pt-1">
             <span id="nfc-precio" class="text-2xl font-extrabold"></span>
-            <a id="b-nfc" target="_blank" rel="noopener" class="btn text-white font-bold rounded-xl px-5 py-2.5 text-sm flex items-center gap-1"><span class="ms text-[18px]">shopping_bag</span>La quiero</a>
+            <a id="b-nfc" target="_blank" rel="noopener" class="btn text-white font-bold rounded-xl px-5 py-2.5 text-sm flex items-center gap-1"><span class="ms text-[18px]">shopping_bag</span><span id="b-nfc-txt">Comprar ahora</span></a>
             <a id="b-nfc-video" hidden href="#nfc-video" class="text-sm font-semibold text-orange-300 hover:text-orange-200 flex items-center gap-1"><span class="ms text-[18px]">play_circle</span>Ver cómo se usa</a>
           </div>
         </div>
       </div>
+      <p id="nfc-seguro" class="relative text-xs text-white/40 mt-3 flex items-center gap-1"><span class="ms text-[16px]">lock</span>Pago seguro con tarjeta a través de Stripe. IVA incluido. <a id="nfc-dudas" target="_blank" rel="noopener" class="underline hover:text-white ml-1">¿Dudas?</a></p>
       <div id="nfc-video" class="relative mt-5" hidden></div>
     </section>
 
@@ -241,7 +242,14 @@
     $("#s-nfc").hidden = !(nfc && nfc.activo);
     if (nfc && nfc.activo) {
       $("#nfc-precio").textContent = nfc.precio;
-      $("#b-nfc").href = wa(`Hola, soy de ${c.negocio}. Quiero la placa NFC de reseñas de Google (${nfc.precio}).`, WA);
+      const msgNfc = wa(`Hola, soy de ${c.negocio}. Quiero la placa NFC de reseñas de Google (${nfc.precio}).`, WA);
+      $("#nfc-dudas").href = wa(`Hola, soy de ${c.negocio}. Tengo una duda sobre la placa NFC de reseñas.`, WA);
+      $("#nfc-seguro").hidden = !nfc.pago;
+      if (nfc.pago) {
+        const ref = c.negocio.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^A-Za-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 190);
+        $("#b-nfc").href = nfc.pago + (nfc.pago.includes("?") ? "&" : "?") + "client_reference_id=" + encodeURIComponent(ref || "cliente");
+        $("#b-nfc-txt").textContent = "Comprar ahora";
+      } else { $("#b-nfc").href = msgNfc; $("#b-nfc-txt").textContent = "La quiero"; }
       const yt = nfc.video ? idYoutube(nfc.video) : null, box = $("#nfc-video");
       $("#b-nfc-video").hidden = !nfc.video; box.hidden = !nfc.video;
       if (yt && /^[\w-]{6,20}$/.test(yt)) box.innerHTML = `<div class="relative w-full rounded-2xl overflow-hidden border border-white/10" style="padding-top:56.25%"><iframe class="absolute inset-0 w-full h-full" src="https://www.youtube-nocookie.com/embed/${yt}?rel=0" title="Cómo se usa la placa NFC" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
@@ -261,6 +269,14 @@
     const a = document.createElement("a"); a.href = src; a.download = "qr-resenas-google.png"; document.body.appendChild(a); a.click(); a.remove();
   });
 
+  // vuelta de Stripe tras pagar la placa
+  if (new URLSearchParams(location.search).get("nfc") === "ok") {
+    const av = document.createElement("div");
+    av.className = "fixed inset-x-3 top-3 z-50 mx-auto max-w-md rounded-2xl border border-emerald-400/30 bg-emerald-950/90 backdrop-blur p-4 text-sm shadow-2xl flex gap-3";
+    av.innerHTML = '<span class="ms text-emerald-400">check_circle</span><div class="flex-1"><b>¡Pago recibido, gracias!</b><br><span class="text-white/70">Te preparamos la placa con tu enlace de reseñas y te escribimos por WhatsApp para el envío.</span></div><button class="ms text-white/50 self-start" aria-label="Cerrar">close</button>';
+    document.body.appendChild(av); av.querySelector("button").addEventListener("click", () => av.remove());
+    history.replaceState(null, "", location.pathname);
+  }
   if (token) cargar();
 })();
 </script>

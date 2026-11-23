@@ -39,7 +39,7 @@ async function listar(store, prefix) {
   return (await Promise.all(blobs.map((b) => store.get(b.key, { type: "json" })))).filter(Boolean);
 }
 // Tienda del área de clientes (de momento, la placa NFC de reseñas). Se edita desde la pestaña Clientes.
-const TIENDA_DEF = { nfc: { activo: true, precio: "25 € + IVA", video: "" } };
+const TIENDA_DEF = { nfc: { activo: true, precio: "25 €", video: "", pago: "https://buy.stripe.com/7sY5kDasKeZO8NUbKj5ZC07" } };
 async function leerTienda(store) {
   const t = await store.get("ajustes/tienda", { type: "json" }).catch(() => null);
   return { nfc: { ...TIENDA_DEF.nfc, ...(t && t.nfc) } };
@@ -63,7 +63,7 @@ export async function adminClientes(req, ruta, { store, env }) {
       if (m === "GET") return json({ tienda: await leerTienda(store) });
       if (m === "POST") {
         const n = cuerpo.nfc || {};
-        const t = { nfc: { activo: n.activo !== false, precio: txt(n.precio, 40) || TIENDA_DEF.nfc.precio, video: /^https:\/\//i.test(n.video || "") ? txt(n.video, 500) : "" } };
+        const t = { nfc: { activo: n.activo !== false, precio: txt(n.precio, 40) || TIENDA_DEF.nfc.precio, video: /^https:\/\//i.test(n.video || "") ? txt(n.video, 500) : "", pago: /^https:\/\//i.test(n.pago || "") ? txt(n.pago, 500) : "" } };
         await store.setJSON("ajustes/tienda", t); return json({ tienda: t });
       }
     }
