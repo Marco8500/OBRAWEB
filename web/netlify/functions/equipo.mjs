@@ -3,6 +3,7 @@
 // Datos guardados en Netlify Blobs: cada lead, mensaje e informe es una clave propia.
 import { getStore } from "@netlify/blobs";
 import { createHmac, timingSafeEqual, randomBytes } from "node:crypto";
+import { admision } from "../lib/admision.mjs";
 
 export const config = { path: "/api/equipo/*" };
 
@@ -105,7 +106,8 @@ export async function manejar(req, { store, env = process.env }) {
   const url = new URL(req.url);
   const ruta = url.pathname.replace(/^\/api\/equipo\/?/, "").split("/").filter(Boolean);
   const metodo = req.method;
-  const cuerpo = metodo === "POST" || metodo === "PUT" ? await req.json().catch(() => ({})) : {};
+  // Admisión lee su propio cuerpo (JSON o trozos de audio en binario)
+  const cuerpo = (metodo === "POST" || metodo === "PUT") && ruta[0] !== "admision" ? await req.json().catch(() => ({})) : {};
 
   // --- entrar con código ---
   if (ruta[0] === "login" && metodo === "POST") {
@@ -129,6 +131,12 @@ export async function manejar(req, { store, env = process.env }) {
   if (!user) return json({ error: "Sesión caducada. Vuelve a entrar con tu código." }, 401);
   const esAdmin = user.rol === "admin";
   try { await registrarActividad(store, user, req); } catch (e) { console.error("actividad", e); }
+
+  // --- ADMISIÓN DE CANDIDATOS (solo fundador) ---
+  if (ruta[0] === "admision") {
+    if (!esAdmin) return json({ error: "Solo el fundador puede ver la admisión." }, 403);
+    return admision(req, ruta, { store, env, user });
+  }
 
   // --- CONEXIONES DEL EQUIPO (solo fundador) ---
   if (ruta[0] === "actividad" && metodo === "GET") {

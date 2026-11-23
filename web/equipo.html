@@ -154,6 +154,17 @@
       </div>
     </section>
 
+    <!-- ADMISIÓN (solo fundador) -->
+    <section id="t-admision" hidden class="flex flex-col gap-3">
+      <div class="flex items-center justify-between gap-2">
+        <h2 class="text-xl font-extrabold">Admisión</h2>
+        <button id="b-cand-nuevo" class="text-sm font-bold bg-brand-orange text-white rounded-xl px-3 py-2 flex items-center gap-1"><span class="ms text-[18px]">person_add</span>Nuevo candidato</button>
+      </div>
+      <p class="text-sm text-brand-muted -mt-1">Marca las cualidades que cumple cada candidato o sube un MP3 de la entrevista o del roleplay y deja que la IA lo evalúe. Apto = al menos el umbral y todas las imprescindibles (★).</p>
+      <div id="cand-chips" class="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1"></div>
+      <div id="cand-lista" class="flex flex-col gap-2"></div>
+    </section>
+
     <!-- PANEL -->
     <section id="t-panel" hidden class="flex flex-col gap-4">
       <div class="flex items-center justify-between gap-2">
@@ -170,11 +181,12 @@
 
   <!-- pestañas -->
   <nav class="fixed bottom-0 inset-x-0 z-30 bg-white border-t border-brand-border safe-b">
-    <div class="max-w-3xl mx-auto grid grid-cols-4">
+    <div id="nav-grid" class="max-w-3xl mx-auto grid grid-cols-4">
       <button data-tab="leads" class="tab py-2 flex flex-col items-center text-xs font-semibold"><span class="ms">list_alt</span>Leads</button>
       <button data-tab="grupo" class="tab py-2 flex flex-col items-center text-xs font-semibold relative"><span class="ms">forum</span>Grupo<span id="dot" hidden class="absolute top-0.5 right-[28%] min-w-[18px] h-[18px] px-1 rounded-full bg-red-600 text-white text-[11px] font-bold leading-[18px] text-center ring-2 ring-white"></span></button>
       <button data-tab="informe" class="tab py-2 flex flex-col items-center text-xs font-semibold"><span class="ms">edit_note</span>Informe</button>
       <button data-tab="panel" class="tab py-2 flex flex-col items-center text-xs font-semibold"><span class="ms">monitoring</span>Panel</button>
+      <button data-tab="admision" hidden class="tab py-2 flex flex-col items-center text-xs font-semibold"><span class="ms">badge</span>Admisión</button>
     </div>
   </nav>
 </div>
@@ -240,6 +252,50 @@
   </form>
 </div>
 
+<!-- ============ NUEVO CANDIDATO ============ -->
+<div id="m-cand-nuevo" hidden class="fixed inset-0 z-40 bg-black/50 flex items-end sm:items-center justify-center">
+  <form id="f-cand-nuevo" class="bg-white w-full sm:max-w-lg rounded-t-2xl sm:rounded-2xl p-4 flex flex-col gap-3 safe-b">
+    <div class="flex items-center justify-between"><h3 class="text-lg font-extrabold">Nuevo candidato</h3>
+      <button type="button" data-cerrar-c class="w-9 h-9 rounded-full hover:bg-slate-100" aria-label="Cerrar"><span class="ms">close</span></button></div>
+    <label class="flex flex-col gap-1 text-sm font-semibold" for="cn-nombre">Nombre<input id="cn-nombre" required class="border border-brand-border rounded-xl px-3 py-2 font-normal"></label>
+    <label class="flex flex-col gap-1 text-sm font-semibold" for="cn-contacto">Teléfono o email<input id="cn-contacto" class="border border-brand-border rounded-xl px-3 py-2 font-normal"></label>
+    <label class="flex flex-col gap-1 text-sm font-semibold" for="cn-rol">Puesto
+      <select id="cn-rol" class="border border-brand-border rounded-xl px-3 py-2 font-normal"><option value="setter">Setter (llamadas en frío)</option><option value="closer">Closer (presenta y cierra)</option><option value="developer">Developer (producción de webs)</option></select></label>
+    <label class="flex flex-col gap-1 text-sm font-semibold" for="cn-notas">Notas<textarea id="cn-notas" rows="3" class="border border-brand-border rounded-xl px-3 py-2 font-normal" placeholder="De dónde viene, experiencia, primera impresión…"></textarea></label>
+    <label class="flex items-start gap-2 text-sm" for="cn-consent"><input id="cn-consent" type="checkbox" class="mt-1"> El candidato ha dado su consentimiento para grabar la entrevista y analizarla con IA.</label>
+    <p id="cn-err" class="text-red-600 text-sm" hidden></p>
+    <button class="bg-brand-orange text-white font-bold rounded-xl py-3">Crear candidato</button>
+  </form>
+</div>
+
+<!-- ============ FICHA DE CANDIDATO ============ -->
+<div id="m-cand" hidden class="fixed inset-0 z-40 bg-black/50 flex items-end sm:items-center justify-center">
+  <div class="bg-white w-full sm:max-w-xl max-h-[92vh] overflow-y-auto rounded-t-2xl sm:rounded-2xl p-4 flex flex-col gap-4 safe-b">
+    <div class="flex items-start justify-between gap-2">
+      <div><h3 id="mc-nombre" class="text-lg font-extrabold"></h3><p id="mc-sub" class="text-sm text-brand-muted"></p></div>
+      <button type="button" data-cerrar-c class="w-9 h-9 rounded-full hover:bg-slate-100 shrink-0" aria-label="Cerrar"><span class="ms">close</span></button>
+    </div>
+    <div id="mc-score"></div>
+    <div><h4 class="font-bold mb-2">Cualidades</h4><div id="mc-checks" class="flex flex-col gap-1.5"></div></div>
+    <div class="bg-slate-50 rounded-xl p-3 flex flex-col gap-2">
+      <h4 class="font-bold flex items-center gap-1"><span class="ms text-brand-orange">graphic_eq</span>Grabación (MP3)</h4>
+      <label class="flex items-start gap-2 text-sm" for="mc-consent"><input id="mc-consent" type="checkbox" class="mt-1"> El candidato ha dado su consentimiento para grabar y analizar el audio con IA.</label>
+      <div id="mc-audio"></div>
+      <input id="mc-file" type="file" accept=".mp3,audio/mpeg" class="text-sm">
+      <p id="mc-audio-msg" class="text-sm text-brand-muted"></p>
+      <div class="flex flex-wrap gap-2">
+        <button id="mc-analizar" class="bg-brand-navy text-white font-bold rounded-xl px-3 py-2 text-sm flex items-center gap-1"><span class="ms text-[18px]">auto_awesome</span>Analizar con IA</button>
+        <button id="mc-borrar-audio" class="border border-red-200 text-red-600 rounded-xl px-3 py-2 text-sm font-semibold">Borrar audio</button>
+      </div>
+      <details id="mc-trans-wrap" class="text-sm" hidden><summary class="cursor-pointer font-semibold">Ver transcripción</summary><p id="mc-trans" class="whitespace-pre-wrap mt-2 text-brand-muted"></p></details>
+    </div>
+    <div><h4 class="font-bold mb-2">Resumen</h4><div id="mc-resumen" class="text-sm flex flex-col gap-2"></div></div>
+    <label class="flex flex-col gap-1 text-sm font-semibold" for="mc-notas">Notas<textarea id="mc-notas" rows="2" class="border border-brand-border rounded-xl px-3 py-2 font-normal"></textarea></label>
+    <div><h4 class="font-bold mb-2">Decisión</h4><div id="mc-decision" class="flex gap-2 flex-wrap"></div></div>
+    <button id="mc-borrar" class="self-start text-sm text-red-600 font-semibold">Borrar candidato</button>
+  </div>
+</div>
+
 <div id="toast" hidden class="fixed left-1/2 -translate-x-1/2 bottom-24 z-50 bg-brand-navy text-white text-sm font-semibold px-4 py-2 rounded-xl shadow-lg"></div>
 
 <script>
@@ -297,6 +353,7 @@
     $("#v-login").hidden = true; $("#v-app").hidden = false;
     $("#yo-nombre").textContent = yo.nombre;
     $("#b-importar").hidden = !esAdmin(); $("#f-closer").hidden = !esAdmin(); $("#l-borrar").hidden = !esAdmin();
+    $('[data-tab="admision"]').hidden = !esAdmin(); $("#nav-grid").classList.toggle("grid-cols-5", esAdmin()); $("#nav-grid").classList.toggle("grid-cols-4", !esAdmin());
     const opts = (lista, vacio) => (vacio !== undefined ? `<option value="">${vacio}</option>` : "") + lista.map((u) => `<option value="${esc(u.id)}">${esc(u.nombre)}</option>`).join("");
     $("#f-closer").innerHTML = opts(closers(), "Todos");
     $("#l-closer").innerHTML = opts(equipo); $("#l-presenta").innerHTML = opts(equipo, "El mismo closer");
@@ -312,10 +369,12 @@
   // ---------- pestañas ----------
   function ir(tab){
     tabActual = tab; store.set("obw_tab", tab);
-    ["leads","grupo","informe","panel"].forEach((t) => $("#t-" + t).hidden = t !== tab);
+    if (tab === "admision" && !esAdmin()) tab = "leads";
+    ["leads","grupo","informe","panel","admision"].forEach((t) => $("#t-" + t).hidden = t !== tab);
     $$(".tab").forEach((b) => { const on = b.dataset.tab === tab; b.classList.toggle("text-brand-orange", on); b.classList.toggle("text-brand-muted", !on); });
     if (tab === "grupo") { store.set("obw_visto", mensajes.length ? mensajes[mensajes.length-1].id : ""); avisoChat(); pintarChat(true); }
     if (tab === "panel") pintarPanel();
+    if (tab === "admision") cargarCandidatos();
   }
   $$(".tab").forEach((b) => b.addEventListener("click", () => ir(b.dataset.tab)));
 
@@ -617,6 +676,111 @@
     try { const { lead } = await api("leads/" + b.dataset.pagar + "/pagar", { method: "POST", body: { closer: b.dataset.closer } });
       leads = leads.map((l) => l.id === lead.id ? lead : l); pintarPanel(); toast("Comisión marcada como pagada"); }
     catch (x) { b.disabled = false; toast(x.message); }
+  });
+
+
+  // ---------- ADMISIÓN (solo fundador) ----------
+  let cands = [], rubricas = {}, umbral = 70, candF = "todos", candActual = null;
+  const ROLN = { setter: "Setter", closer: "Closer", developer: "Developer" };
+  async function cargarCandidatos(){ try { const d = await api("admision"); cands = d.candidatos; rubricas = d.rubricas; umbral = d.umbral; pintarCands(); } catch (x) { toast(x.message); } }
+  function estadoCand(c){
+    if (c.decision === "contratado") return ["Contratado","bg-emerald-600 text-white"];
+    if (c.decision === "descartado") return ["Descartado","bg-slate-200 text-slate-600"];
+    return c.apto ? ["Apto","bg-emerald-100 text-emerald-700"] : ["No apto","bg-red-100 text-red-700"];
+  }
+  function pintarCands(){
+    const F = [["todos","Todos",()=>true],["setter","Setter",c=>c.rol==="setter"],["closer","Closer",c=>c.rol==="closer"],["developer","Developer",c=>c.rol==="developer"],["aptos","Aptos",c=>c.apto&&c.decision==="en proceso"]];
+    $("#cand-chips").innerHTML = F.map(([k,t,f]) => `<button data-cf="${k}" class="shrink-0 text-sm font-semibold rounded-full px-3 py-1.5 border ${k===candF?"bg-brand-navy text-white border-brand-navy":"bg-white border-brand-border"}">${t} <span class="text-brand-muted">${cands.filter(f).length}</span></button>`).join("");
+    const lista = cands.filter(F.find(x=>x[0]===candF)[2]);
+    $("#cand-lista").innerHTML = lista.length ? lista.map((c) => { const [et, ec] = estadoCand(c);
+      return `<button data-cid="${esc(c.id)}" class="text-left bg-white rounded-2xl border border-brand-border p-3 flex items-center gap-3 hover:border-brand-orange">
+        <div class="w-12 h-12 rounded-full flex items-center justify-center font-extrabold shrink-0 ${c.apto?"bg-emerald-50 text-emerald-700":"bg-slate-100 text-slate-600"}">${c.puntuacion}%</div>
+        <div class="min-w-0 flex-1"><div class="font-bold truncate">${esc(c.nombre)}</div><div class="text-sm text-brand-muted">${ROLN[c.rol]}${c.ia?" · evaluado con IA":""}${c.audio?.completo?" · 🎧":""}</div></div>
+        <span class="text-[11px] font-bold rounded-full px-2 py-0.5 shrink-0 ${ec}">${et}</span></button>`; }).join("")
+      : `<div class="bg-white rounded-2xl border border-dashed border-brand-border p-6 text-center text-brand-muted text-sm">No hay candidatos. Pulsa <b>Nuevo candidato</b>.</div>`;
+  }
+  $("#cand-chips").addEventListener("click", (e) => { const b = e.target.closest("[data-cf]"); if (b) { candF = b.dataset.cf; pintarCands(); } });
+  $("#cand-lista").addEventListener("click", (e) => { const b = e.target.closest("[data-cid]"); if (b) abrirCand(cands.find((c) => c.id === b.dataset.cid)); });
+  $("#b-cand-nuevo").addEventListener("click", () => { $("#f-cand-nuevo").reset(); $("#cn-err").hidden = true; $("#m-cand-nuevo").hidden = false; });
+  $$("[data-cerrar-c]").forEach((b) => b.addEventListener("click", () => { $("#m-cand-nuevo").hidden = true; $("#m-cand").hidden = true; limpiarAudio(); }));
+  $("#f-cand-nuevo").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    try { const { candidato } = await api("admision", { method: "POST", body: { nombre: $("#cn-nombre").value, contacto: $("#cn-contacto").value, rol: $("#cn-rol").value, notas: $("#cn-notas").value, consentimiento: $("#cn-consent").checked } });
+      cands.unshift(candidato); pintarCands(); $("#m-cand-nuevo").hidden = true; abrirCand(candidato); }
+    catch (x) { $("#cn-err").textContent = x.message; $("#cn-err").hidden = false; }
+  });
+  function actualizarCand(c){ candActual = c; cands = cands.map((x) => x.id === c.id ? c : x); pintarCands(); pintarCand(); }
+  let urlAudio = null; function limpiarAudio(){ if (urlAudio) { URL.revokeObjectURL(urlAudio); urlAudio = null; } }
+  function abrirCand(c){ candActual = c; limpiarAudio(); $("#mc-file").value = ""; $("#mc-audio-msg").textContent = ""; pintarCand(); $("#m-cand").hidden = false; if (c.audio?.completo) cargarAudio(); }
+  async function cargarAudio(){
+    try { const r = await fetch(API + "admision/" + candActual.id + "/audio", { headers: { authorization: "Bearer " + token } }); if (!r.ok) return;
+      limpiarAudio(); urlAudio = URL.createObjectURL(await r.blob()); $("#mc-audio").innerHTML = `<audio controls src="${urlAudio}" class="w-full"></audio>`; } catch {}
+  }
+  function resumenAuto(c, r){
+    const si = r.criterios.filter((k) => c.checks[k.id]), no = r.criterios.filter((k) => !c.checks[k.id]);
+    let t = `Candidato a ${r.nombre}. Cumple ${si.length} de ${r.criterios.length} cualidades (${c.puntuacion} %). `;
+    t += c.apto ? "Es APTO: supera el umbral y cumple todas las imprescindibles." : (c.faltan.length ? `No es apto: le falta ${c.faltan.length === 1 ? "una imprescindible" : c.faltan.length + " imprescindibles"} (${c.faltan.join("; ")}).` : `No es apto: no llega al ${umbral} %.`);
+    return `<p>${esc(t)}</p>${si.length ? `<p><b>Puntos fuertes:</b> ${esc(si.map(k=>k.texto).join(" · "))}</p>` : ""}${no.length ? `<p><b>A mejorar o sin comprobar:</b> ${esc(no.map(k=>k.texto).join(" · "))}</p>` : ""}`;
+  }
+  function pintarCand(){
+    const c = candActual, r = rubricas[c.rol]; const [et, ec] = estadoCand(c);
+    $("#mc-nombre").textContent = c.nombre; $("#mc-sub").textContent = r.nombre + (c.contacto ? " · " + c.contacto : "");
+    $("#mc-score").innerHTML = `<div class="flex items-center justify-between text-sm font-semibold"><span>Puntuación: <b class="text-lg">${c.puntuacion} %</b> <span class="text-brand-muted font-normal">(apto desde ${umbral} %)</span></span><span class="text-[11px] font-bold rounded-full px-2 py-0.5 ${ec}">${et}</span></div>
+      <div class="bar mt-2 relative"><i class="${c.apto?"bg-emerald-500":"bg-brand-orange"}" style="width:${c.puntuacion}%"></i><b class="absolute top-[-3px] w-0.5 h-3.5 bg-brand-navy" style="left:${umbral}%"></b></div>
+      ${!c.apto && c.faltan.length ? `<p class="text-sm text-red-600 mt-2">Falta imprescindible: ${esc(c.faltan.join(" · "))}</p>` : ""}`;
+    const ev = Object.fromEntries((c.ia?.criterios || []).map((k) => [k.id, k.evidencia]));
+    $("#mc-checks").innerHTML = r.criterios.map((k) => `<label class="flex items-start gap-2 p-2 rounded-xl border ${c.checks[k.id]?"border-emerald-200 bg-emerald-50":"border-brand-border"}" for="ck-${k.id}">
+      <input id="ck-${k.id}" type="checkbox" data-ck="${k.id}" ${c.checks[k.id]?"checked":""} class="mt-1">
+      <span class="flex-1 text-sm"><span class="font-semibold">${k.imp?"★ ":""}${esc(k.texto)}</span> <span class="text-brand-muted">${"●".repeat(k.peso)}</span>${ev[k.id]?`<span class="block text-xs text-brand-muted mt-0.5">IA: ${esc(ev[k.id])}</span>`:""}</span></label>`).join("");
+    $("#mc-consent").checked = !!c.consentimiento;
+    if (!c.audio?.completo) $("#mc-audio").innerHTML = `<p class="text-sm text-brand-muted">Sin audio. Sube un MP3 (máx. 20 MB) de la entrevista o del roleplay.</p>`;
+    else if (!urlAudio) $("#mc-audio").innerHTML = `<p class="text-sm text-brand-muted">🎧 ${esc(c.audio.nombre)} (${(c.audio.bytes/1048576).toFixed(1)} MB)</p>`;
+    $("#mc-analizar").disabled = !c.audio?.completo; $("#mc-analizar").classList.toggle("opacity-50", !c.audio?.completo);
+    $("#mc-borrar-audio").hidden = !c.audio?.completo;
+    $("#mc-trans-wrap").hidden = !c.transcripcion; $("#mc-trans").textContent = c.transcripcion || "";
+    const ia = c.ia;
+    $("#mc-resumen").innerHTML = ia ? `<p class="text-xs font-bold uppercase tracking-wide text-brand-orange">Evaluado con IA · recomendación: ${({apto:"apto",dudoso:"dudoso",no_apto:"no apto"})[ia.recomendacion]||"-"}</p>
+      <p>${esc(ia.resumen)}</p>${ia.puntos_fuertes?.length?`<p><b>Puntos fuertes:</b> ${esc(ia.puntos_fuertes.join(" · "))}</p>`:""}${ia.a_mejorar?.length?`<p><b>A mejorar:</b> ${esc(ia.a_mejorar.join(" · "))}</p>`:""}
+      <p class="text-xs text-brand-muted">La IA propone; la decisión es tuya. Puedes cambiar cualquier casilla.</p>` : resumenAuto(c, r);
+    $("#mc-notas").value = c.notas || "";
+    $("#mc-decision").innerHTML = [["en proceso","En proceso"],["contratado","Contratado"],["descartado","Descartado"]].map(([k,t]) => `<button data-dec="${k}" class="text-sm font-semibold rounded-xl px-3 py-2 border ${c.decision===k?"bg-brand-navy text-white border-brand-navy":"border-brand-border"}">${t}</button>`).join("");
+  }
+  async function guardarCand(body){ try { const { candidato } = await api("admision/" + candActual.id, { method: "POST", body }); actualizarCand(candidato); } catch (x) { toast(x.message); } }
+  $("#mc-checks").addEventListener("change", (e) => { if (!e.target.dataset.ck) return; const checks = { ...candActual.checks }; if (e.target.checked) checks[e.target.dataset.ck] = true; else delete checks[e.target.dataset.ck]; guardarCand({ checks }); });
+  $("#mc-consent").addEventListener("change", (e) => guardarCand({ consentimiento: e.target.checked }));
+  $("#mc-notas").addEventListener("change", (e) => guardarCand({ notas: e.target.value }));
+  $("#mc-decision").addEventListener("click", (e) => { const b = e.target.closest("[data-dec]"); if (b) guardarCand({ decision: b.dataset.dec }); });
+  $("#mc-file").addEventListener("change", async (e) => {
+    const f = e.target.files[0]; if (!f) return; const msg = $("#mc-audio-msg");
+    if (!/\.mp3$/i.test(f.name) && f.type !== "audio/mpeg") { msg.textContent = "Tiene que ser un archivo MP3."; return; }
+    if (f.size > 20 * 1048576) { msg.textContent = "El MP3 supera 20 MB. Recórtalo o bájale la calidad."; return; }
+    if (!candActual.consentimiento) { msg.textContent = "Marca antes la casilla de consentimiento."; return; }
+    const T = 3 * 1048576, n = Math.ceil(f.size / T);
+    try {
+      for (let i = 0; i < n; i++) {
+        msg.textContent = `Subiendo… ${Math.round(100 * i / n)} %`;
+        const r = await fetch(API + `admision/${candActual.id}/audio?parte=${i}&total=${n}&nombre=${encodeURIComponent(f.name)}`, { method: "PUT", headers: { authorization: "Bearer " + token, "content-type": "application/octet-stream" }, body: f.slice(i * T, (i + 1) * T) });
+        const d = await r.json().catch(() => ({})); if (!r.ok) throw new Error(d.error || "No se ha podido subir el audio."); if (i === n - 1) actualizarCand(d.candidato);
+      }
+      msg.textContent = "Audio subido. Pulsa «Analizar con IA»."; limpiarAudio(); cargarAudio();
+    } catch (x) { msg.textContent = x.message; }
+    e.target.value = "";
+  });
+  $("#mc-analizar").addEventListener("click", async () => {
+    const msg = $("#mc-audio-msg"), b = $("#mc-analizar"); b.disabled = true;
+    try {
+      msg.textContent = "1/2 · Transcribiendo el audio… (puede tardar hasta un minuto)";
+      actualizarCand((await api("admision/" + candActual.id + "/transcribir", { method: "POST" })).candidato);
+      msg.textContent = "2/2 · Evaluando con IA…";
+      actualizarCand((await api("admision/" + candActual.id + "/evaluar", { method: "POST" })).candidato);
+      msg.textContent = "Listo. Revisa las casillas y el resumen."; toast("Candidato evaluado");
+    } catch (x) { msg.textContent = x.message; }
+    b.disabled = false;
+  });
+  $("#mc-borrar-audio").addEventListener("click", async () => { try { const { candidato } = await api("admision/" + candActual.id + "/audio", { method: "DELETE" }); limpiarAudio(); actualizarCand(candidato); toast("Audio borrado"); } catch (x) { toast(x.message); } });
+  $("#mc-borrar").addEventListener("click", async () => {
+    const b = $("#mc-borrar"); if (b.dataset.ok !== "1") { b.dataset.ok = "1"; b.textContent = "¿Seguro? Pulsa otra vez"; setTimeout(() => { b.dataset.ok = ""; b.textContent = "Borrar candidato"; }, 3000); return; }
+    try { await api("admision/" + candActual.id, { method: "DELETE" }); cands = cands.filter((c) => c.id !== candActual.id); $("#m-cand").hidden = true; limpiarAudio(); pintarCands(); toast("Candidato borrado"); } catch (x) { toast(x.message); }
   });
 
   // ---------- inicio ----------
