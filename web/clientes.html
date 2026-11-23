@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" class="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -8,7 +8,7 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <meta name="theme-color" content="#0B192C">
+  <meta name="theme-color" content="#05070A">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=swap" rel="stylesheet">
@@ -17,122 +17,126 @@
   <script src="datos.js"></script>
   <script>
     tailwind.config = { theme: { extend: {
-      colors: { brand: { orange:"#F97316", orangeHover:"#EA580C", navy:"#0B192C", muted:"#64748B", border:"#E2E8F0" } },
+      colors: { brand: { orange:"#F97316", orangeHover:"#EA580C" } },
       fontFamily: { sans: ['"Plus Jakarta Sans"','system-ui','sans-serif'] } } } };
-    (function(){ var t=null; try{ t=localStorage.getItem("obw_tema"); }catch(e){}
-      var oscuro = t ? t==="oscuro" : window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches;
-      if (oscuro) document.documentElement.classList.add("dark"); })();
   </script>
   <style>
-    html.dark{color-scheme:dark}
-    html.dark body{background:#0A1422;color:#E6EDF7}
-    html.dark .bg-white{background-color:#132238!important}
-    html.dark .bg-slate-50{background-color:#1A2C46!important}
-    html.dark .border-brand-border{border-color:#24395A!important}
-    html.dark .text-brand-navy{color:#E6EDF7!important}
-    html.dark .text-brand-muted{color:#94A3B8!important}
-    html.dark header.bg-brand-navy,html.dark #v-login{background:#06101C!important}
-    html.dark input,html.dark textarea{background-color:#0F1C30;color:#E6EDF7;border-color:#2B4266}
-    html.dark .bg-emerald-50{background-color:rgba(16,185,129,.14)!important}
-    html.dark .text-emerald-800{color:#6EE7B7!important}
-    html.dark #toast{background:#F97316}
-    body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#F1F5F9;-webkit-tap-highlight-color:transparent}
+    html{color-scheme:dark}
+    body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;-webkit-tap-highlight-color:transparent;color:#F5F7FA;
+      background:#05070A radial-gradient(1000px 520px at 85% -10%,rgba(249,115,22,.16),transparent 60%) no-repeat,
+                 radial-gradient(700px 420px at -10% 30%,rgba(249,115,22,.06),transparent 60%) no-repeat;background-attachment:fixed}
     .ms{font-family:'Material Symbols Outlined';font-weight:normal;font-style:normal;line-height:1;display:inline-block;vertical-align:middle;-webkit-font-feature-settings:'liga';font-feature-settings:'liga'}
     input,textarea{font-size:16px}
     [hidden]{display:none!important}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(8px)}
+    a.card:hover,details.card:hover{border-color:rgba(249,115,22,.45)}
+    .oro{background:linear-gradient(90deg,#FDBA74,#F97316 55%,#FB923C);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .linea{height:1px;background:linear-gradient(90deg,transparent,rgba(249,115,22,.6),transparent)}
+    .campo{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.12);color:#F5F7FA}
+    .campo:focus{outline:none;border-color:#F97316;box-shadow:0 0 0 3px rgba(249,115,22,.25)}
+    .campo::placeholder{color:rgba(255,255,255,.3)}
+    .btn{background:linear-gradient(180deg,#FB923C,#EA580C);box-shadow:0 8px 24px -8px rgba(249,115,22,.6)}
+    .btn:hover{filter:brightness(1.08)}
     #qr img,#qr canvas{width:100%;height:auto;image-rendering:pixelated}
+    @keyframes sube{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+    .sube{animation:sube .6s ease both}.d1{animation-delay:.08s}.d2{animation-delay:.16s}.d3{animation-delay:.24s}
+    @media (prefers-reduced-motion:reduce){.sube{animation:none}}
   </style>
 </head>
-<body class="text-brand-navy min-h-screen">
+<body class="min-h-screen">
 
 <!-- ============ ENTRAR ============ -->
-<section id="v-login" class="min-h-screen flex items-center justify-center px-4 bg-brand-navy">
-  <form id="f-login" class="w-full max-w-sm bg-white rounded-2xl p-6 shadow-xl flex flex-col gap-4">
+<section id="v-login" class="min-h-screen flex items-center justify-center px-4 py-10">
+  <form id="f-login" class="sube card w-full max-w-sm rounded-3xl p-7 shadow-2xl flex flex-col gap-5">
     <div class="flex items-center gap-2">
       <div class="w-9 h-9 rounded-lg bg-brand-orange flex items-center justify-center text-white"><span class="ms text-[20px]">construction</span></div>
       <span class="font-extrabold text-xl tracking-tight">OBRA<span class="text-brand-orange">WEB</span></span>
     </div>
     <div>
-      <h1 class="text-2xl font-extrabold">Área de clientes</h1>
-      <p class="text-brand-muted text-sm mt-1">Entra con el código que te enviamos por WhatsApp.</p>
+      <p class="text-[11px] font-bold tracking-[.25em] uppercase text-brand-orange">Acceso privado</p>
+      <h1 class="text-3xl font-extrabold mt-2 leading-tight">Área de <span class="oro">clientes</span></h1>
+      <p class="text-white/60 text-sm mt-2">Exclusivo para negocios que trabajan con nosotros. Entra con el código que te enviamos por WhatsApp.</p>
     </div>
-    <label class="flex flex-col gap-1.5 text-sm font-semibold" for="codigo">Tu código
-      <input id="codigo" autocomplete="one-time-code" autocapitalize="characters" spellcheck="false" required class="border border-brand-border rounded-xl px-4 py-3 font-normal uppercase tracking-wider focus:outline-none focus:ring-2 focus:ring-brand-orange" placeholder="CLI-XXXXXXXX">
+    <label class="flex flex-col gap-1.5 text-sm font-semibold text-white/80" for="codigo">Tu código
+      <input id="codigo" autocomplete="one-time-code" autocapitalize="characters" spellcheck="false" required class="campo rounded-xl px-4 py-3 font-normal uppercase tracking-wider" placeholder="CLI-XXXXXXXX">
     </label>
-    <p id="login-err" class="text-red-600 text-sm" hidden></p>
-    <button class="bg-brand-orange hover:bg-brand-orangeHover text-white font-bold rounded-xl py-3 transition">Entrar</button>
-    <a data-wa-ayuda target="_blank" rel="noopener" class="text-center text-sm text-brand-muted hover:underline">¿No tienes código? Escríbenos</a>
-    <a href="/" class="text-center text-sm text-brand-muted hover:underline">← Volver a la web</a>
+    <p id="login-err" class="text-red-400 text-sm" hidden></p>
+    <button class="btn text-white font-bold rounded-xl py-3 transition">Entrar</button>
+    <div class="flex justify-between text-sm text-white/50">
+      <a href="/" class="hover:text-white">← Volver a la web</a>
+      <a data-wa-ayuda target="_blank" rel="noopener" class="hover:text-white">¿Sin código?</a>
+    </div>
   </form>
 </section>
 
 <!-- ============ ÁREA ============ -->
-<div id="v-app" hidden class="min-h-screen pb-10">
-  <header class="sticky top-0 z-30 bg-brand-navy text-white" style="padding-top:env(safe-area-inset-top,0px)">
+<div id="v-app" hidden class="min-h-screen pb-12">
+  <header class="sticky top-0 z-30 bg-black/40 backdrop-blur-md border-b border-white/5" style="padding-top:env(safe-area-inset-top,0px)">
     <div class="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between gap-2">
       <div class="flex items-center gap-2 min-w-0">
         <div class="w-7 h-7 rounded-lg bg-brand-orange flex items-center justify-center shrink-0"><span class="ms text-[16px]">construction</span></div>
-        <span class="font-extrabold tracking-tight truncate">OBRA<span class="text-brand-orange">WEB</span> · Clientes</span>
+        <span class="font-extrabold tracking-tight truncate">OBRA<span class="text-brand-orange">WEB</span></span>
+        <span class="hidden sm:inline text-[10px] font-bold tracking-[.2em] uppercase text-white/40 ml-1">Clientes</span>
       </div>
-      <div class="flex items-center gap-2 text-sm shrink-0">
-        <button id="b-tema" class="w-9 h-9 rounded-full hover:bg-white/10 flex items-center justify-center" aria-label="Cambiar entre modo claro y oscuro"><span class="ms text-[20px]">dark_mode</span></button>
-        <button id="b-salir" class="text-slate-300 hover:text-white flex items-center gap-1"><span class="ms text-[18px]">logout</span>Salir</button>
-      </div>
+      <button id="b-salir" class="text-white/60 hover:text-white flex items-center gap-1 text-sm"><span class="ms text-[18px]">logout</span>Salir</button>
     </div>
   </header>
 
-  <main class="max-w-3xl mx-auto px-4 py-5 flex flex-col gap-5">
-    <div>
-      <p class="text-sm text-brand-muted" id="plan"></p>
-      <h1 id="negocio" class="text-2xl sm:text-3xl font-extrabold"></h1>
-    </div>
+  <main class="max-w-3xl mx-auto px-4 pt-8 flex flex-col gap-6">
+    <!-- bienvenida -->
+    <section class="sube flex flex-col gap-3">
+      <span class="self-start inline-flex items-center gap-1.5 rounded-full border border-brand-orange/40 bg-brand-orange/10 px-3 py-1 text-[11px] font-bold tracking-[.18em] uppercase text-orange-300"><span class="ms text-[14px]">workspace_premium</span><span id="plan"></span></span>
+      <h1 class="text-3xl sm:text-4xl font-extrabold leading-tight">Enhorabuena,<br><span id="negocio" class="oro"></span></h1>
+      <p class="text-white/70 text-base sm:text-lg max-w-xl">Has dado el primer paso: tu negocio ya tiene su sitio en internet. Aquí tienes todo lo necesario para que te traiga clientes.</p>
+      <div class="linea mt-2"></div>
+    </section>
 
     <!-- accesos rápidos -->
-    <div class="grid sm:grid-cols-2 gap-3">
-      <a id="b-web" target="_blank" rel="noopener" class="bg-white border border-brand-border rounded-2xl p-4 flex items-center gap-3 hover:shadow-md transition">
-        <span class="w-11 h-11 rounded-xl bg-brand-navy text-white flex items-center justify-center shrink-0"><span class="ms">language</span></span>
-        <span><span class="font-bold block">Ver mi web</span><span id="web-txt" class="text-sm text-brand-muted break-all"></span></span>
+    <div class="sube d1 grid sm:grid-cols-2 gap-3">
+      <a id="b-web" target="_blank" rel="noopener" class="card rounded-2xl p-4 flex items-center gap-3 transition">
+        <span class="w-11 h-11 rounded-xl bg-white/10 text-white flex items-center justify-center shrink-0"><span class="ms">language</span></span>
+        <span class="min-w-0"><span class="font-bold block">Ver mi web</span><span id="web-txt" class="text-sm text-white/50 break-all"></span></span>
       </a>
-      <a id="b-wa" target="_blank" rel="noopener" class="bg-white border border-brand-border rounded-2xl p-4 flex items-center gap-3 hover:shadow-md transition">
-        <span class="w-11 h-11 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0"><span class="ms">chat</span></span>
-        <span><span class="font-bold block">Pedir un cambio o ayuda</span><span class="text-sm text-brand-muted">Por WhatsApp, te contestamos nosotros</span></span>
+      <a id="b-wa" target="_blank" rel="noopener" class="card rounded-2xl p-4 flex items-center gap-3 transition">
+        <span class="w-11 h-11 rounded-xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center shrink-0"><span class="ms">chat</span></span>
+        <span><span class="font-bold block">Pedir un cambio o ayuda</span><span class="text-sm text-white/50">Por WhatsApp, directo con nosotros</span></span>
       </a>
     </div>
 
     <!-- reseñas -->
-    <section id="s-resenas" class="bg-white border border-brand-border rounded-2xl p-4 sm:p-5 flex flex-col gap-4">
+    <section id="s-resenas" class="sube d2 card rounded-3xl p-5 sm:p-6 flex flex-col gap-5">
       <div>
-        <h2 class="text-lg font-extrabold flex items-center gap-2"><span class="ms text-brand-orange">star</span>Consigue más reseñas en Google</h2>
-        <p class="text-sm text-brand-muted mt-1">Las reseñas son lo que más te sube en Google Maps. Pídelas justo al terminar un buen trabajo.</p>
+        <h2 class="text-lg font-extrabold flex items-center gap-2"><span class="ms text-brand-orange" style="font-variation-settings:'FILL' 1">star</span>Consigue más reseñas en Google</h2>
+        <p class="text-sm text-white/60 mt-1">Las reseñas son lo que más te sube en Google Maps. Pídelas justo al terminar un buen trabajo.</p>
       </div>
-      <div id="resenas-si" class="grid sm:grid-cols-[180px_1fr] gap-4 items-start">
+      <div id="resenas-si" class="grid sm:grid-cols-[180px_1fr] gap-5 items-start">
         <div class="flex flex-col items-center gap-2">
-          <div id="qr" class="w-40 bg-white p-2 rounded-xl border border-brand-border"></div>
-          <button id="b-qr" class="text-sm font-semibold text-brand-orange flex items-center gap-1"><span class="ms text-[18px]">download</span>Descargar QR</button>
+          <div id="qr" class="w-40 bg-white p-2.5 rounded-2xl shadow-[0_0_40px_-10px_rgba(249,115,22,.6)]"></div>
+          <button id="b-qr" class="text-sm font-semibold text-orange-300 hover:text-orange-200 flex items-center gap-1"><span class="ms text-[18px]">download</span>Descargar QR</button>
         </div>
         <div class="flex flex-col gap-3">
-          <p class="text-sm">Imprime el QR y ponlo en el mostrador, en la factura o en el coche de trabajo. O envía este mensaje a tus clientes:</p>
-          <textarea id="msg-resena" rows="4" class="border border-brand-border rounded-xl px-3 py-2 text-sm"></textarea>
+          <p class="text-sm text-white/80">Imprime el QR y ponlo en el mostrador, en la factura o en el coche de trabajo. O envía este mensaje a tus clientes:</p>
+          <textarea id="msg-resena" rows="4" class="campo rounded-xl px-3 py-2 text-sm"></textarea>
           <div class="flex flex-wrap gap-2">
-            <a id="b-enviar-resena" target="_blank" rel="noopener" class="bg-emerald-600 text-white font-bold rounded-xl px-4 py-2 text-sm flex items-center gap-1"><span class="ms text-[18px]">send</span>Enviar por WhatsApp</a>
-            <button id="b-copiar-resena" class="border border-brand-border rounded-xl px-4 py-2 text-sm font-semibold flex items-center gap-1"><span class="ms text-[18px]">content_copy</span>Copiar</button>
+            <a id="b-enviar-resena" target="_blank" rel="noopener" class="btn text-white font-bold rounded-xl px-4 py-2 text-sm flex items-center gap-1"><span class="ms text-[18px]">send</span>Enviar por WhatsApp</a>
+            <button id="b-copiar-resena" class="border border-white/15 hover:border-white/30 rounded-xl px-4 py-2 text-sm font-semibold flex items-center gap-1"><span class="ms text-[18px]">content_copy</span>Copiar</button>
           </div>
         </div>
       </div>
-      <p id="resenas-no" hidden class="text-sm bg-slate-50 rounded-xl p-3">Aún no tenemos tu enlace de reseñas. <a data-wa-resenas target="_blank" rel="noopener" class="font-semibold text-brand-orange underline">Pídenoslo por WhatsApp</a> y te lo dejamos aquí, con tu QR.</p>
+      <p id="resenas-no" hidden class="text-sm bg-white/5 rounded-xl p-3 text-white/80">Aún no tenemos tu enlace de reseñas. <a data-wa-resenas target="_blank" rel="noopener" class="font-semibold text-orange-300 underline">Pídenoslo por WhatsApp</a> y te lo dejamos aquí, con tu QR.</p>
     </section>
 
     <!-- recursos -->
-    <section class="flex flex-col gap-3">
+    <section class="sube d3 flex flex-col gap-3">
       <h2 class="text-lg font-extrabold flex items-center gap-2"><span class="ms text-brand-orange">school</span>Recursos para sacarle partido</h2>
       <div id="recursos" class="flex flex-col gap-3"></div>
     </section>
 
-    <p class="text-xs text-brand-muted text-center pt-2">¿Dudas? Escríbenos por WhatsApp. · <a href="condiciones-contratacion.html" class="underline">Condiciones</a> · <a href="politica-privacidad.html" class="underline">Privacidad</a></p>
+    <p class="text-xs text-white/40 text-center pt-4">¿Dudas? Escríbenos por WhatsApp · <a href="condiciones-contratacion.html" class="underline hover:text-white">Condiciones</a> · <a href="politica-privacidad.html" class="underline hover:text-white">Privacidad</a></p>
   </main>
 </div>
 
-<div id="toast" hidden class="fixed left-1/2 -translate-x-1/2 bottom-6 z-50 bg-brand-navy text-white text-sm font-semibold px-4 py-2 rounded-xl shadow-lg"></div>
+<div id="toast" hidden class="fixed left-1/2 -translate-x-1/2 bottom-6 z-50 bg-brand-orange text-white text-sm font-semibold px-4 py-2 rounded-xl shadow-lg"></div>
 
 <script>
 (function(){
@@ -155,11 +159,6 @@
   }
   $("[data-wa-ayuda]").href = wa("Hola, soy cliente de OBRAWEB y necesito mi código del área de clientes.", WA);
 
-  // ---------- tema ----------
-  function aplicarTema(osc){ document.documentElement.classList.toggle("dark", osc); $("#b-tema .ms").textContent = osc ? "light_mode" : "dark_mode"; }
-  aplicarTema(document.documentElement.classList.contains("dark"));
-  $("#b-tema").addEventListener("click", () => { const osc = !document.documentElement.classList.contains("dark"); store.set("obw_tema", osc ? "oscuro" : "claro"); aplicarTema(osc); });
-
   // ---------- entrar / salir ----------
   $("#f-login").addEventListener("submit", async (e) => {
     e.preventDefault(); const err = $("#login-err"); err.hidden = true;
@@ -181,22 +180,22 @@
   }
   function tarjeta(r){
     const yt = r.tipo === "video" && r.url ? idYoutube(r.url) : null;
-    const texto = r.texto ? `<div class="text-sm leading-relaxed whitespace-pre-line text-brand-muted">${esc(r.texto)}</div>` : "";
-    if (yt && /^[\w-]{6,20}$/.test(yt)) return `<article class="bg-white border border-brand-border rounded-2xl overflow-hidden">
+    const texto = r.texto ? `<div class="text-sm leading-relaxed whitespace-pre-line text-white/60">${esc(r.texto)}</div>` : "";
+    if (yt && /^[\w-]{6,20}$/.test(yt)) return `<article class="card rounded-2xl overflow-hidden">
       <div class="relative w-full" style="padding-top:56.25%"><iframe class="absolute inset-0 w-full h-full" src="https://www.youtube-nocookie.com/embed/${yt}?rel=0" title="${esc(r.titulo)}" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
       <div class="p-4 flex flex-col gap-2"><h3 class="font-bold flex items-center gap-2"><span class="ms text-brand-orange">smart_display</span>${esc(r.titulo)}</h3>${texto}</div></article>`;
-    if (r.tipo === "guia") return `<details class="bg-white border border-brand-border rounded-2xl p-4 group">
-      <summary class="font-bold cursor-pointer flex items-center gap-2 list-none"><span class="ms text-brand-orange">menu_book</span><span class="flex-1">${esc(r.titulo)}</span><span class="ms text-brand-muted group-open:rotate-180 transition">expand_more</span></summary>
+    if (r.tipo === "guia") return `<details class="card rounded-2xl p-4 group">
+      <summary class="font-bold cursor-pointer flex items-center gap-2 list-none"><span class="ms text-brand-orange">menu_book</span><span class="flex-1">${esc(r.titulo)}</span><span class="ms text-white/40 group-open:rotate-180 transition">expand_more</span></summary>
       <div class="mt-3">${texto}</div></details>`;
     const icono = r.tipo === "video" ? "smart_display" : "link";
-    return `<a href="${esc(r.url)}" target="_blank" rel="noopener" class="bg-white border border-brand-border rounded-2xl p-4 flex items-start gap-3 hover:shadow-md transition">
-      <span class="ms text-brand-orange">${icono}</span><span class="flex-1 flex flex-col gap-1"><span class="font-bold">${esc(r.titulo)}</span>${texto}</span><span class="ms text-brand-muted">open_in_new</span></a>`;
+    return `<a href="${esc(r.url)}" target="_blank" rel="noopener" class="card rounded-2xl p-4 flex items-start gap-3 transition">
+      <span class="ms text-brand-orange">${icono}</span><span class="flex-1 flex flex-col gap-1"><span class="font-bold">${esc(r.titulo)}</span>${texto}</span><span class="ms text-white/40">open_in_new</span></a>`;
   }
 
   // ---------- pintar ----------
   function pintar(d){
     const c = d.cliente;
-    $("#negocio").textContent = c.negocio; $("#plan").textContent = "Plan: " + (c.planNombre || "");
+    $("#negocio").textContent = c.negocio; $("#plan").textContent = c.planNombre || "";
     document.title = c.negocio + " · Área de clientes";
     $("#b-web").hidden = !c.web; if (c.web) { $("#b-web").href = c.web; $("#web-txt").textContent = c.web.replace(/^https:\/\//, "").replace(/\/$/, ""); }
     $("#b-wa").href = wa(`Hola, soy de ${c.negocio}. Quería pedir un cambio en mi web: `, WA);
@@ -205,11 +204,11 @@
     if (c.resenas) {
       $("#qr").innerHTML = "";
       if (window.QRCode) new QRCode($("#qr"), { text: c.resenas, width: 512, height: 512, correctLevel: QRCode.CorrectLevel.M });
-      else $("#qr").innerHTML = `<p class="text-xs text-brand-muted p-2">No se ha podido cargar el QR. Recarga la página.</p>`;
+      else $("#qr").innerHTML = `<p class="text-xs text-slate-500 p-2">No se ha podido cargar el QR. Recarga la página.</p>`;
       const guardado = store.get("obw_msg_resena");
       $("#msg-resena").value = guardado || `¡Hola! Gracias por confiar en ${c.negocio}. Si te ha gustado el trabajo, nos ayudaría mucho que nos dejaras una reseña en Google, solo es un minuto: ${c.resenas}`;
     }
-    $("#recursos").innerHTML = d.recursos.length ? d.recursos.map(tarjeta).join("") : `<p class="text-sm text-brand-muted">Pronto tendrás aquí vídeos y guías.</p>`;
+    $("#recursos").innerHTML = d.recursos.length ? d.recursos.map(tarjeta).join("") : `<p class="text-sm text-white/50">Pronto tendrás aquí vídeos y guías.</p>`;
     $("#v-login").hidden = true; $("#v-app").hidden = false;
   }
   async function cargar(){ try { pintar(await api("cliente")); } catch (x) { if (token) toast(x.message); } }
