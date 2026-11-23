@@ -173,7 +173,8 @@ export async function admision(req, ruta, { store, env, user }) {
     if (m === "GET") {
       const { blobs } = await store.list({ prefix: "candidatos/" });
       const cs = (await Promise.all(blobs.map((b) => store.get(b.key, { type: "json" })))).filter(Boolean).map(conPuntos);
-      return json({ candidatos: cs.sort((a, b) => (b.creado || "").localeCompare(a.creado || "")), rubricas: RUBRICAS, umbral: UMBRAL });
+      const ia = env.ANTHROPIC_API_KEY ? "claude" : (env.GROQ_API_KEY || env.STT_API_KEY) ? "groq" : null;  // nunca se envía la clave, solo si existe
+      return json({ candidatos: cs.sort((a, b) => (b.creado || "").localeCompare(a.creado || "")), rubricas: RUBRICAS, umbral: UMBRAL, ia });
     }
     if (m === "POST") {
       const b = await req.json().catch(() => ({}));

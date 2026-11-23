@@ -161,6 +161,7 @@
         <button id="b-cand-nuevo" class="text-sm font-bold bg-brand-orange text-white rounded-xl px-3 py-2 flex items-center gap-1"><span class="ms text-[18px]">person_add</span>Nuevo candidato</button>
       </div>
       <p class="text-sm text-brand-muted -mt-1">Marca las cualidades que cumple cada candidato o sube un MP3 de la entrevista o del roleplay y deja que la IA lo evalúe. Apto = al menos el umbral y todas las imprescindibles (★).</p>
+      <p id="cand-ia" class="text-xs font-semibold"></p>
       <div id="cand-chips" class="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1"></div>
       <div id="cand-lista" class="flex flex-col gap-2"></div>
     </section>
@@ -682,7 +683,9 @@
   // ---------- ADMISIÓN (solo fundador) ----------
   let cands = [], rubricas = {}, umbral = 70, candF = "todos", candActual = null;
   const ROLN = { setter: "Setter", closer: "Closer", developer: "Developer" };
-  async function cargarCandidatos(){ try { const d = await api("admision"); cands = d.candidatos; rubricas = d.rubricas; umbral = d.umbral; pintarCands(); } catch (x) { toast(x.message); } }
+  async function cargarCandidatos(){ try { const d = await api("admision"); cands = d.candidatos; rubricas = d.rubricas; umbral = d.umbral;
+    $("#cand-ia").innerHTML = d.ia ? `<span class="text-emerald-700">● Análisis con IA activado (${d.ia === "claude" ? "Claude" : "Groq, gratis"})</span>` : `<span class="text-amber-700">● Análisis con IA sin activar: añade GROQ_API_KEY en Netlify y vuelve a publicar</span>`;
+    pintarCands(); } catch (x) { toast(x.message); } }
   function estadoCand(c){
     if (c.decision === "contratado") return ["Contratado","bg-emerald-600 text-white"];
     if (c.decision === "descartado") return ["Descartado","bg-slate-200 text-slate-600"];
