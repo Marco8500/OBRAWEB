@@ -20,9 +20,9 @@
   var P = D.portfolio || {}, C = D.capturas || {};
   $$("[data-port]").forEach(function (a) { var u = P[a.getAttribute("data-port")]; if (u) { a.href = u; a.hidden = false; } });
   $$("[data-port-url]").forEach(function (s) { var u = P[s.getAttribute("data-port-url")]; if (u) s.textContent = u.replace(/^https?:\/\//, "").replace(/\/$/, ""); });
-  $$("img[data-larga]").forEach(function (img) {
+  function cargarLarga(img) {
     var src = C[img.getAttribute("data-larga")]; if (!src) return;
-    var larga = new Image(); larga.alt = img.alt; larga.className = "larga"; larga.loading = "lazy"; larga.decoding = "async";
+    var larga = new Image(); larga.alt = img.alt; larga.className = "larga"; larga.decoding = "async";
     larga.onload = function () {
       var vista = img.parentNode; vista.replaceChild(larga, img);
       var pista = d.createElement("span"); pista.className = "pista"; pista.textContent = tactil ? "Se desliza sola" : "Pasa el ratón"; vista.appendChild(pista);
@@ -30,7 +30,13 @@
       function medir() { var dist = Math.max(0, larga.offsetHeight - vista.offsetHeight); vista.style.setProperty("--dist", dist + "px"); vista.style.setProperty("--dur", Math.min(12, Math.max(3, dist / 220)) + "s"); }
     };
     larga.src = src;
-  });
+  }
+  // las capturas largas pesan: se cargan solo cuando la tarjeta está cerca de la pantalla
+  var largas = $$("img[data-larga]");
+  if ("IntersectionObserver" in w) {
+    var ioL = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { ioL.unobserve(e.target); cargarLarga(e.target); } }); }, { rootMargin: "600px 0px" });
+    largas.forEach(function (img) { ioL.observe(img); });
+  } else { largas.forEach(cargarLarga); }
 
   /* ---------- opiniones reales (datos.js) ---------- */
   var O = D.opiniones || [];

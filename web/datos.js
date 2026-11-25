@@ -14,13 +14,18 @@ window.DATOS = {
   dominio:   "obraweb.es",  // Ej: "obraweb.es"
   chatbot:   "https://hook.eu1.make.com/q2jyemzfefyl8rh8bmk6ivt72bwd1ard",  // Webhook de Make del asistente virtual (vacío = sin chatbot)
   // Capturas largas de cada web del portfolio (se deslizan al pasar el ratón). Ej: "Flor & Atelier": "/img/trabajos/flor-atelier-larga.jpg"
-  capturas: {},
+  capturas: {
+    "Flor & Atelier": "/img/trabajos/flor-atelier-larga.jpg",
+    "Distintivo": "/img/trabajos/distintivo-larga.jpg",
+    "Empresa de reformas": "/img/trabajos/reformas-larga.jpg",
+    "INVICTO Barber Shop": "/img/trabajos/invicto-larga.jpg"
+  },
   // Enlaces a las webs del portfolio (vacío = no se muestra el botón "Ver la web")
   portfolio: {
-    "Flor & Atelier": "",
-    "Distintivo": "",
-    "Empresa de reformas": "",
-    "Aura Burgos Nails Studio": ""
+    "Flor & Atelier": "https://floristeriademo.netlify.app/",
+    "Distintivo": "https://somosdistintivo.netlify.app/",
+    "Empresa de reformas": "https://reformademo.netlify.app/",
+    "INVICTO Barber Shop": "https://ehebhchgqbghcbh.netlify.app/"
   },
   // Opiniones REALES de clientes. Ej: { nombre: "Laura", negocio: "Flor & Atelier", texto: "..." }
   opiniones: []
