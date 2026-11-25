@@ -13,6 +13,8 @@ window.DATOS = {
   whatsapp:  "34641409181",  // Con prefijo y sin +: "34612345678"
   dominio:   "obraweb.es",  // Ej: "obraweb.es"
   chatbot:   "https://hook.eu1.make.com/q2jyemzfefyl8rh8bmk6ivt72bwd1ard",  // Webhook de Make del asistente virtual (vacío = sin chatbot)
+  // Capturas largas de cada web del portfolio (se deslizan al pasar el ratón). Ej: "Flor & Atelier": "/img/trabajos/flor-atelier-larga.jpg"
+  capturas: {},
   // Enlaces a las webs del portfolio (vacío = no se muestra el botón "Ver la web")
   portfolio: {
     "Flor & Atelier": "",
