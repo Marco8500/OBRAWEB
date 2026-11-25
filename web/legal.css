@@ -64,3 +64,5 @@ footer{background:#000;border-top:1px solid #1E293B;color:#94A3B8;font-size:12px
 .wa-float:hover{background:#1EBE5A;transform:scale(1.05)}
 .wa-float svg{width:32px;height:32px}
 @media (min-width:768px){.wa-float{right:24px;bottom:24px;width:64px;height:64px}.wa-float svg{width:36px;height:36px}}
+
+img.mark{background:none;border-radius:50%;box-shadow:none;object-fit:contain}
