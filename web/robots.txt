@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /equipo.html
+Disallow: /clientes.html
+Disallow: /gracias.html
+Disallow: /api/
+
+Sitemap: https://obraweb.es/sitemap.xml
